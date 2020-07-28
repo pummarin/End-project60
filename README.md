@@ -1,3 +1,3 @@
-pummarin phiawsoongnern B6003296    
+Pummarin Phiawsoongnern B6003296    
 
-kamolchat kamollanon B6008376
+Kamolchat Kamollanon B6008376
