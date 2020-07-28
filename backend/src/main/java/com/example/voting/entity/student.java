@@ -1,40 +1,50 @@
 package com.example.voting.entity;
 
-import lombok.Data;
+import lombok.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+//import javax.validation.constraints.NotNull;
+
 
 @Data
 @Entity
-@Table(name = "STUDENTS")
-public class Students {
+@Table(name = "STUDENT")
+public class student {
 
 	@Id
-	@SequenceGenerator(name = "STUDENTS_seq", sequenceName = "STUDENTS_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDENTS_seq")
-	@Column(name = "STUDENTS_ID", unique = true, nullable = true)
+	@SequenceGenerator(name = "STUDENT_seq", sequenceName = "STUDENT_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDENT_seq")
+	@Column(name = "STUDENT_ID", unique = true, nullable = true)
 	private Long id;
 	
-	@NotNull
+	@NonNull
 	private String studentId;
 
-	@NotNull
+	@NonNull
 	private String fullName;
 
-	@NotNull
+	@NonNull
 	private String gender;
 
-	@NotNull
+	@NonNull
 	private String username;
 
-	@NotNull
+	@NonNull
     private String password;
     
-    @NotNull
-    private Long s_year
+    @NonNull
+    private Long s_year;
 
-	public Students() {
+	public student() {
 	}
 
-	public Students(String fullName, String studentId, String gender, String username, String password, Long s_year) {
+	public student(String fullName, String studentId, String gender, String username, String password, Long s_year) {
 		this.fullName = fullName;
 		this.username = username;
 		this.gender = gender;
