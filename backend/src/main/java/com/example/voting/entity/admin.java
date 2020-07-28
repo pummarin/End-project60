@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "ADMIN")
-public class Staff {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ADMIN_ID", insertable = true)
@@ -18,10 +18,10 @@ public class Staff {
     private @NotNull String gender;
 
 
-    public Staff() {
+    public Admin() {
     }
 
-    public Staff(String name, String user, String pass, String gender) {
+    public Admin(String name, String user, String pass, String gender) {
         this.name = name;
         this.password = pass;
         this.username = user;
