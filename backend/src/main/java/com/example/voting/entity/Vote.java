@@ -14,7 +14,7 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "VOTE")
-public class vote {
+public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "VOTE_ID", insertable = true)
@@ -25,10 +25,10 @@ public class vote {
     
 
 
-    public vote() {
+    public Vote() {
     }
 
-    public vote(Date vtime, Long score) {
+    public Vote(Date vtime, Long score) {
         this.vtime = vtime;
         this.score = score;
     }
