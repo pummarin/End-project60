@@ -18,6 +18,7 @@ public class AdminController {
     @Autowired
     AdminRepository adminRepository;
 
+
     @GetMapping("/admin")
     public Collection<Admin> getAllAdmins(){
         return adminRepository.findAll().stream().collect(Collectors.toList());
