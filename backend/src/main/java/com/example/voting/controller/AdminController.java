@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.example.voting.entity.Admins;
 
+import com.example.voting.repository.AdminsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class AdminController {
     @Autowired
-    AdminRepository adminRepository;
+    AdminsRepository adminRepository;
 
 
     @GetMapping("/admin")

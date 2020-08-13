@@ -1,9 +1,11 @@
 package com.example.voting.controller;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import com.example.voting.entity.Students;
 
+import com.example.voting.repository.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class StudentController {
     @Autowired
-    StudentRepository studentRepository;
+    StudentsRepository studentsRepository;
 
     @GetMapping("/student")
     public Collection<Students> getAllStudents() {

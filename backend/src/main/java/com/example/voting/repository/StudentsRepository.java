@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public interface StudentRepository extends JpaRepository<Students, Long>{
+public interface StudentsRepository extends JpaRepository<Students, Long>{
 
-    Students findById(Long id);
+    Students findById(long id);
 }
