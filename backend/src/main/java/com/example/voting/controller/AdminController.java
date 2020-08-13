@@ -3,7 +3,7 @@ package com.example.voting.controller;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import com.example.voting.entity.Admin;
+import com.example.voting.entity.Admins;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +20,7 @@ public class AdminController {
 
 
     @GetMapping("/admin")
-    public Collection<Admin> getAllAdmins(){
+    public Collection<Admins> getAllAdmins(){
         return adminRepository.findAll().stream().collect(Collectors.toList());
     }
 

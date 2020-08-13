@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "STUDENT")
-public class Student {
+public class Students {
 
 	@Id
 	@SequenceGenerator(name = "STUDENT_seq", sequenceName = "STUDENT_seq")
@@ -41,10 +41,10 @@ public class Student {
     @NonNull
     private Long s_year;
 
-	public Student() {
+	public Students() {
 	}
 
-	public Student(String fullName, String studentId, String gender, String username, String password, Long s_year) {
+	public Students(String fullName, String studentId, String gender, String username, String password, Long s_year) {
 		this.fullName = fullName;
 		this.username = username;
 		this.gender = gender;

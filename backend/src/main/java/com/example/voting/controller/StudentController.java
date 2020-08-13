@@ -2,7 +2,7 @@ package com.example.voting.controller;
 
 import java.util.Collection;
 
-import com.example.voting.entity.Student;
+import com.example.voting.entity.Students;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +18,7 @@ public class StudentController {
     StudentRepository studentRepository;
 
     @GetMapping("/student")
-    public Collection<Student> getAllStudents() {
+    public Collection<Students> getAllStudents() {
         return studentsRepository.findAll().stream().collect(Collectors.toList());
     }
 }
