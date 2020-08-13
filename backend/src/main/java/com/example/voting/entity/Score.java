@@ -21,15 +21,15 @@ public class Score {
 
     private long student_id;
     private long party_id;
-    private long score;
+    private long point;
     
     public Score() {
 	}
 
-	public Score(Long student_id, Long party_id, Long score) {
+	public Score(Long student_id, Long party_id, Long point) {
 		this.student_id = student_id;
 		this.party_id = party_id;
-		this.score = score;
+		this.point = point;
 	}
 
 }
