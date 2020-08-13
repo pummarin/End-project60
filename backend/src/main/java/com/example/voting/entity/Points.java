@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Score")
-public class Score {
+public class Points {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,10 +23,10 @@ public class Score {
     private long party_id;
     private long point;
     
-    public Score() {
+    public Points() {
 	}
 
-	public Score(Long student_id, Long party_id, Long point) {
+	public Points(Long student_id, Long party_id, Long point) {
 		this.student_id = student_id;
 		this.party_id = party_id;
 		this.point = point;
