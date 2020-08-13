@@ -20,7 +20,7 @@ public class AdminController {
     AdminsRepository adminRepository;
 
 
-    @GetMapping("/admin")
+    @GetMapping("/admins")
     public Collection<Admins> getAllAdmins(){
         return adminRepository.findAll().stream().collect(Collectors.toList());
     }
