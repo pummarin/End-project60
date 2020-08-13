@@ -1,4 +1,4 @@
-package com.example.vote.entity;
+package com.example.voting.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
