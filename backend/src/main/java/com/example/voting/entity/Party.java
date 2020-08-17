@@ -34,5 +34,6 @@ public class Party {
     private String policy;
     private int p_number;
 
+    public Party(){}
 
 }
