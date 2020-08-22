@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-//import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -20,36 +20,41 @@ public class Students {
 	@Id
 	@SequenceGenerator(name = "STUDENT_seq", sequenceName = "STUDENT_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDENT_seq")
-	@Column(name = "STUDENT_ID", unique = true, nullable = true)
+	@Column(name = "STUDENTS_ID", unique = true, nullable = true)
 	private Long id;
 	
-	@NonNull
+	@NotNull
 	private String studentId;
 
-	@NonNull
+	@NotNull
 	private String fullName;
 
-	@NonNull
+	@NotNull
 	private String gender;
 
-	@NonNull
-	private String username;
+	@NotNull
+    private String identifyNumber;
 
-	@NonNull
-    private String password;
-    
-    @NonNull
+	@NotNull
     private Long s_year;
+
+	@NotNull
+	private String email;
+
+	@NotNull
+	private Long phoneNumber;
 
 	public Students() {
 	}
 
-	public Students(String fullName, String studentId, String gender, String username, String password, Long s_year) {
+	public Students(String fullName, String studentId, String gender, Long phoneNumber,
+					String identifyNumber, Long s_year, String email) {
 		this.fullName = fullName;
-		this.username = username;
 		this.gender = gender;
-		this.password = password;
+		this.identifyNumber = identifyNumber;
         this.studentId = studentId;
         this.s_year = s_year;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
 	}
 }

@@ -5,4 +5,5 @@ import com.example.voting.entity.*;
 @RepositoryRestResource
 public class PartyRepository extends JpaRepository<Party, Long> {
 
+
 }
