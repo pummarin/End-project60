@@ -3,6 +3,7 @@ package com.example.voting.entity;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -21,15 +22,15 @@ public class Vote {
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Students.class)
     @JoinColumn(name = "STUDENT_ID", insertable = true)
     @JsonManagedReference
-    private @NonNull Students students;
+    private @NotNull Students students;
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Party.class)
     @JoinColumn(name = "PARTY_ID", insertable = true)
     @JsonManagedReference
-    private @NonNull Party party;
+    private @NotNull Party party;
 
 
-    private @NonNull Date voteTime;
+    private @NotNull Date voteTime;
 
 
 
