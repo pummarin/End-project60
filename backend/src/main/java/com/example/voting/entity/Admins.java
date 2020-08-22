@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.*;
 
@@ -19,10 +20,10 @@ public class Admins {
     @Column(name = "ADMIN_ID", insertable = true)
     private long id;
 
-    private @NonNull String name;
-    private @NonNull String username;
-    private @NonNull String password;
-    private @NonNull String gender;
+    private @NotNull String name;
+    private @NotNull String username;
+    private @NotNull String password;
+    private @NotNull String gender;
 
 
     public Admins() {
