@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public class CandidateProfileRepository extends JpaRepository<CandidateProfile, Long>{
-    
+public interface CandidateProfileRepository extends JpaRepository<CandidateProfile, Long>{
+    CandidateProfile findById(long can_id);
 }
