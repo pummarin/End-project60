@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
-public class AdminController {
+public class AdminsController {
     @Autowired
-    AdminsRepository adminRepository;
+    AdminsRepository adminsRepository;
 
 
     @GetMapping("/admins")
     public Collection<Admins> getAllAdmins(){
-        return adminRepository.findAll().stream().collect(Collectors.toList());
+        return adminsRepository.findAll().stream().collect(Collectors.toList());
     }
 
     

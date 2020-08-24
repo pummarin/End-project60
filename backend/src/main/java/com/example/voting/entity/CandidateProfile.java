@@ -2,21 +2,22 @@ package com.example.voting.entity;
 
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToOne;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Getter
@@ -79,7 +80,7 @@ public class CandidateProfile {
         this.position = position;
         this.party = party;
         this.gender = gender;
-        this.admins = admin;
+        this.admins = admins;
 		
 	}
 }

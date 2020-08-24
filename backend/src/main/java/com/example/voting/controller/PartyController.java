@@ -3,21 +3,23 @@ package com.example.voting.controller;
 
 import com.example.voting.entity.Party;
 import com.example.voting.entity.Admins;
-
+import com.example.voting.entity.payload.PartyPayload;
 import com.example.voting.repository.PartyRepository;
 import com.example.voting.repository.AdminsRepository;
 
-import com.example.voting.entity.payload.VotePayload;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
+import java.util.Optional;
+import java.util.List;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -30,15 +32,14 @@ public class PartyController {
     private AdminsRepository adminsRepository;
     @Autowired
     private PartyRepository partyRepository;
-    @Autowired
-    private CandidateProfileRepository candidateProfileRepository;
+    
     
     public PartyController(PartyRepository partyRepository) {
         this.partyRepository = partyRepository;
     }
 
     @GetMapping("/partys")
-    public Collection<PartyRepository> PartyRepository() {
+    public Collection<Party> getAllParty() {
         return partyRepository.findAll().stream().collect(Collectors.toList());
     }
     
