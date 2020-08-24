@@ -1,25 +1,33 @@
 package com.example.voting.controller;
 
-import com.example.voting.Entity.*;
-import com.example.voting.Repository.*;
+
+import com.example.voting.entity.Party;
+import com.example.voting.entity.Admins;
+
+import com.example.voting.repository.PartyRepository;
+import com.example.voting.repository.AdminsRepository;
+
+import com.example.voting.entity.payload.VotePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/api")
 public class PartyController {
 
+    @Autowired
+    private AdminsRepository adminsRepository;
     @Autowired
     private PartyRepository partyRepository;
     @Autowired
@@ -29,30 +37,26 @@ public class PartyController {
         this.partyRepository = partyRepository;
     }
 
-    @GetMapping("/party")
+    @GetMapping("/partys")
     public Collection<PartyRepository> PartyRepository() {
         return partyRepository.findAll().stream().collect(Collectors.toList());
     }
+    
+    @PostMapping("/party")
+    public Party newParty(@RequestBody PartyPayload p){
 
-    @PostMapping("/party/{p_name}/{member}/{policy}/{p_number}")
-    public void newParty(
+        Party party = new Party();
+
+        Optional<Admins> admins = adminsRepository.findById(p.getAdmins_id());
         
-                        
-                        @PathVariable long party_id,
-                        @PathVariable String p_name,
-                        @PathVariable Integer member,
-                        @PathVariable String policy,
-                        @PathVariable Integer p_number,
-                        ) 
-                  {
-                
-                Party party = new Party();
-                party.setName(p_name);
-                party.setMember(member);
-                party.setPolicy(policy);
-                party.setPartyNo(p_number);
+        party.setP_name(p.getP_name());
+        party.setPolicy(p.getPolicy());
+        party.setP_number(p.getP_number());
+        party.setPoint(p.getPoint());
+        party.setAdmins(admins.get());
 
-                partyRepository.save(party);
+        return partyRepository.save(party);
     }
+    
     
 }
