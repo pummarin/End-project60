@@ -1,5 +1,14 @@
 package com.example.voting.controller;
 
+import com.example.voting.entity.Gender;
+import com.example.voting.repository.GenderRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 @RestController
 public class GenderController {
 
