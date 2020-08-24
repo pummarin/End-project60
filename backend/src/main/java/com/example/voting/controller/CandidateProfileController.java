@@ -1,23 +1,32 @@
 package com.example.voting.controller;
 
-import com.example.voting.Entity.*;
-import com.example.voting.Repository.*;
+import com.example.voting.entity.Party;
+import com.example.voting.entity.Gender;
+import com.example.voting.entity.Admins;
+import com.example.voting.entity.CandidateProfile;
+
+import com.example.voting.repository.PartyRepository;
+import com.example.voting.repository.GenderRepository;
+import com.example.voting.repository.AdminsRepository;
+import com.example.voting.repository.CandidateProfileRepository;
+
+import com.example.voting.entity.payload.VotePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/api")
 public class CandidateProfileController {
 
     @Autowired
@@ -36,32 +45,27 @@ public class CandidateProfileController {
         return candidateProfileRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/canprofile/{p_numberSelect}/{title_name}/{c_name}/{genSelect}/{age}/{grade}/{skill}/{status}")
-    public void newCandidateProfile(
+    @PostMapping("/canp")
+    public CandidateProfile newCandidateProfile(@RequestBody CandidateProfilePayload canp){
+
+        CandidateProfile cp = new CandidateProfile();
+
+        Optional<Party> party = partyRepository.findById(canp.getParty_id());
+        Optional<Gender> gender = genderRepository.findById(canp.getGender_id());
+        Optional<Admins> admins = adminsRepository.findById(canp.getAdmins_id());
         
-                        @PathVariable String title_name,
-                        @PathVariable Integer p_numberSelect,
-                        @PathVariable String c_name,
-                        @PathVariable Integer age,
-                        @PathVariable float grade,
-                        @PathVariable String skill,
-                        @PathVariable String status,
-                        @PathVariable long genSelect,
-                        ) 
-                  {
-
-                Party party = partyRepository.findById(p_numberSelect);
-                Gender gender = genderRepository.findById(genSelect);
-                
-                CandidateProfile c = new CandidateProfile();
-                c.setTitle_name(title_name);
-                c.setName(c_name);
-                c.setAge(age);
-                c.setGrade(grade);
-                c.setSkill(skill);
-                c.setStatus(status);
-                c.setParty(p_numberSelect);
-
-                c.save(candidateProfile);
+        cp.setTitle_name(cp.getTitle_name());
+        cp.setC_name(cp.getC_name());
+        cp.setStudent_id(cp.getStudent_id());
+        cp.setMajor(cp.getMajor());
+        cp.setYear(cp.getYear());
+        cp.setGrade(cp.getYear());
+        cp.setArchivement(cp.getArchivement());
+        cp.setPosition(cp.getPosition());
+        
+        cp.setGender(gender.get());
+        cp.setAdmins(admins.get());
+        return candidateProfileRepository.save(cp);
     }
+
 }

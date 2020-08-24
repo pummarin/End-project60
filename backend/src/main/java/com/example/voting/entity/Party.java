@@ -9,8 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
@@ -30,8 +28,8 @@ public class Party {
     @Column(name = "PARTY_ID", unique = true, nullable = true)
     private Long party_id;
     
-	private String p_name;
-    private int member;
+    private String p_name;
+   // private int member;
     private String policy;
     private int p_number;
     private Long point;

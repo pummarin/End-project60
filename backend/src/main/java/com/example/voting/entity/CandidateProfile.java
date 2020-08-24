@@ -31,26 +31,34 @@ public class CandidateProfile {
     @Column(name = "CAN_ID", unique = true, nullable = true)
     private  Long can_id;
     
+    @NotNull
     private String title_name;
+    @NotNull
     private  String c_name;
+    @NotNull
     private String student_id;
+    @NotNull
     private String major;
+    @NotNull
     private int year;
+    @NotNull
     private  float grade;
+    @NotNull
     private  String archivement;
+    @NotNull
     private  String position;
 
-    /*
+    
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Gender.class)
     @JoinColumn(name = "GENDER_ID", insertable = true)
     @JsonManagedReference
-    private Gender gender; */
+    private @NotNull Gender gender; 
 
     
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Party.class)
     @JoinColumn(name = "PARTY_ID", insertable = true)
     @JsonManagedReference
-    private Party party;
+    private @NotNull Party party;
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Admins.class)
     @JoinColumn(name = "ADMIN_ID", insertable = true)
@@ -60,7 +68,7 @@ public class CandidateProfile {
     public CandidateProfile(){}
 
     public CandidateProfile(String title_name, String c_name, String student_id, String major, int year, float grade,
-                            String archivement, String position, Party party, Admins admins) {
+                            String archivement, String position, Party party, Gender gender, Admins admins) {
         this.title_name = title_name;
         this.c_name = c_name;
         this.student_id = student_id;
@@ -70,6 +78,7 @@ public class CandidateProfile {
         this.archivement = archivement;
         this.position = position;
         this.party = party;
+        this.gender = gender;
         this.admins = admin;
 		
 	}
