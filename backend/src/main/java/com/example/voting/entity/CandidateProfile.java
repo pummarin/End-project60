@@ -39,8 +39,6 @@ public class CandidateProfile {
     @NotNull
     private String student_id;
     @NotNull
-    private String major;
-    @NotNull
     private int year;
     @NotNull
     private  float grade;
@@ -49,13 +47,16 @@ public class CandidateProfile {
     @NotNull
     private  String position;
 
-    
+    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Major.class)
+    @JoinColumn(name = "MAJOR_ID", insertable = true)
+    @JsonManagedReference
+    private @NotNull Major major; 
+
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Gender.class)
     @JoinColumn(name = "GENDER_ID", insertable = true)
     @JsonManagedReference
     private @NotNull Gender gender; 
-
-    
+ 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Party.class)
     @JoinColumn(name = "PARTY_ID", insertable = true)
     @JsonManagedReference
@@ -68,8 +69,8 @@ public class CandidateProfile {
     
     public CandidateProfile(){}
 
-    public CandidateProfile(String title_name, String c_name, String student_id, String major, int year, float grade,
-                            String archivement, String position, Party party, Gender gender, Admins admins) {
+    public CandidateProfile(String title_name, String c_name, String student_id, int year, float grade,
+                            String archivement, String position, Party party, Major major, Gender gender, Admins admins) {
         this.title_name = title_name;
         this.c_name = c_name;
         this.student_id = student_id;
