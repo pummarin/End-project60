@@ -17,9 +17,6 @@ public class CandidateProfilePayload {
     private String student_id;
 
     @NotBlank
-    private String major;
-
-    @NotBlank
     private int year;
 
     @NotBlank
@@ -39,5 +36,8 @@ public class CandidateProfilePayload {
 
     @NotBlank
     private Long gender_id;
+
+    @NotBlank
+    private Long major_id;
 
 }

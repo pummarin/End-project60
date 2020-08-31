@@ -2,11 +2,13 @@ package com.example.voting.controller;
 
 import com.example.voting.entity.Party;
 import com.example.voting.entity.Gender;
+import com.example.voting.entity.Major;
 import com.example.voting.entity.Admins;
 import com.example.voting.entity.CandidateProfile;
 import com.example.voting.entity.payload.CandidateProfilePayload;
 import com.example.voting.repository.PartyRepository;
 import com.example.voting.repository.GenderRepository;
+import com.example.voting.repository.MajorRepository;
 import com.example.voting.repository.AdminsRepository;
 import com.example.voting.repository.CandidateProfileRepository;
 
@@ -39,6 +41,8 @@ public class CandidateProfileController {
     @Autowired
     private PartyRepository partyRepository;
     @Autowired
+    private MajorRepository majorRepository;
+    @Autowired
     AdminsRepository adminsRepository;
 
     public CandidateProfileController(CandidateProfileRepository candidateProfileRepository) {
@@ -56,18 +60,19 @@ public class CandidateProfileController {
         CandidateProfile cp = new CandidateProfile();
 
         Optional<Party> party = partyRepository.findById(canp.getParty_id());
+        Optional<Major> major = majorRepository.findById(canp.getMajor_id());
         Optional<Gender> gender = genderRepository.findById(canp.getGender_id());
         Optional<Admins> admins = adminsRepository.findById(canp.getAdmins_id());
         
         cp.setTitle_name(canp.getTitle_name());
         cp.setC_name(canp.getC_name());
         cp.setStudent_id(canp.getStudent_id());
-        cp.setMajor(canp.getMajor());
         cp.setYear(canp.getYear());
         cp.setGrade(canp.getYear());
         cp.setArchivement(canp.getArchivement());
         cp.setPosition(canp.getPosition());
         
+        cp.setMajor(major.get());
         cp.setGender(gender.get());
         cp.setAdmins(admins.get());
         return candidateProfileRepository.save(cp);
