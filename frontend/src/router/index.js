@@ -118,7 +118,13 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/SearchEnrolledVehicle.vue")
-  }
+    },
+    {
+      path: "/vote",
+      name: "Vote",
+      component: () =>
+      import("../views/Vote.vue")
+    }
 ];
 
 const router = new VueRouter({
@@ -127,7 +133,7 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/signin", "/", "/register", "/staff/signin"];
+  const publicPages = ["/signin", "/", "/register", "/staff/signin", "/vote"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
 
