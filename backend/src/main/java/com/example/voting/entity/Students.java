@@ -36,19 +36,22 @@ public class Students {
     private String identifyNumber;
 
 	@NotNull
-    private Long s_year;
+    private String s_year;
 
 	@NotNull
 	private String email;
 
 	@NotNull
-	private Long phoneNumber;
+	private String phoneNumber;
+
+	@NotNull
+	private String major;
 
 	public Students() {
 	}
 
-	public Students(String fullName, String studentId, String gender, Long phoneNumber,
-					String identifyNumber, Long s_year, String email) {
+	public Students(String fullName, String studentId, String gender, String phoneNumber,
+					String identifyNumber, String s_year, String email, String major) {
 		this.fullName = fullName;
 		this.gender = gender;
 		this.identifyNumber = identifyNumber;
@@ -56,5 +59,6 @@ public class Students {
         this.s_year = s_year;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.major = major;
 	}
 }

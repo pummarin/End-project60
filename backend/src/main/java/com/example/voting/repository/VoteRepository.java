@@ -9,5 +9,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 	Vote findById(long id);
-	Vote findByStudent(Students students);
+	Vote findByStudents(Students students);
 }

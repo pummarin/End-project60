@@ -16,4 +16,4 @@ spring:
     show-sql: true
   output:
     ansi:
-      enabled: ALWAYSs
+      enabled: ALWAYS #WTF is this?!
