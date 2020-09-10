@@ -20,7 +20,7 @@ public class CandidateProfilePayload {
     private int year;
 
     @NotBlank
-    private float grade;
+    private String grade;
 
     @NotBlank
     private String archivement;
@@ -39,5 +39,7 @@ public class CandidateProfilePayload {
 
     @NotBlank
     private Long major_id;
+
+
 
 }

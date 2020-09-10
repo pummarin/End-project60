@@ -14,10 +14,10 @@ public class PartyPayload {
     private String policy;
 
     @NotBlank
-    private int p_number;
+    private String p_number;
 
-    @NotBlank
-    private Long point;
+    
+    private int point;
 
     @NotBlank
     private Long admins_id;    
