@@ -9,21 +9,39 @@
           </v-col>
         </v-row>
         <br />
-        <h1 class="display-2 font-weight-bold mb-3">ข้อมูลพรรค</h1>
+        <h1 class="display-2 font-weight-bold mb-10">ข้อมูลพรรค</h1>
 
-        <v-row justify="center" class="pb-0 mb-0">
-            <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="หมายเลขพรรค" v-model="fillPartyNo" />
-            </v-col>
+        <v-row justify="center">
+        <v-col cols="12" sm="6" md="5">
+          <v-text-field
+            label="หมายเลขพรรค"
+            placeholder=" "
+            outlined
+            v-model="fillPartyNo"
+          ></v-text-field>
+        </v-col>
+          </v-row>
 
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="ชื่อพรรค" v-model="fillPartyName" />
-          </v-col>
+       <v-row justify="center">
+        <v-col cols="12" sm="6" md="5">
+          <v-text-field
+            label="ชื่อพรรค"
+            placeholder=" "
+            outlined
+            v-model="fillPartyName"
+          ></v-text-field>
+        </v-col>
+          </v-row>
 
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="นโยบาย" v-model="fillPolicy" />
-          </v-col>
-
+      <v-row justify="center">
+        <v-col cols="12" sm="6" md="5">
+          <v-text-field
+            label="นโยบาย"
+            placeholder=" "
+            outlined
+            v-model="fillPolicy"
+          ></v-text-field>
+        </v-col>
           </v-row>
 
         <v-row justify="center">
@@ -51,30 +69,27 @@ export default {
       alertmsg: undefined
     };
   },
+  clearAlert() {
+      this.alertFailed = false;
+      this.alertSuccess = false;
+      this.alertmsg = false;
+    },
   mounted() {
     this.getAdmins();
   },
   methods: {
     getAdmins() {
-        api
-        .get("/api/admins/")
-        .then(response => {
-          this.admins.push(JSON.parse(localStorage.getItem("user")));
-          console.log(JSON.parse(JSON.stringify(response.data)));
-        })
-        .catch(e => {
-          console.log(e);
-        });
+        this.Admins.push(JSON.parse(localStorage.getItem("user")));
     },
     save() {
-      let data = {
+      let databox = {
         p_number: this.fillPartyNo,
         p_name: this.fillPartyName,
         p_policy: this.fillPolicy,
         admins: this.selectAdmins
       };
       api
-        .post("/api/party", data)
+        .post("/api/party", databox)
         .then(() => {
           this.clearAlert();
           this.alertSuccess = true;

@@ -130,7 +130,19 @@ const routes = [
       name: "CandidateDetail",
       component: () =>
       import("../views/CandidateDetail.vue")
-    }
+    },
+    {
+      path: "/candidateprofile",
+      name: "CandidateProfile",
+      component: () =>
+        import("../views/CandidateProfile.vue")
+    },
+    {
+      path: "/party",
+      name: "Party",
+      component: () =>
+        import("../views/Party.vue")
+    },
 ];
 
 const router = new VueRouter({
@@ -139,7 +151,8 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/signin", "/", "/register", "/staff/signin", "/vote", "/candidateDetail"];
+  const publicPages = ["/signin", "/", "/register", "/staff/signin", "/vote", "/candidateDetail",
+  "/candidateprofile", "/party"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
 
