@@ -59,7 +59,7 @@ public class CandidateProfileController {
 
         CandidateProfile cp = new CandidateProfile();
 
-        Optional<Party> party = partyRepository.findById(canp.getParty_id());
+        Optional<Party> p_number = partyRepository.findById(canp.getParty_id());
         Optional<Major> major = majorRepository.findById(canp.getMajor_id());
         Optional<Gender> gender = genderRepository.findById(canp.getGender_id());
         Optional<Admins> admins = adminsRepository.findById(canp.getAdmins_id());
@@ -68,10 +68,11 @@ public class CandidateProfileController {
         cp.setC_name(canp.getC_name());
         cp.setStudent_id(canp.getStudent_id());
         cp.setYear(canp.getYear());
-        cp.setGrade(canp.getYear());
+        cp.setGrade(canp.getGrade());
         cp.setArchivement(canp.getArchivement());
         cp.setPosition(canp.getPosition());
         
+        cp.setP_number(p_number.get());
         cp.setMajor(major.get());
         cp.setGender(gender.get());
         cp.setAdmins(admins.get());

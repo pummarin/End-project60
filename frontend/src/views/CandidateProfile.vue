@@ -11,61 +11,104 @@
         <br />
         <h1 class="display-2 font-weight-bold mb-3">ข้อมูลผู้สมัคร</h1>
 
-        <v-row justify="center" class="pb-0 mb-0">
-            <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="คำนำหน้าชื่อ" v-model="fillTitleName" />
-            </v-col>
 
           <v-row justify="center">
-          <v-col cols="6">
+        <v-col cols="12" sm="6" md="3">
+          <v-text-field
+            label="คำนำหน้าชื่อ"
+            placeholder=" "
+            outlined
+            v-model="fillTitleName"
+          ></v-text-field>
+        </v-col>
+  
+          <v-col cols="6" sm="3">
             <v-select class="pa-0 ma-0" label="เพศ" v-model="selectGender"
-              :items="Gender" item-text="gender" item-value="gender.gender_id" />
+              :items="gender" item-text="gender" item-value="id" />
           </v-col>
         </v-row>
-   
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="ชื่อ-สกุล" v-model="fillName" />
-          </v-col>
 
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="รหัสนักศึกษา" v-model="fillStudentId" />
-          </v-col>
+         <v-row justify="center">
+        <v-col cols="12" sm="6" md="6">
+          <v-text-field
+            label="ชื่อ-สกุล"
+            placeholder=" "
+            outlined
+            v-model="fillName"
+          ></v-text-field>
+        </v-col>
+        </v-row>
 
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="ตำแหน่ง" v-model="fillPosition" />
-          </v-col>
+        <v-row justify="center">
+        <v-col cols="12" sm="6" md="3">
+          <v-text-field
+            label="รหัสนักศึกษา"
+            placeholder=" "
+            outlined
+            v-model="fillStudentId"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" sm="6" md="3">
+          <v-text-field
+            label="ตำแหน่ง"
+            placeholder=" "
+            outlined
+            v-model="fillPosition"
+          ></v-text-field>
+        </v-col>
+        </v-row>
 
           <v-row justify="center">
           <v-col cols="6">
             <v-select class="pa-0 ma-0" label="สำนักวิชา" v-model="selectMajor"
-              :items="Major" item-text="major" item-value="id" />
+              :items="Major" item-text="major" item-value="major.major_id" />
           </v-col>
           </v-row>
+
+          <v-row justify="center">
+        <v-col cols="12" sm="6" md="3">
+          <v-text-field
+            label="ชั้นปี"
+            placeholder=" "
+            outlined
+            v-model="fillYear"
+          ></v-text-field>
+        </v-col>
 
         <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="ชั้นปี" v-model="fillYear" />
-          </v-col>
-
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="เกรด" v-model="fillGrade" />
-          </v-col>
-
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field solo label="ผลงาน" v-model="fillArchivement" />
-          </v-col>
-
-        //upload file
-          </v-row>
+          <v-text-field
+            label="เกรด"
+            placeholder=" "
+            outlined
+            v-model="fillGrade"
+          ></v-text-field>
+        </v-col>
+        </v-row>
 
         <v-row justify="center">
-          <v-col cols="6" class="pa-0 mx-2">
-            <v-btn @click="checksave" class="light-blue accent-4">เพิ่ม</v-btn>
-          </v-col>
-          <v-row justify="center">
-          <v-col cols="6" class="pa-0 mx-2">
-            <v-btn class="light-red accent-4" router-link to="/">ยกเลิก</v-btn>
-          </v-col>
+        <v-col cols="12" sm="6" md="6">
+          <v-text-field
+            label="ผลงาน"
+            placeholder=" "
+            outlined
+            v-model="fillArchivement"
+          ></v-text-field>
+        </v-col>
         </v-row>
+
+        //upload file
+     
+
+        <v-row justify="center">
+          <v-col cols="6" class="pa-2 mx-3">
+            <v-btn @click="checksave" class="light-blue accent-4">บันทึก</v-btn>
+    
+            <v-btn class="light-red accent-4" router-link to="/">ยกเลิก</v-btn>
+         
+          </v-col>
+         </v-row>
+
       </v-flex>
     </v-layout>
   </v-container>
@@ -101,6 +144,7 @@ export default {
     this.getAdmins();
     this.getGender();
     this.getMajor();
+    this.getParty();
   },
   methods: {
     getAdmins() {
@@ -135,6 +179,18 @@ export default {
         .catch(e => {
           console.log(e);
         });
+        
+    },
+    getParty() {
+        api
+        .get("/api/party/")
+        .then(response => {
+          this.major = response.data;
+          console.log(JSON.parse(JSON.stringify(response.data)));
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     save() {
       let data = {
@@ -146,6 +202,7 @@ export default {
         grade: this.fillGrade,
         archivement: this.fillArchivement,
 
+        party: this.p_number,
         major: this.selectMajor,
         gender: this.selectGender,
         admins: this.selectAdmins

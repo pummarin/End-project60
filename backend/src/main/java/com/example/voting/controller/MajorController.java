@@ -20,7 +20,7 @@ public class MajorController {
     }
 
     @GetMapping("/major")
-    public Collection<Major> Gender() {
+    public Collection<Major> Major() {
         return majorRepository.findAll().stream().collect(Collectors.toList());
     }
 }

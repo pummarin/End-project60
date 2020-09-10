@@ -31,11 +31,15 @@ public class Party {
     @Column(name = "PARTY_ID", unique = true, nullable = true)
     private Long party_id;
     
+    @NotNull
     private String p_name;
    // private int member;
+    @NotNull
     private String policy;
-    private int p_number;
-    private Long point;
+    @NotNull
+    private String p_number;
+
+    private int point;
 
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Admins.class)
@@ -45,11 +49,12 @@ public class Party {
 
     public Party(){}
 
-    public Party(String p_name, String policy, int p_number, Long point) {
+    public Party(String p_name, String policy, String p_number, int point, Admins admins) {
         this.p_name = p_name;
         this.policy = policy;
         this.p_number = p_number;
         this.point = point;
+        this.admins = admins;
     
 	}
 
