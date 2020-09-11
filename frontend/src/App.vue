@@ -89,7 +89,7 @@
         </v-avatar>
       </v-btn>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
-        <span class="hidden-sm-and-down">SUT Dormitory</span>
+        <span class="hidden-sm-and-down">SUT Student council election</span>
       </v-toolbar-title>
       <v-text-field
         flat
@@ -145,15 +145,15 @@
     <v-footer :color="footerColor()" :dark="isDark()" app>
       <div>
         &copy;
-        <strong>SUT62 TEAM01</strong>
+        <strong>End-project60</strong>
       </div>
       <v-divider vertical style="padding-right: 5px"></v-divider>
       <div>
-        <v-btn href="https://github.com/sut62/team01" icon small target="_blank">
-          <v-icon>mdi-github-circle</v-icon>
+        <v-btn href="https://github.com/pummarin/End-project60" icon small target="_blank">
+          <v-icon>mdi-github</v-icon>
         </v-btn>
       </div>
-      <div>
+      <!-- <div>
         <v-btn
           href="https://www.facebook.com/Sut-Se62-Team01-118308956295583"
           icon
@@ -162,11 +162,11 @@
         >
           <v-icon>mdi-facebook</v-icon>
         </v-btn>
-      </div>
+      </div>-->
       <v-spacer></v-spacer>
       <div>
         {{ new Date().getFullYear() }} —
-        <strong>SUT DORMITORY</strong>
+        <strong>SUT Student council election</strong>
       </div>
     </v-footer>
   </v-app>
@@ -181,16 +181,16 @@ export default {
       themes: {
         student: {
           appBar: "blue darken-3",
-          fontColor: "light"
+          fontColor: "light",
         },
         staff: {
           appBar: "amber darken-3",
-          fontColor: "light"
+          fontColor: "light",
         },
         public: {
           appBar: "white",
-          fontColor: "dark"
-        }
+          fontColor: "dark",
+        },
       },
       isSignin: undefined,
       userRole: null,
@@ -204,7 +204,7 @@ export default {
           text: "หน้าหลัก",
           click: () => {
             this.$router.push("/home");
-          }
+          },
         },
         {
           icon: "mdi-contacts",
@@ -212,7 +212,7 @@ export default {
           text: "ลงทะเบียนยานพาหนะ",
           click: () => {
             this.$router.push("/staff/enrollvehicle");
-          }
+          },
         },
         {
           icon: "mdi-alien",
@@ -220,7 +220,7 @@ export default {
           text: "ลงทะเบียนเครื่องใช้ไฟฟ้า",
           click: () => {
             this.$router.push("/staff/electricregister");
-          }
+          },
         },
         {
           icon: "mdi-package",
@@ -228,7 +228,7 @@ export default {
           text: "จัดการพัสดุ",
           click: () => {
             this.$router.push("/staff/packageManagement");
-          }
+          },
         },
         {
           icon: "mdi-email",
@@ -236,7 +236,7 @@ export default {
           text: "แสดงข้อมูลการแจ้งซ่อม",
           click: () => {
             this.$router.push("/staff/RepairDetail");
-          }
+          },
         },
         {
           icon: "mdi-bicycle",
@@ -244,7 +244,7 @@ export default {
           text: "อนุมัติคำร้องขอยืมรถจักรยาน",
           click: () => {
             this.$router.push("/staff/approve/borrowedbike");
-          }
+          },
         },
         {
           icon: "mdi-rocket",
@@ -252,7 +252,7 @@ export default {
           text: "แสดงข้อมูลใช้เครื่องไฟฟ้า",
           click: () => {
             this.$router.push("/staff/showElectric");
-          }
+          },
         },
         {
           icon: "mdi-checkbox-marked",
@@ -260,7 +260,7 @@ export default {
           text: "บันทึกสถานะพัสดุ",
           click: () => {
             this.$router.push("/staff/confirmPackage");
-          }
+          },
         },
         {
           icon: "mdi-car-info",
@@ -268,8 +268,8 @@ export default {
           text: "ค้นหาข้อมูลยานพาหนะ",
           click: () => {
             this.$router.push("/staff/searchEnrolledVehicle");
-          }
-        }
+          },
+        },
       ],
       items: [
         {
@@ -278,7 +278,7 @@ export default {
           text: "หน้าหลัก",
           click: () => {
             this.$router.push("/home");
-          }
+          },
         },
         {
           icon: "mdi-contacts",
@@ -286,7 +286,7 @@ export default {
           text: "จองห้องพัก",
           click: () => {
             this.$router.push("/roombooking");
-          }
+          },
         },
         {
           icon: "mdi-bicycle-basket",
@@ -294,7 +294,7 @@ export default {
           text: "ยืมจักรยาน",
           click: () => {
             this.$router.push("/borrowedBike");
-          }
+          },
         },
         {
           icon: "mdi-wrench",
@@ -302,7 +302,7 @@ export default {
           text: "แจ้งซ่อม",
           click: () => {
             this.$router.push("/repair");
-          }
+          },
         },
         {
           icon: "mdi-help-circle",
@@ -310,9 +310,9 @@ export default {
           text: "สถานะห้องพัก",
           click: () => {
             this.$router.push("/roomstatus");
-          }
-        }
-      ]
+          },
+        },
+      ],
     };
   },
   mounted() {
@@ -333,18 +333,18 @@ export default {
     checkStudentAlreadyBookingRoom() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
-        student_id: user.id
+        student_id: user.id,
       };
       api
         .post("/api/roombooking/student", JSON.stringify(body))
-        .then(res => {
+        .then((res) => {
           if (res.data.length > 0) {
             this.items[1].click = () => {
               alert("นักศึกษาจองห้องไปแล้ว");
             };
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -387,7 +387,7 @@ export default {
     },
     handleIndex() {
       this.$router.push("/");
-    }
-  }
+    },
+  },
 };
 </script>
