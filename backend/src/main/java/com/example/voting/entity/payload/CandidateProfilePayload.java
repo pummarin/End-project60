@@ -14,6 +14,12 @@ public class CandidateProfilePayload {
     private String c_name;
 
     @NotBlank
+    private String birthday;
+
+    @NotBlank
+    private String telephone;
+
+    @NotBlank
     private String student_id;
 
     @NotBlank
@@ -26,11 +32,11 @@ public class CandidateProfilePayload {
     private String archivement;
 
     @NotBlank
-    private String position;
+    private int c_number;
 
     @NotBlank
-    private Long party_id;
-
+    private String purpose;
+    
     @NotBlank
     private Long admins_id;
 
