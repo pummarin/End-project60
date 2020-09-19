@@ -37,6 +37,10 @@ public class CandidateProfile {
     @NotNull
     private  String c_name;
     @NotNull
+    private  String birthday;
+    @NotNull
+    private  String telephone;
+    @NotNull
     private String student_id;
     @NotNull
     private int year;
@@ -45,7 +49,9 @@ public class CandidateProfile {
     @NotNull
     private  String archivement;
     @NotNull
-    private  String position;
+    private  int c_number;
+    @NotNull
+    private  String purpose;
 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Major.class)
     @JoinColumn(name = "MAJOR_ID", insertable = true)
@@ -56,11 +62,6 @@ public class CandidateProfile {
     @JoinColumn(name = "GENDER_ID", insertable = true)
     @JsonManagedReference
     private @NotNull Gender gender; 
- 
-    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Party.class)
-    @JoinColumn(name = "PARTY_ID", insertable = true)
-    @JsonManagedReference
-    private @NotNull Party p_number;
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Admins.class)
     @JoinColumn(name = "ADMIN_ID", insertable = true)
@@ -69,17 +70,19 @@ public class CandidateProfile {
     
     public CandidateProfile(){}
 
-    public CandidateProfile(String title_name, String c_name, String student_id, int year, String grade,
-                            String archivement, String position, Party p_number, Major major, Gender gender, Admins admins) {
+    public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,
+                            String archivement,int c_number, String purpose, Major major, Gender gender, Admins admins) {
         this.title_name = title_name;
         this.c_name = c_name;
+        this.birthday = birthday;
+        this.telephone = telephone;
         this.student_id = student_id;
         this.major = major;
         this.year = year;
         this.grade = grade;
         this.archivement = archivement;
-        this.position = position;
-        this.p_number = p_number;
+        this.c_number = c_number;
+        this.purpose = purpose;
         this.gender = gender;
         this.admins = admins;
 		

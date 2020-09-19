@@ -4,7 +4,6 @@ import com.example.voting.entity.Admins;
 import com.example.voting.entity.Students;
 import com.example.voting.entity.Gender;
 import com.example.voting.entity.Major;
-import com.example.voting.entity.Party;
 import com.example.voting.entity.CandidateProfile;
 
 import com.example.voting.repository.*;
@@ -30,8 +29,8 @@ public class VotingApplication {
 
 	@Bean
 	ApplicationRunner init(AdminsRepository adminsRepository, CandidateProfileRepository candidateProfileRepository,
-						   GenderRepository genderRepository, MajorRepository majorRepository, PartyRepository partyRepository,
-						   StudentsRepository studentsRepository, VoteRepository voteRepository){
+						   GenderRepository genderRepository, MajorRepository majorRepository, StudentsRepository studentsRepository, 
+						   VoteRepository voteRepository){
 		return  args -> {
 
 			//Students
@@ -54,14 +53,6 @@ public class VotingApplication {
 			Stream.of(admin1,admin2).forEach(admins -> {
 				adminsRepository.save(admins);
 			});
-
-			//Party
-			Party p1 = new Party("พรรคแสดทอง", "กิจกรรมดี กิจกรรมเด่น เน้นกิจกรรม", "1", 0, admin2);
-			Party p2 = new Party("พรรคปีบทอง", "ไปด้วยกัน ไปได้ไกล", "2", 0, admin2);
-
-			Stream.of(p1, p2).forEach(p -> {
-				partyRepository.save(p);
-			}); 
 
 
 			//Gender
@@ -94,8 +85,8 @@ public class VotingApplication {
 			Major m19 = new Major("สำนักวิชาเทคโนโลยีการเกษตร สาขาวิชาเทคโนโลยีการผลิตสัตว์");
 			Major m20 = new Major("สำนักวิชาเทคโนโลยีการเกษตร สาขาวิชาเทคโนโลยีชีวภาพ");
 			Major m21 = new Major("สำนักวิชาเทคโนโลยีการเกษตร สาขาวิชาเทคโนโลยีอาหาร");
-			Major m22 = new Major("สำนักวิชาสาธารณสุขศาสสตร์ สาขาวิชาอาชีวอนามัยและความปลอดภัย");
-			Major m23 = new Major("สำนักวิชาสาธารณสุขศาสสตร์ สาขาวิชาอนามัยสิ่งแวดล้อม");
+			Major m22 = new Major("สำนักวิชาสาธารณสุขศาสตร์ สาขาวิชาอาชีวอนามัยและความปลอดภัย");
+			Major m23 = new Major("สำนักวิชาสาธารณสุขศาสตร์ สาขาวิชาอนามัยสิ่งแวดล้อม");
 			Major m24 = new Major("สำนักวิชาแพทยศาสตร์ แพทยศาสตร์");
 			Major m25 = new Major("สำนักวิชาพยาบาลศาสตร์");
 			Major m26 = new Major("สำนักวิชาทันตแพทยศาสตร์");
@@ -123,28 +114,32 @@ public class VotingApplication {
 			//CandidateProfile
 			CandidateProfile cp1 = new CandidateProfile();
 			cp1.setTitle_name("นาย");
-        	cp1.setC_name("จงรัก ภักดี");
+			cp1.setC_name("จงรัก ภักดี");
+			cp1.setBirthday("1 มกราคม 2542");
+			cp1.setTelephone("0960032169");
         	cp1.setStudent_id("B6001234");
         	cp1.setYear(2);
         	cp1.setGrade("3.45");
         	cp1.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
-        	cp1.setPosition("สมาชิกสภานักศึกษา");
+			cp1.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
+			cp1.setC_number(201);
         
-        	cp1.setP_number(p1);
         	cp1.setMajor(m36);
         	cp1.setGender(g1);
         	cp1.setAdmins(admin2);
 
 			CandidateProfile cp2 = new CandidateProfile();
 			cp2.setTitle_name("นางสาว");
-        	cp2.setC_name("ใจดี มีเมตตา");
-        	cp2.setStudent_id("B6004321");
+			cp2.setC_name("ใจดี มีเมตตา");
+			cp2.setBirthday("14 กุมภาพันธ์ 2543");
+			cp2.setTelephone("0981135169");
+        	cp2.setStudent_id("B6104321");
         	cp2.setYear(2);
         	cp2.setGrade("3.65");
         	cp2.setArchivement("บริจาคโลหิต");
-        	cp2.setPosition("สมาชิกสภานักศึกษา");
+			cp2.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
+			cp2.setC_number(202);
         
-        	cp2.setP_number(p2);
         	cp2.setMajor(m17);
         	cp2.setGender(g2);
         	cp2.setAdmins(admin2);
