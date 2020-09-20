@@ -9,11 +9,22 @@
           </v-col>
         </v-row>
         <br />
-        <h1 class="display-2 font-weight-bold mb-3">ข้อมูลผู้สมัคร</h1>
+        <h1 class="display-2 font-weight-bold mb-3">ข้อมูลผู้สมัครสมาชิกสภานักศึกษา</h1>
 
 
           <v-row justify="center">
-        <v-col cols="12" sm="6" md="3">
+        <v-col cols="12" sm="6" md="2">
+          <v-text-field
+            label="หมายเลขผู้สมัคร"
+            placeholder=" "
+            outlined
+            v-model="fillCanNumber"
+          ></v-text-field>
+        </v-col>
+        </v-row>
+
+          <v-row justify="center">
+        <v-col cols="12" sm="6" md="2">
           <v-text-field
             label="คำนำหน้าชื่อ"
             placeholder=" "
@@ -21,15 +32,9 @@
             v-model="fillTitleName"
           ></v-text-field>
         </v-col>
-  
-          <v-col cols="6" sm="3">
-            <v-select class="pa-0 ma-0" label="เพศ" v-model="selectGender"
-              :items="gender" item-text="gender" item-value="id" />
-          </v-col>
-        </v-row>
 
-         <v-row justify="center">
-        <v-col cols="12" sm="6" md="6">
+        
+        <v-col cols="12" sm="6" md="4">
           <v-text-field
             label="ชื่อ-สกุล"
             placeholder=" "
@@ -40,7 +45,32 @@
         </v-row>
 
         <v-row justify="center">
-        <v-col cols="12" sm="6" md="3">
+         <v-col cols="6" sm="2">
+            <v-select class="pa-0 ma-0" label="เพศ" v-model="selectGender"
+              :items="genders" item-text="gender" item-value="gender_id" />
+          </v-col>
+        
+        <v-col cols="12" sm="6" md="2">
+          <v-text-field
+            label="วัน-เดือน-ปีเกิด"
+            placeholder=" "
+            outlined
+            v-model="fillBirthday"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" sm="6" md="2">
+          <v-text-field
+            label="เบอร์โทรศัพท์"
+            placeholder=" "
+            outlined
+            v-model="fillTelephone"
+          ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+        <v-col cols="12" sm="6" md="2">
           <v-text-field
             label="รหัสนักศึกษา"
             placeholder=" "
@@ -49,25 +79,7 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6" md="3">
-          <v-text-field
-            label="ตำแหน่ง"
-            placeholder=" "
-            outlined
-            v-model="fillPosition"
-          ></v-text-field>
-        </v-col>
-        </v-row>
-
-          <v-row justify="center">
-          <v-col cols="6">
-            <v-select class="pa-0 ma-0" label="สำนักวิชา" v-model="selectMajor"
-              :items="Major" item-text="major" item-value="major.major_id" />
-          </v-col>
-          </v-row>
-
-          <v-row justify="center">
-        <v-col cols="12" sm="6" md="3">
+        <v-col cols="12" sm="6" md="2">
           <v-text-field
             label="ชั้นปี"
             placeholder=" "
@@ -76,9 +88,9 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6" md="3">
+            <v-col cols="12" sm="6" md="2">
           <v-text-field
-            label="เกรด"
+            label="คะแนนเฉลี่ยสะสม(GPAX)"
             placeholder=" "
             outlined
             v-model="fillGrade"
@@ -86,10 +98,17 @@
         </v-col>
         </v-row>
 
+          <v-row justify="center">
+          <v-col cols="6">
+            <v-select class="pa-0 ma-0" label="สำนักวิชา-สาขาวิชา" v-model="selectMajor"
+              :items="majors" item-text="major" item-value="major_id" />
+          </v-col>
+          </v-row>
+
         <v-row justify="center">
         <v-col cols="12" sm="6" md="6">
           <v-text-field
-            label="ผลงาน"
+            label="กิจกรรมที่เคยร่วม"
             placeholder=" "
             outlined
             v-model="fillArchivement"
@@ -97,13 +116,37 @@
         </v-col>
         </v-row>
 
-        //upload file
-     
+        <v-row justify="center">
+        <v-col cols="12" sm="6" md="6">
+          <v-text-field
+            label="จุดมุ่งหมายในการสมัครครั้งนี้"
+            placeholder=" "
+            outlined
+            v-model="fillPurpsoe"
+          ></v-text-field>
+        </v-col>
+        </v-row>
+
+        <v-row justify="center">
+        <v-col cols="12" sm="6" md="6">
+        <v-file-input 
+          :rules="rules"
+          accept="image/png, image/jpeg, image/bmp"
+          v-model="files"
+          color="deep-purple accent-4"
+          
+          label="รูปภาพ"
+          placeholder="  "
+          prepend-icon="mdi-camera"
+          outlined :show-size="6"
+        ></v-file-input>
+        </v-col>
+        </v-row>
 
         <v-row justify="center">
           <v-col cols="6" class="pa-2 mx-3">
             <v-btn @click="checksave" class="light-blue accent-4">บันทึก</v-btn>
-    
+            &nbsp;
             <v-btn class="light-red accent-4" router-link to="/">ยกเลิก</v-btn>
          
           </v-col>
@@ -115,39 +158,48 @@
 </template>
 
 <script>
-import api from "../Api";
+import api from "../Api.js";
 export default {
+
+  mounted() {
+    this.getAllAdmins();
+    this.getAllGender();
+    this.getAllMajor();
+   
+  },
   data() {
     return {
     
         fillTitleName: undefined,
         fillName: undefined,
+        fillBirthday: undefined,
+        fillTelephone: undefined,
         fillStudentId: undefined,
-        fillPosition: undefined,
         fillYear: undefined,
         fillGrade: undefined,
         fillArchivement: undefined,
+        fillCanNumber: undefined,
+        fillPurpose: undefined,
 
-        Major: [],
+        majors: [],
         selectMajor: undefined,
 
-        Gender: [],
+        genders: [],
         selectGender: undefined,
         
-        Admins: [],
-      alertFailed: false,
-      alertSuccess: false,
-      alertmsg: undefined
+        admins: [],
+        selectAdmins: undefined,
+
+        files: [],
+
+        alertFailed: false,
+        alertSuccess: false,
+        alertmsg: undefined
     };
   },
-  mounted() {
-    this.getAdmins();
-    this.getGender();
-    this.getMajor();
-    this.getParty();
-  },
+  
   methods: {
-    getAdmins() {
+    getAllAdmins() {
         api
         .get("/api/admins/")
         .then(response => {
@@ -158,34 +210,22 @@ export default {
           console.log(e);
         });
       },
-    getGender() {
+    getAllGender() {
         api
         .get("/api/gender/")
         .then(response => {
-          this.gender = response.data;
+          this.genders = response.data;
           console.log(JSON.parse(JSON.stringify(response.data)));
         })
         .catch(e => {
           console.log(e);
         });
     },
-    getMajor() {
+    getAllMajor() {
         api
         .get("/api/major/")
         .then(response => {
-          this.major = response.data;
-          console.log(JSON.parse(JSON.stringify(response.data)));
-        })
-        .catch(e => {
-          console.log(e);
-        });
-        
-    },
-    getParty() {
-        api
-        .get("/api/party/")
-        .then(response => {
-          this.major = response.data;
+          this.majors = response.data;
           console.log(JSON.parse(JSON.stringify(response.data)));
         })
         .catch(e => {
@@ -196,17 +236,21 @@ export default {
       let data = {
         title_name: this.fillTitleName,
         c_name: this.fillName,
+        birthday: this.fillBirthday,
+        telephone: this.fillTelephone,
         student_id: this.fillStudentId,
-        position: this.fillPosition,
         year: this.fillYear,
         grade: this.fillGrade,
         archivement: this.fillArchivement,
+        c_number: this.fillCanNumber,
+        purpose: this.fillPurpose,
 
-        party: this.p_number,
+       
         major: this.selectMajor,
         gender: this.selectGender,
         admins: this.selectAdmins
       };
+      console.log(data);
       api
         .post("/api/canp", data)
         .then(() => {
@@ -219,11 +263,14 @@ export default {
 
           this.fillTitleName = null;
           this.fillName = null;
+          this.fillBirthday = null;
+          this.fillTelephone = null;
           this.fillStudentId = null;
-          this.fillPosition = null;
           this.fillYear = null;
           this.fillGrade = null;
           this.fillArchivement = null;
+          this.fillCanNumber = null;
+          this.fillPurpose = null;
 
         })
         .catch(e => {
@@ -238,10 +285,13 @@ export default {
         !this.selectGender ||
         !this.fillTitleName ||
         !this.fillName ||
+        !this.fillBirthday ||
+        !this.fillTelephone ||
         !this.fillStudentId ||
-        !this.fillPosition ||
         !this.fillYear ||
         !this.fillGrade ||
+        !this.fillCanNumber ||
+        !this.fillPurpose ||
         !this.fillArchivement
       ) {
         this.clearAlert();

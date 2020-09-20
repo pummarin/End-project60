@@ -2,7 +2,7 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="8" md="6">
       <v-card class="elevation-12">
-        <v-toolbar color="primary" dark flat>
+        <v-toolbar color="#FB8C00" dark flat>
           <v-toolbar-title>เข้าสู่ระบบในฐานะนักศึกษา</v-toolbar-title>
           <v-spacer />
         </v-toolbar>
@@ -27,9 +27,9 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <a @click="handleStaffSignin">เข้าสู่ระบบสำหรับที่ปรึกษาหอพัก?</a>
           <v-spacer />
-          <v-btn color="primary" @click="signin">Login</v-btn>
+          <v-btn color="#FB8C00" dark flat @click="handleStaffSignin">เข้าสู่ระบบในฐานะผู้ดูแล</v-btn>
+          <v-btn color="#FB8C00" dark flat @click="signin">Login</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -38,7 +38,7 @@
 
 <script>
 import api from "../Api.js";
-
+import "firebase/auth";
 export default {
   name: "sigin",
   data() {
