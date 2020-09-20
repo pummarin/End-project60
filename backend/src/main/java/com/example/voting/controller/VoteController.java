@@ -9,7 +9,6 @@ import com.example.voting.entity.Students;
 import com.example.voting.entity.Vote;
 
 import com.example.voting.entity.payload.VotePayload;
-import com.example.voting.repository.PartyRepository;
 import com.example.voting.repository.StudentsRepository;
 import com.example.voting.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class VoteController {
     @Autowired
     StudentsRepository studentsRepository;
 
-    @Autowired
-    PartyRepository partyRepository;
+
 
 
     @GetMapping("/votes")

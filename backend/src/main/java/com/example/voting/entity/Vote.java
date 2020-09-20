@@ -24,10 +24,7 @@ public class Vote {
     @JsonManagedReference
     private @NotNull Students students;
 
-    @OneToOne(fetch = FetchType.EAGER,targetEntity = Party.class)
-    @JoinColumn(name = "PARTY_ID", insertable = true)
-    @JsonManagedReference
-    private @NotNull Party party;
+
 
 
     private @NotNull Date voteTime;
@@ -37,9 +34,8 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote( Students students, Party party) {
+    public Vote( Students students) {
         this.voteTime = new Date();
         this.students = students;
-        this.party = party;
     }
 }
