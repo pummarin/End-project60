@@ -10,7 +10,5 @@ public class VotePayload {
     @NotBlank
     private Long students_id;
 
-    @NotBlank
-    private Long party_id;
 
 }
