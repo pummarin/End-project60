@@ -38,7 +38,7 @@ public class CandidateProfilePayload {
     private String purpose;
     
     @NotBlank
-    private Long admins_id;
+    private Long admin_id;
 
     @NotBlank
     private Long gender_id;

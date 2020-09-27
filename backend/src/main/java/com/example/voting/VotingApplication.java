@@ -1,6 +1,6 @@
 package com.example.voting;
 
-import com.example.voting.entity.Admins;
+import com.example.voting.entity.Admin;
 import com.example.voting.entity.Students;
 import com.example.voting.entity.Gender;
 import com.example.voting.entity.Major;
@@ -28,7 +28,7 @@ public class VotingApplication {
 	}
 
 	@Bean
-	ApplicationRunner init(AdminsRepository adminsRepository, CandidateProfileRepository candidateProfileRepository,
+	ApplicationRunner init(AdminRepository adminRepository, CandidateProfileRepository candidateProfileRepository,
 						   GenderRepository genderRepository, MajorRepository majorRepository, StudentsRepository studentsRepository, 
 						   VoteRepository voteRepository){
 		return  args -> {
@@ -47,11 +47,11 @@ public class VotingApplication {
 			});
 
 			//Admins
-			Admins admin1 = new Admins("leo", "admin1", "1234", "ชาย");
-			Admins admin2 = new Admins("fin", "admin2", "1234", "หญิง");
+			Admin admin1 = new Admin("ภุมรินทร์", "admin1", "1234", "ชาย");
+			Admin admin2 = new Admin("กมลฉัตร", "admin2", "password", "หญิง");
 
-			Stream.of(admin1,admin2).forEach(admins -> {
-				adminsRepository.save(admins);
+			Stream.of(admin1,admin2).forEach(admin -> {
+				adminRepository.save(admin);
 			});
 
 
@@ -126,7 +126,7 @@ public class VotingApplication {
         
         	cp1.setMajor(m36);
         	cp1.setGender(g1);
-        	cp1.setAdmins(admin2);
+        	cp1.setAdmin(admin2);
 
 			CandidateProfile cp2 = new CandidateProfile();
 			cp2.setTitle_name("นางสาว");
@@ -142,7 +142,7 @@ public class VotingApplication {
         
         	cp2.setMajor(m17);
         	cp2.setGender(g2);
-        	cp2.setAdmins(admin2);
+        	cp2.setAdmin(admin2);
 	
 			Stream.of(cp1, cp2).forEach(cp -> {
 			candidateProfileRepository.save(cp);
