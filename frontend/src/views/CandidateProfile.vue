@@ -122,11 +122,12 @@
             label="จุดมุ่งหมายในการสมัครครั้งนี้"
             placeholder=" "
             outlined
-            v-model="fillPurpsoe"
+            v-model="fillPurpose"
           ></v-text-field>
         </v-col>
         </v-row>
 
+        <!-- <div>
         <v-row justify="center">
         <v-col cols="12" sm="6" md="6">
         <v-file-input 
@@ -142,6 +143,22 @@
         ></v-file-input>
         </v-col>
         </v-row>
+        <<div-->
+
+           
+          <v-row justify="center">
+          <v-col cols="6">
+            <v-select
+              class="pa-0 ma-0"
+              label="ผู้กรอกข้อมูล"
+              v-model="selectAdmin"
+              :items="admins"
+              item-text="name"
+              item-value="admin_id"
+            />
+          </v-col>
+        </v-row>
+       
 
         <v-row justify="center">
           <v-col cols="6" class="pa-2 mx-3">
@@ -162,7 +179,7 @@ import api from "../Api.js";
 export default {
 
   mounted() {
-    this.getAllAdmins();
+    this.getAllAdmin();
     this.getAllGender();
     this.getAllMajor();
    
@@ -188,10 +205,11 @@ export default {
         selectGender: undefined,
         
         admins: [],
-        selectAdmins: undefined,
+        selectAdmin: undefined,
 
-        files: [],
-
+      
+        //files: [],
+        
         alertFailed: false,
         alertSuccess: false,
         alertmsg: undefined
@@ -199,17 +217,18 @@ export default {
   },
   
   methods: {
-    getAllAdmins() {
-        api
-        .get("/api/admins/")
+    getAllAdmin() {
+      api
+        .get("/api/admin/")
         .then(response => {
-          this.admins.push(JSON.parse(localStorage.getItem("user")));
+          this.admins = response.data;
           console.log(JSON.parse(JSON.stringify(response.data)));
         })
         .catch(e => {
           console.log(e);
         });
       },
+
     getAllGender() {
         api
         .get("/api/gender/")
@@ -232,7 +251,13 @@ export default {
           console.log(e);
         });
     },
-    save() {
+       clearAlert() {
+        this.alertmsg = false;
+        this.alertFailed = false;
+        this.alertSuccess = false;
+      
+    },
+    checksave() {
       let data = {
         title_name: this.fillTitleName,
         c_name: this.fillName,
@@ -246,9 +271,9 @@ export default {
         purpose: this.fillPurpose,
 
        
-        major: this.selectMajor,
-        gender: this.selectGender,
-        admins: this.selectAdmins
+        major_id: this.selectMajor,
+        gender_id: this.selectGender,
+        admin_id: this.selectAdmin
       };
       console.log(data);
       api
@@ -257,7 +282,7 @@ export default {
           this.clearAlert();
           this.alertSuccess = true;
 
-          this.selectAdmins = null;
+          this.selectAdmin = null;
           this.selectMajor = null;
           this.selectGender = null;
 
@@ -277,10 +302,10 @@ export default {
           console.log(e);
         });
     },
-    checksave() {
+    save() {
       
       if (
-        !this.selectAdmins ||
+        !this.selectAdmin ||
         !this.selectMajor ||
         !this.selectGender ||
         !this.fillTitleName ||
@@ -298,9 +323,10 @@ export default {
         this.alertmsg = "กรุณากรอกข้อมูลให้ครบ";
         this.alertFailed = true;
       } else {
-        this.save();
+        this.checksave();
       }
     }
   }
 };
+
 </script>

@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -34,10 +35,10 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Profile.vue")
   },
   {
-    path: "/staff/signin",
-    name: "staffsignin",
+    path: "/admin/signin",
+    name: "AdminSignin",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/StaffSignin.vue")
+      import(/* webpackChunkName: "about" */ "../views/AdminLogin.vue")
   },
   {
     path: "/vote",
@@ -66,7 +67,7 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/signin", "/", "/register", "/staff/signin", "/vote", "/candidateDetail",
+  const publicPages = ["/signin", "/", "/register", "/admin/signin", "/vote", "/candidateDetail",
     "/candidateprofile"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");

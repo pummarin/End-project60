@@ -1,12 +1,13 @@
 package com.example.voting.repository;
 
-import com.example.voting.entity.Admins;
+import com.example.voting.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Optional;
 
 @RepositoryRestResource
-public interface AdminsRepository extends JpaRepository<Admins, Long> {
-    Optional<Admins> findById(Long id);
+public interface AdminRepository extends JpaRepository<Admin, Long> {
+    Optional<Admin> findById(Long admin_id);
+    Admin findByUsernameAndPassword(String username, String password);
 }

@@ -14,11 +14,11 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "ADMIN")
-public class Admins {
+public class Admin {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ADMIN_ID", insertable = true)
-    private long id;
+    private long admin_id;
 
     private @NotNull String name;
     private @NotNull String username;
@@ -26,10 +26,10 @@ public class Admins {
     private @NotNull String gender;
 
 
-    public Admins() {
+    public Admin() {
     }
 
-    public Admins(String name, String user, String pass, String gender) {
+    public Admin(String name, String user, String pass, String gender) {
         this.name = name;
         this.password = pass;
         this.username = user;

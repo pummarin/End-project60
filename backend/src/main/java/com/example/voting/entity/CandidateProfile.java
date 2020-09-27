@@ -63,15 +63,15 @@ public class CandidateProfile {
     @JsonManagedReference
     private @NotNull Gender gender; 
 
-    @OneToOne(fetch = FetchType.EAGER,targetEntity = Admins.class)
+    @OneToOne(fetch = FetchType.EAGER,targetEntity = Admin.class)
     @JoinColumn(name = "ADMIN_ID", insertable = true)
     @JsonManagedReference
-    private @NotNull Admins admins;
+    private @NotNull Admin admin;
     
     public CandidateProfile(){}
 
     public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,
-                            String archivement,int c_number, String purpose, Major major, Gender gender, Admins admins) {
+                            String archivement,int c_number, String purpose, Major major, Gender gender, Admin admin) {
         this.title_name = title_name;
         this.c_name = c_name;
         this.birthday = birthday;
@@ -84,7 +84,7 @@ public class CandidateProfile {
         this.c_number = c_number;
         this.purpose = purpose;
         this.gender = gender;
-        this.admins = admins;
+        this.admin = admin;
 		
 	}
 }
