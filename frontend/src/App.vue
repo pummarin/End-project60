@@ -1,14 +1,11 @@
 <template>
   <v-app id="inspire">
-   
-
     <v-app-bar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
       :color="appBarColor()"
       :dark="user ? true : false"
     >
-      
       <v-btn icon large>
         <v-avatar size="50px" item>
           <v-img src="Sut_logo_Thai.png" alt="Vuetify" />
@@ -18,20 +15,9 @@
          <font color="#FB8C00"> 
         <h1 class="hidden-sm-and-down" >SUT Student Council Election</h1> </font>
       </v-toolbar-title>
+      
       <v-spacer />
-
-      <!-- <div>
-      <v-text-field
-        
-        solo-inverted
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        label="Search"
-        class="hidden-sm-and-down"
-      />
-      <v-spacer />
-      </div>-->
-     
+      
       <template v-if="isSignin">
         <span>Sign in as</span>
         <template v-if="user.studentId">
@@ -61,13 +47,13 @@
         <v-btn color="#FB8C00" dark text to="/signin">Sign in</v-btn>
       </template>
     </v-app-bar>
-    <v-main>
+    <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <router-view></router-view>
         </v-row>
       </v-container>
-    </v-main>
+    </v-content>
     <v-footer :color="footerColor()" :dark="isDark()" app>
       <div>
         &copy;
@@ -79,8 +65,15 @@
           <v-icon>mdi-github</v-icon>
         </v-btn>
       </div>
-      
-
+      <div>
+        <v-btn
+          href="https://www.facebook.com/Sut-Se62-Team01-118308956295583"
+          icon
+          small
+          target="_blank"
+        >
+        </v-btn>
+      </div>
       <v-spacer></v-spacer>
       <div>
         {{ new Date().getFullYear() }} —
@@ -101,7 +94,7 @@ export default {
           appBar: "blue darken-3",
           fontColor: "light",
         },
-        admins: {
+        staff: {
           appBar: "amber darken-3",
           fontColor: "light",
         },
@@ -115,74 +108,6 @@ export default {
       user: {},
       dialog: false,
       drawer: null,
-      adminsItems: [
-        {
-          icon: "mdi-home",
-          role: "all",
-          text: "หน้าหลัก",
-          click: () => {
-            this.$router.push("/home");
-          },
-        },
-        {
-          icon: "mdi-email",
-          role: "admins",
-          text: "ข้อมูลผู้สมัคร",
-          click: () => {
-            this.$router.push("/admin/CandidateProfile");
-          },
-        },
-        {
-          icon: "mdi-car-info",
-          role: "staff",
-          text: "ค้นหาข้อมูลยานพาหนะ",
-          click: () => {
-            this.$router.push("/staff/searchEnrolledVehicle");
-          },
-        },
-      ],
-      items: [
-        {
-          icon: "mdi-home",
-          role: "all",
-          text: "หน้าหลัก",
-          click: () => {
-            this.$router.push("/home");
-          },
-        },
-        {
-          icon: "mdi-contacts",
-          role: "student",
-          text: "จองห้องพัก",
-          click: () => {
-            this.$router.push("/roombooking");
-          },
-        },
-        {
-          icon: "mdi-bicycle-basket",
-          role: "student",
-          text: "ยืมจักรยาน",
-          click: () => {
-            this.$router.push("/borrowedBike");
-          },
-        },
-        {
-          icon: "mdi-wrench",
-          role: "student",
-          text: "แจ้งซ่อม",
-          click: () => {
-            this.$router.push("/repair");
-          },
-        },
-        {
-          icon: "mdi-help-circle",
-          role: "student",
-          text: "สถานะห้องพัก",
-          click: () => {
-            this.$router.push("/roomstatus");
-          },
-        },
-      ],
     };
   },
   mounted() {
