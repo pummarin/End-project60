@@ -11,4 +11,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface CandidateProfileRepository extends JpaRepository<CandidateProfile, Long>{
     CandidateProfile findById(long can_id);
+    Collection<CandidateProfile> findByYear(int year);
 }
