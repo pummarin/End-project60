@@ -35,7 +35,7 @@ public class VotingApplication {
 
 			//Students
 			Students student1 = new Students("นายภุมรินทร์", "b6003296", "ชาย",
-					"0621983565","1480000330642","4","hantermaster0@gmail.com", "ComputerEngineer");
+					"0621983565","1480000330642","2","hantermaster0@gmail.com", "ComputerEngineer");
 			Students student2 = new Students("นายพรเทพ", "b6003235", "ชาย",
 					"0625687511","1489750329658","4","Pontep@gmail.com", "ComputerEngineer");
 			Students student3 = new Students("นางสาวกมลฉัตร", "b6000358", "หญิง",
