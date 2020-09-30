@@ -21,12 +21,12 @@ public class AdminController {
     AdminRepository adminRepository;
 
 
-    @GetMapping("/admin")
+    @GetMapping("/admins")
     public Collection<Admin> getAllAdmin(){
         return adminRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    
+    /*
     @GetMapping("/admin/{username}/{password}")
     public Admin adminLogin(String username, String password){
         return adminRepository.findByUsernameAndPassword(username, password);
@@ -36,5 +36,6 @@ public class AdminController {
     public Optional<Admin> adminId(long id){
         return adminRepository.findById(id);
     }
+    */
     
 }
