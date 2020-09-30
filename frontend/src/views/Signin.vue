@@ -54,8 +54,8 @@ export default {
     },
     signin() {
       let user = {
-        username: this.username,
-        password: this.password
+        studentId: this.username,
+        identifyNumber: this.password
       };
       api
         .post("/auth/login", JSON.stringify(user))

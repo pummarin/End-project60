@@ -118,7 +118,7 @@ export default {
         this.userRole = "student";
         this.checkStudentAlreadyBookingRoom();
       } else {
-        this.userRole = "admin";
+        this.userRole = "staff";
       }
     } else {
       this.isSignin = false;
@@ -155,7 +155,7 @@ export default {
       else return false;
     },
     appBarColor() {
-      if (this.userRole == "admin") {
+      if (this.userRole == "staff") {
         return "amber darken-3";
       } else if (this.userRole == "student") {
         return "blue darken-3";
@@ -164,7 +164,7 @@ export default {
       }
     },
     footerColor() {
-      if (this.userRole == "admin") {
+      if (this.userRole == "staff") {
         return "amber darken-4";
       } else if (this.userRole == "student") {
         return "primary";
