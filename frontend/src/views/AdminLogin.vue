@@ -2,29 +2,33 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="8" md="6">
       <v-card class="elevation-12">
-        <v-toolbar color="#FB8C00" dark>
+        <v-toolbar color="#F16529" dark>
           <v-toolbar-title>เข้าสู่ระบบในฐานะผู้ดูแล</v-toolbar-title>
           <v-spacer />
         </v-toolbar>
         <v-card-text>
           <v-form>
+                  <v-row justify="center">
+              <v-col cols="12" sm="6" md="10">
             <v-text-field
-              label="Username"
-              name="login"
-              prepend-icon="mdi-account"
+              label="USERNAME"
+              placeholder=" "
+              outlined
               type="text"
               v-model="username"
             />
 
             <v-text-field
-              id="password"
-              label="Password"
-              name="password"
-              prepend-icon="mdi-lock"
+              label="PASSWORD"
+              placeholder=" "
+              outlined
               type="password"
               v-model="password"
               @keyup.enter="signin"
-            />
+            /> 
+            
+            </v-col>
+             </v-row>
           </v-form>
         </v-card-text>
         <v-card-actions>

@@ -2,7 +2,9 @@ package com.example.voting.controller;
 
 
 import com.example.voting.entity.Students;
+import com.example.voting.entity.Admin;
 import com.example.voting.entity.payload.LoginRequest;
+import com.example.voting.entity.payload.AdminLoginRequest;
 import com.example.voting.repository.AdminRepository;
 import com.example.voting.repository.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,16 @@ public class AuthController {
             return ResponseEntity.ok().body(students.get());
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("UserOrPassword is incorect");
+        }
+    }
+
+    @PostMapping("/admin/signin")
+    public ResponseEntity<?> login(@RequestBody AdminLoginRequest adminloginRequest){
+        Optional<Admin> admins = adminRepository.findByUsernameAndPassword(adminloginRequest.getUsername(), adminloginRequest.getPassword());
+        if (admins.isPresent()){
+            return ResponseEntity.ok().body(admins.get());
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username Or Password is incorect");
         }
     }
 }
