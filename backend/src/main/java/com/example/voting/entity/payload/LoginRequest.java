@@ -5,13 +5,10 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class VotePayload {
+public class LoginRequest {
+    @NotBlank
+    private String studentId;
 
     @NotBlank
-    private Long students_id;
-
-    @NotBlank
-    private Long can_id;
-
-
+    private String identifyNumber;
 }

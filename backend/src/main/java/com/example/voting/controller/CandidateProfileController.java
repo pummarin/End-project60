@@ -51,6 +51,11 @@ public class CandidateProfileController {
         return candidateProfileRepository.findAll().stream().collect(Collectors.toList());
     }
 
+    @GetMapping("/canprofile2")
+    public Collection<CandidateProfile> getAllCandidateProfileByYear(@RequestParam int year) {
+        return candidateProfileRepository.findByYear(year);
+    }
+
     @PostMapping("/canp")
     public CandidateProfile newCandidateProfile(@RequestBody CandidateProfilePayload canp){
 
