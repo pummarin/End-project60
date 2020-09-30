@@ -83,7 +83,7 @@
   </v-app>
 </template>
 <script>
-import api from "../src/Api";
+// import api from "../src/Api";
 export default {
   name: "App",
   components: {},
@@ -111,38 +111,38 @@ export default {
     };
   },
   mounted() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    if (this.user) {
-      this.isSignin = true;
-      if (this.user.studentId) {
-        this.userRole = "student";
-        this.checkStudentAlreadyBookingRoom();
-      } else {
-        this.userRole = "staff";
-      }
-    } else {
-      this.isSignin = false;
-    }
+    // this.user = JSON.parse(localStorage.getItem("user"));
+    // if (this.user) {
+    //   this.isSignin = true;
+    //   if (this.user.studentId) {
+    //     this.userRole = "student";
+    //     this.checkStudentAlreadyBookingRoom();
+    //   } else {
+    //     this.userRole = "staff";
+    //   }
+    // } else {
+    //   this.isSignin = false;
+    // }
   },
   methods: {
-    checkStudentAlreadyBookingRoom() {
-      let user = JSON.parse(localStorage.getItem("user"));
-      let body = {
-        student_id: user.id,
-      };
-      api
-        .post("/api/roombooking/student", JSON.stringify(body))
-        .then((res) => {
-          if (res.data.length > 0) {
-            this.items[1].click = () => {
-              alert("นักศึกษาจองห้องไปแล้ว");
-            };
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
+    // checkStudentAlreadyBookingRoom() {
+    //   let user = JSON.parse(localStorage.getItem("user"));
+    //   let body = {
+    //     student_id: user.id,
+    //   };
+    //   api
+    //     .post("/api/roombooking/student", JSON.stringify(body))
+    //     .then((res) => {
+    //       if (res.data.length > 0) {
+    //         this.items[1].click = () => {
+    //           alert("นักศึกษาจองห้องไปแล้ว");
+    //         };
+    //       }
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // },
     whichColor() {
       if (!this.userRole) {
         return "white";

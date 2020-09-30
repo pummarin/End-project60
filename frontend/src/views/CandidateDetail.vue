@@ -1,122 +1,170 @@
+
 <template>
-  <v-container>
-    <v-layout text-center wrap>
-      <v-flex mb-4>
-        <br />
-        <v-alert type="success" dismissible v-model="alertSuccess">พบข้อมูล</v-alert>
-        <v-alert type="error" dismissible v-model="alertFailed">ไม่พบข้อมูล!</v-alert>
-        <h1 class="display-2 font-weight-bold mb-3">ข้อมูลผู้ลงสมัคร</h1>
+  <v-col cols="10" md="6" sm="6">
+    <div>
+      <div>
+        <v-container grid-list-md>
+          <v-col v-for="i in candidate" v-bind:key="i.can_id">
+            <v-card width="650" height="auto">
+              <v-card-title primary-title>
+                <font size="auto">Number: {{ i.c_number }}</font>
+              </v-card-title>
 
-        <!-- <v-row justify="center" class="pb-0 mb-0">
-          <v-col cols="3">
-            <v-text-field
-              solo
-              label="หมายเลขพรรค"
-              v-model="partyNum"
-              @keyup.enter="SearchPartyNum"
-            />
+              <v-card-text class="text-center">
+                <v-img v-if="photos[29]" :src="photos[29].download_url"></v-img>
+                <v-progress-circular
+                  v-if="!photos[29]"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
+              </v-card-text>
+
+              <v-card-text>
+                <font color="black">
+                  <pre>Name: {{ i.c_name }}</pre>
+                  <pre>Gpax: {{ i.grade }}</pre>
+                </font>
+              </v-card-text>
+
+              <v-card-actions>
+                <div>
+                  <!-- <v-btn
+                    class="ma-2"
+                    outlined
+                    color="indigo"
+                    dark
+                    @click="save2()"
+                    >ข้อมูลผู้สมัคร</v-btn
+                  > -->
+                  <v-row>
+                    <v-dialog
+                      v-model="dialog"
+                      fullscreen
+                      hide-overlay
+                      transition="dialog-bottom-transition"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          class="ma-2"
+                          outlined
+                          color="indigo"
+                          dark
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          ข้อมูลผู้สมัคร
+                        </v-btn>
+                        <v-btn
+                          class="ma-2"
+                          outlined
+                          color="primary"
+                          dark
+                          to="/vote"
+                          >Go ot vote page</v-btn
+                        >
+                      </template>
+
+                      <v-card>
+                        <v-toolbar dark color="primary">
+                          <v-btn icon dark @click="dialog = false">
+                            <v-icon>mdi-close</v-icon>
+                          </v-btn>
+                          <v-toolbar-title>รายละเอียด</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-toolbar-items>
+                            <v-btn dark text @click="dialog = false">
+                              Close
+                            </v-btn>
+                          </v-toolbar-items>
+                        </v-toolbar>
+                        <v-list three-line subheader>
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title
+                                >ข้อมูลส่วนตัว</v-list-item-title
+                              >
+                              <v-card-text>
+                                <pre>ชื่อ-นามสกุล: {{ i.c_name }}</pre>
+                              </v-card-text>
+                              
+                            </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>Password</v-list-item-title>
+                              <v-list-item-subtitle
+                                >Require password for purchase or use password
+                                to restrict purchase</v-list-item-subtitle
+                              >
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-list>
+                        <v-divider></v-divider>
+                      </v-card>
+                    </v-dialog>
+                  </v-row>
+                </div>
+              </v-card-actions>
+            </v-card>
           </v-col>
-          <v-col cols="1">
-            <v-btn @click="SearchPartyNum" large class="light-blue darken-1">Search</v-btn>
-          </v-col>
-        </v-row> -->
-
-        <v-card>
-          <v-data-table
-            :headers="headers"
-            :items="candidateProfile"
-            :items-per-page="5"
-            class="elevation-3"
-          ></v-data-table>
-        </v-card>
-
-        <!-- <v-card v-if="Statussearch">
-          <v-data-table
-            :headers="headers"
-            :items="SearchPartyNumber"
-            :items-per-page="5"
-            class="elevation-3"
-          ></v-data-table>
-        </v-card> -->
-
-      </v-flex>
-    </v-layout>
-  </v-container>
+        </v-container>
+      </div>
+    </div>
+  </v-col>
 </template>
 
 <script>
-import api from "../Api.js";
+import Axios from "axios";
+import Api from "../Api";
+
 export default {
-  mounted() {
-    this.getAllCandidateProfile();
-  },
+  name: "Vote",
   data() {
     return {
-      headers: [
-        { text: "รหัสนักศึกษา", value: "student_id" },
-        { text: "ชื่อนักศึกษา", value: "c_name" },
-        { text: "สาขาวิชา", value: "major.major" },
-        { text: "ชั้นปี", value: "year" },
-        { text: "Gpax", value: "grade" },
-        { text: "ตำแหน่ง", value: "position" },
-        { text: "ผลงาน", value: "archivement" }
-      ],
-      candidateProfile: [],
-      // SearchPartyNumber: [],
-      // partyNum: undefined,
-      // Statussearch: false,
-      alertFailed: false,
+      photos: [],
+      candidate: [],
       alertSuccess: false,
+      dialog: false,
     };
   },
-
   methods: {
-    getAllCandidateProfile() {
-      api
-        .get("/api/canprofile")
-        .then((res) => {
-          this.candidateProfile = res.data;
-          console.log("loading candidateprofiles");
-          console.log(JSON.parse(JSON.stringify(res.data)));
-          // this.clearAlert();
+    async getPhotos() {
+      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
+        (Response) => {
+          // console.log(Response.data);
+          // this.photos = Response.data;
+          return Response.data;
+        }
+      );
+    },
+
+    clearAlert() {
+      this.alertSuccess = false;
+    },
+    async getAllCandidate() {
+      const student = await JSON.parse(localStorage.getItem("user"));
+      // console.log(student.s_year);
+      await Api.get(`/api/canprofile2?year=${student.s_year}`)
+        .then((response) => {
+          this.candidate = response.data;
+          console.log(JSON.parse(JSON.stringify(response.data)));
+          // for(let i in this.candidate){
+          //   console.log(i);
+          // }
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    // FindCandidateProofileByPartyNumber(){
-    //   api
-    //     .post("/api/partys"+this.partyNum)
-
-    // },
-    // SearchPartyNumber() {
-    //   api
-    //     .get("/api/canprofile"+this.partyNum)
-    //     .then(res => {
-    //       this.SearchPartyNumber = res.data;
-    //       console.log("loading roombooking");
-    //       console.log(JSON.parse(JSON.stringify(res.data)));
-    //       this.clearAlert();
-    //       if (this.SearchPartyNumber.length == 0) {
-    //         this.alertFailed = true;
-    //          this.Status = false;
-    //          this.Statussearch = true;
-    //       } else {
-    //         this.alertSuccess = true;
-    //         this.Status = false;
-    //         this.Statussearch = true;
-    //       }
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
-    clearAlert() {
-      this.alertSuccess = false;
-      this.alertFailed = false;
-      // this.Status = true;
-      // this.Statussearch = false;
-    },
+    async save2() {},
+  },
+  mounted() {
+    this.getPhotos();
+    this.clearAlert();
+    this.getAllCandidate();
   },
 };
 </script>
+
+<style>
+</style>

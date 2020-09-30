@@ -1,6 +1,6 @@
 
 <template>
-  <v-col cols="10" md="5" sm="6">
+  <v-col cols="12" md="5" sm="6">
     <v-alert prominent type="success" dismissible v-model="alertSuccess"
       ><v-row align-center>
         <v-col class="grow"> ลงคะแนนสำเร็จ... </v-col>
