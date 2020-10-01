@@ -9,11 +9,13 @@ import com.example.voting.entity.CandidateProfile;
 import com.example.voting.entity.Students;
 import com.example.voting.entity.Vote;
 
+import com.example.voting.entity.payload.FindStudent;
 import com.example.voting.entity.payload.VotePayload;
 import com.example.voting.repository.CandidateProfileRepository;
 import com.example.voting.repository.StudentsRepository;
 import com.example.voting.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -51,4 +53,20 @@ public class VoteController {
 
         return voteRepository.save(newVote);
     }
+
+
+    @PostMapping("/vote/student")
+    public ResponseEntity<?> findVoteWhereStudent(@RequestBody FindStudent payload){
+        Optional<Students> student = studentsRepository.findById(payload.getStudent_id());
+        if(student.isPresent()){
+            Optional<Vote> vote = voteRepository.findByStudents(student.get());
+            if(vote.isPresent()) {
+                return ResponseEntity.ok().body(true);
+            }else {
+                return ResponseEntity.ok().body(false);
+            }
+        }
+        return ResponseEntity.badRequest().body("Error: Incorrect Student_Id!");
+    }
+
 }

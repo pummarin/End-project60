@@ -6,8 +6,10 @@ import com.example.voting.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.Optional;
+
 @RepositoryRestResource
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 	Vote findById(long id);
-	Vote findByStudents(Students students);
+	Optional<Vote> findByStudents(Students students);
 }
