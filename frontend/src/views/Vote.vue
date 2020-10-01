@@ -112,7 +112,7 @@ export default {
           .then(() => {
             this.alertSuccess = true;
             setTimeout(() => {
-              this.$router.push("/home");
+              this.$router.push("/candidateDetail");
               this.$router.go();
             }, 2000);
           })
