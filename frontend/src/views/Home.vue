@@ -16,7 +16,7 @@
                 ></v-progress-circular>
               </v-row>
             </template>
-            <v-card-title>SUT Dormitory Home</v-card-title>
+            <v-card-title>SUT Student Council Election</v-card-title>
           </v-img>
 
           <v-card-subtitle class="pb-0">Detials</v-card-subtitle>

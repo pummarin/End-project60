@@ -59,7 +59,7 @@
                           outlined
                           color="primary"
                           dark
-                          to="/vote"
+                          @click="checkStudentAlreadyVote"
                           >Go ot vote page</v-btn
                         >
                       </template>
@@ -85,8 +85,9 @@
                               >
                               <v-card-text>
                                 <pre>ชื่อ-นามสกุล: {{ i.c_name }}</pre>
+                                <pre>วัน/เดือน/ปี: {{ i.birthday }}</pre>
+                                <pre>เพศ: {{ i.gender.gerder }}</pre>
                               </v-card-text>
-                              
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
@@ -156,7 +157,29 @@ export default {
           console.log(e);
         });
     },
-    async save2() {},
+    checkStudentAlreadyVote() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let body = {
+        student_id: user.id,
+      };
+      // console.log(user.id);
+      Api.post("/api/vote/student", JSON.stringify(body))
+        .then((res) => {
+          // console.log(res.data)
+          if (res.data === true) {
+            alert("นักศึกษาลงคะแนนไปแล้ว");
+            
+            // this.$router.push("/candidateDetail");
+            // this.$router.go();
+          }else{
+            this.$router.push("/vote")
+          } 
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    // async save2() {},
   },
   mounted() {
     this.getPhotos();

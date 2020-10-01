@@ -111,31 +111,31 @@ export default {
     };
   },
   mounted() {
-    // this.user = JSON.parse(localStorage.getItem("user"));
-    // if (this.user) {
-    //   this.isSignin = true;
-    //   if (this.user.studentId) {
-    //     this.userRole = "student";
-    //     this.checkStudentAlreadyBookingRoom();
-    //   } else {
-    //     this.userRole = "staff";
-    //   }
-    // } else {
-    //   this.isSignin = false;
-    // }
+    this.user = JSON.parse(localStorage.getItem("user"));
+    if (this.user) {
+      this.isSignin = true;
+      if (this.user.studentId) {
+        this.userRole = "student";
+        // this.checkStudentAlreadyVote();
+      } else {
+        this.userRole = "staff";
+      }
+    } else {
+      this.isSignin = false;
+    }
   },
   methods: {
-    // checkStudentAlreadyBookingRoom() {
+    // checkStudentAlreadyVote() {
     //   let user = JSON.parse(localStorage.getItem("user"));
     //   let body = {
     //     student_id: user.id,
     //   };
     //   api
-    //     .post("/api/roombooking/student", JSON.stringify(body))
+    //     .post("/api/vote/student", JSON.stringify(body))
     //     .then((res) => {
     //       if (res.data.length > 0) {
     //         this.items[1].click = () => {
-    //           alert("นักศึกษาจองห้องไปแล้ว");
+    //           alert("นักศึกษาลงคะแนนไปแล้ว");
     //         };
     //       }
     //     })
@@ -178,7 +178,7 @@ export default {
     handleSignout() {
       this.isSignin = false;
       localStorage.removeItem("user");
-      this.$router.go("/");
+      this.$router.push("/");
     },
     handleIndex() {
       this.$router.push("/");
