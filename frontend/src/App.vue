@@ -83,7 +83,7 @@
   </v-app>
 </template>
 <script>
-import api from "../src/Api";
+// import api from "../src/Api";
 export default {
   name: "App",
   components: {},
@@ -116,7 +116,7 @@ export default {
       this.isSignin = true;
       if (this.user.studentId) {
         this.userRole = "student";
-        this.checkStudentAlreadyBookingRoom();
+        // this.checkStudentAlreadyVote();
       } else {
         this.userRole = "staff";
       }
@@ -125,24 +125,24 @@ export default {
     }
   },
   methods: {
-    checkStudentAlreadyBookingRoom() {
-      let user = JSON.parse(localStorage.getItem("user"));
-      let body = {
-        student_id: user.id,
-      };
-      api
-        .post("/api/roombooking/student", JSON.stringify(body))
-        .then((res) => {
-          if (res.data.length > 0) {
-            this.items[1].click = () => {
-              alert("นักศึกษาจองห้องไปแล้ว");
-            };
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
+    // checkStudentAlreadyVote() {
+    //   let user = JSON.parse(localStorage.getItem("user"));
+    //   let body = {
+    //     student_id: user.id,
+    //   };
+    //   api
+    //     .post("/api/vote/student", JSON.stringify(body))
+    //     .then((res) => {
+    //       if (res.data.length > 0) {
+    //         this.items[1].click = () => {
+    //           alert("นักศึกษาลงคะแนนไปแล้ว");
+    //         };
+    //       }
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // },
     whichColor() {
       if (!this.userRole) {
         return "white";
@@ -178,7 +178,7 @@ export default {
     handleSignout() {
       this.isSignin = false;
       localStorage.removeItem("user");
-      this.$router.go("/");
+      this.$router.push("/");
     },
     handleIndex() {
       this.$router.push("/");

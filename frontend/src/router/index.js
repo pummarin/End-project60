@@ -68,9 +68,9 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
   const publicPages = ["/signin", "/home", "/register", "/admin/signin",
-    "/candidateprofile"];
+    ];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("student");
+  const loggedIn = localStorage.getItem("user");
 
   // try to access a restricted page + not logged in
   if (authRequired && !loggedIn) {

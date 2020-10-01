@@ -1,17 +1,17 @@
 
 <template>
-  <v-col cols="10" md="5" sm="6">
+  <v-col cols="12" md="5" sm="6">
     <v-alert prominent type="success" dismissible v-model="alertSuccess"
       ><v-row align-center>
         <v-col class="grow"> ลงคะแนนสำเร็จ... </v-col>
         <v-col class="shrink">
-          <v-btn text to="/candidateDetail">Go ot home page</v-btn>
+          <v-btn text>Go ot home page</v-btn>
         </v-col>
       </v-row></v-alert
     >
     <div>
       <div>
-        <v-container grid-list-md>
+        <v-container fluid grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto">
               <v-card-title primary-title>
@@ -20,7 +20,11 @@
 
               <v-card-text class="text-center">
                 <v-img v-if="photos[29]" :src="photos[29].download_url"></v-img>
-                <v-progress-circular v-if="!photos[29]" indeterminate color="primary"></v-progress-circular>
+                <v-progress-circular
+                  v-if="!photos[29]"
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
               </v-card-text>
 
               <v-card-text>
@@ -44,6 +48,9 @@
               </v-card-actions>
             </v-card>
           </v-col>
+          <!-- <v-btn x-large class="ma-2" outlined color="error" dark
+                >ไม่ประสงค์ลงคะแนน</v-btn
+              > -->
         </v-container>
       </div>
     </div>
@@ -65,19 +72,21 @@ export default {
   },
   methods: {
     async getPhotos() {
-      this.photos = await Axios.get("https://picsum.photos/v2/list").then((Response) => {
-        // console.log(Response.data);
-        // this.photos = Response.data;
-        return Response.data;
-      });
+      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
+        (Response) => {
+          // console.log(Response.data);
+          // this.photos = Response.data;
+          return Response.data;
+        }
+      );
     },
-    
+
     clearAlert() {
       this.alertSuccess = false;
     },
     async getAllCandidate() {
-      const student = await JSON.parse(localStorage.getItem('user'))
-      console.log(student.s_year)
+      const student = await JSON.parse(localStorage.getItem("user"));
+      // console.log(student.s_year)
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
@@ -92,7 +101,7 @@ export default {
     },
     async save2(c) {
       if (confirm("Are you sure ?")) {
-        const student = await JSON.parse(localStorage.getItem('user'))
+        const student = await JSON.parse(localStorage.getItem("user"));
         // console.log(student);
         let data = {
           can_id: c.can_id,
@@ -105,12 +114,11 @@ export default {
             setTimeout(() => {
               this.$router.push("/home");
               this.$router.go();
-            },2000)
+            }, 2000);
           })
           .catch((e) => {
             console.log(e);
           });
-          
       }
       console.log(c);
     },
@@ -119,6 +127,23 @@ export default {
     this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
+    let user = JSON.parse(localStorage.getItem("user"));
+    let body = {
+      student_id: user.id,
+    };
+    // console.log(user.id);
+    Api.post("/api/vote/student", JSON.stringify(body))
+      .then((res) => {
+        // console.log(res.data)
+        if (res.data === true) {
+          alert("นักศึกษาลงคะแนนไปแล้ว");
+
+          this.$router.push("/candidateDetail");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 };
 </script>
