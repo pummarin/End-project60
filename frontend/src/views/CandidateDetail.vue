@@ -84,19 +84,30 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>ชื่อ-นามสกุล: {{ i.c_name }}</pre>
+                                <pre>ชื่อ-นามสกุล: {{i.title_name}}{{ i.c_name }}</pre>
                                 <pre>วัน/เดือน/ปี: {{ i.birthday }}</pre>
-                                <pre>เพศ: {{ i.gender.gerder }}</pre>
+                                <pre>เพศ: {{ i.gender.gender }}</pre>
+                                <pre>สำนักวิชา: {{i.major.major}}</pre>
+                                <pre>รหัสนักศึกษา: {{i.student_id}}</pre>
+                                <pre>ชั้นปี: {{i.year}}</pre>
+                                <pre>Gpax: {{i.grade}}</pre>
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>Password</v-list-item-title>
-                              <v-list-item-subtitle
-                                >Require password for purchase or use password
-                                to restrict purchase</v-list-item-subtitle
-                              >
+                              <v-list-item-title>จุดประสงค์ในการลงสมัคร</v-list-item-title>
+                              <v-card-text>
+                                {{i.purpose}}
+                              </v-card-text>
+                            </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-list-item-content>
+                              <v-list-item-title>กิจกรรมที่เคยเข้าร่วม</v-list-item-title>
+                              <v-card-text>
+                                {{i.archivement}}
+                              </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                         </v-list>
