@@ -159,7 +159,7 @@ export default {
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
-          console.log(JSON.parse(JSON.stringify(response.data)));
+          // console.log(JSON.parse(JSON.stringify(response.data)));
           // for(let i in this.candidate){
           //   console.log(i);
           // }

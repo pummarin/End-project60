@@ -114,7 +114,7 @@ export default {
             setTimeout(() => {
               this.$router.push("/candidateDetail");
               this.$router.go();
-            }, 2000);
+            }, 1000);
           })
           .catch((e) => {
             console.log(e);
