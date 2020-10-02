@@ -219,7 +219,7 @@ export default {
   methods: {
     getAllAdmin() {
       api
-        .get("/api/admin/")
+        .get("/api/admins/")
         .then(response => {
           this.admins = response.data;
           console.log(JSON.parse(JSON.stringify(response.data)));
@@ -231,7 +231,7 @@ export default {
 
     getAllGender() {
         api
-        .get("/api/gender/")
+        .get("/gender/")
         .then(response => {
           this.genders = response.data;
           console.log(JSON.parse(JSON.stringify(response.data)));
@@ -242,7 +242,7 @@ export default {
     },
     getAllMajor() {
         api
-        .get("/api/major/")
+        .get("/major/")
         .then(response => {
           this.majors = response.data;
           console.log(JSON.parse(JSON.stringify(response.data)));
