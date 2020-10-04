@@ -13,7 +13,7 @@
       <div>
         <v-container fluid grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
-            <v-card width="650" height="auto">
+            <v-card width="650" height="auto" v-if="loaded">
               <v-card-title primary-title>
                 <font size="auto">Number: {{ i.c_number }}</font>
               </v-card-title>
@@ -65,6 +65,7 @@ export default {
   name: "Vote",
   data() {
     return {
+      loaded: false,
       photos: [],
       candidate: [],
       alertSuccess: false,
@@ -131,6 +132,8 @@ export default {
           if(res.data === true){
             alert("นักศึกษาเป็นผู้ลงสมัคร");
             this.$router.push("/candidateDetail");
+          }else{
+            this.loaded = true;
           }
         })
         .catch((e) => {
@@ -153,7 +156,7 @@ export default {
           if (res.data === true) {
             alert("นักศึกษาลงคะแนนไปแล้ว");
             
-            // this.$router.push("/candidateDetail");
+            this.$router.push("/candidateDetail");
             // this.$router.go();
           }else{
             this.checkStudentAlreadyCandidate();            
