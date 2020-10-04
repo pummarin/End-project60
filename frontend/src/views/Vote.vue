@@ -113,7 +113,6 @@ export default {
             this.alertSuccess = true;
             setTimeout(() => {
               this.$router.push("/candidateDetail");
-              this.$router.go();
             }, 1000);
           })
           .catch((e) => {
@@ -122,28 +121,48 @@ export default {
       }
       console.log(c);
     },
+    checkStudentAlreadyCandidate(){
+      let user = JSON.parse(localStorage.getItem("user"));
+      let body = {
+        studentId: user.studentId
+      }
+      Api.post("/api/canp/student",JSON.stringify(body))
+        .then((res) => {
+          if(res.data === true){
+            alert("นักศึกษาเป็นผู้ลงสมัคร");
+            this.$router.push("/candidateDetail");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    },
   },
   mounted() {
     this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
     let user = JSON.parse(localStorage.getItem("user"));
-    let body = {
-      student_id: user.id,
-    };
-    // console.log(user.id);
-    Api.post("/api/vote/student", JSON.stringify(body))
-      .then((res) => {
-        // console.log(res.data)
-        if (res.data === true) {
-          alert("นักศึกษาลงคะแนนไปแล้ว");
+      let body = {
+        student_id: user.id,
+      };
+      // console.log(user.id);
+      Api.post("/api/vote/student", JSON.stringify(body))
+        .then((res) => {
+          // console.log(res.data)
+          if (res.data === true) {
+            alert("นักศึกษาลงคะแนนไปแล้ว");
+            
+            // this.$router.push("/candidateDetail");
+            // this.$router.go();
+          }else{
+            this.checkStudentAlreadyCandidate();            
+          } 
+        })
+        .catch((e) => {
+          console.log(e);
+        });
 
-          this.$router.push("/candidateDetail");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   },
 };
 </script>

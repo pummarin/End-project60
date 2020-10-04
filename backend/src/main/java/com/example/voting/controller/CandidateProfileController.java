@@ -1,18 +1,14 @@
 package com.example.voting.controller;
 
 
-import com.example.voting.entity.Gender;
-import com.example.voting.entity.Major;
-import com.example.voting.entity.Admin;
-import com.example.voting.entity.CandidateProfile;
+import com.example.voting.entity.*;
 import com.example.voting.entity.payload.CandidateProfilePayload;
-import com.example.voting.repository.GenderRepository;
-import com.example.voting.repository.MajorRepository;
-import com.example.voting.repository.AdminRepository;
-import com.example.voting.repository.CandidateProfileRepository;
+import com.example.voting.entity.payload.FindCandidate;
+import com.example.voting.repository.*;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 //import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,11 +16,8 @@ import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
-
 
 import java.util.Optional;
-import java.util.List;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -41,6 +34,8 @@ public class CandidateProfileController {
     private MajorRepository majorRepository;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    private StudentsRepository studentsRepository;
 
     public CandidateProfileController(CandidateProfileRepository candidateProfileRepository) {
         this.candidateProfileRepository = candidateProfileRepository;
@@ -56,34 +51,45 @@ public class CandidateProfileController {
         return candidateProfileRepository.findByYear(year);
     }
 
+    @PostMapping("/canp/student")
+    public ResponseEntity<?> findCanwherestudent(@RequestBody FindCandidate payload) {
+        Optional<CandidateProfile> candidateProfile = candidateProfileRepository.findByStudentId(payload.getStudentId());
+        if (candidateProfile.isPresent()) {
+            return ResponseEntity.ok().body(true);
+        } else {
+            return ResponseEntity.ok().body(false);
+        }
+//        return ResponseEntity.badRequest().body("Error: Incorrect Student_Id!");
+    }
+
     @PostMapping("/canp")
-    public CandidateProfile newCandidateProfile(@RequestBody CandidateProfilePayload canp){
+    public CandidateProfile newCandidateProfile(@RequestBody CandidateProfilePayload canp) {
 
         CandidateProfile cp = new CandidateProfile();
 
-        
+
         Optional<Major> major = majorRepository.findById(canp.getMajor_id());
         Optional<Gender> gender = genderRepository.findById(canp.getGender_id());
         Optional<Admin> admin = adminRepository.findById(canp.getAdmin_id());
         System.out.println(canp.getC_name());
-        
+
         cp.setTitle_name(canp.getTitle_name());
         cp.setC_name(canp.getC_name());
         cp.setBirthday(canp.getBirthday());
         cp.setTelephone(canp.getTelephone());
-        cp.setStudent_id(canp.getStudent_id());
+        cp.setStudentId(canp.getStudent_id());
         cp.setYear(canp.getYear());
         cp.setGrade(canp.getGrade());
         cp.setArchivement(canp.getArchivement());
         cp.setC_number(canp.getC_number());
         cp.setPurpose(canp.getPurpose());
-        
+
         cp.setMajor(major.get());
         cp.setGender(gender.get());
         cp.setAdmin(admin.get());
         return candidateProfileRepository.save(cp);
-        
-        
+
+
     }
 
 }
