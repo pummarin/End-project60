@@ -41,7 +41,7 @@ public class CandidateProfile {
     @NotNull
     private  String telephone;
     @NotNull
-    private String student_id;
+    private String studentId;
     @NotNull
     private int year;
     @NotNull
@@ -78,7 +78,7 @@ public class CandidateProfile {
         this.c_name = c_name;
         this.birthday = birthday;
         this.telephone = telephone;
-        this.student_id = student_id;
+        this.studentId = student_id;
         this.major = major;
         this.year = year;
         this.grade = grade;

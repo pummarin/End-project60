@@ -40,9 +40,11 @@ public class VotingApplication {
 					"0625687511","1489750329658","3","Pontep@gmail.com", "ComputerEngineer");
 			Students student3 = new Students("นางสาวกมลฉัตร", "b6000358", "หญิง",
 					"0621983565","1480010329569","4","Kamolchat@gmail.com", "ComputerEngineer");
+			Students student4 = new Students("นายมโน เอาเอง", "B6001234", "ชาย",
+					"0960032169","1480010329785","4","Mahno@gmail.com", "ComputerEngineer");
 
 
-			Stream.of(student1,student2,student3).forEach(student -> {
+			Stream.of(student1,student2,student3, student4).forEach(student -> {
 				studentsRepository.save(student);
 			});
 
@@ -118,7 +120,7 @@ public class VotingApplication {
 			cp1.setC_name("จงรัก ภักดี");
 			cp1.setBirthday("1 มกราคม 2543");
 			cp1.setTelephone("0960032169");
-        	cp1.setStudent_id("B6201234");
+        	cp1.setStudentId("B6201234");
         	cp1.setYear(2);
         	cp1.setGrade("3.45");
         	cp1.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
@@ -135,7 +137,7 @@ public class VotingApplication {
 			cp2.setC_name("ใจดี มีเมตตา");
 			cp2.setBirthday("14 กุมภาพันธ์ 2543");
 			cp2.setTelephone("0981135169");
-        	cp2.setStudent_id("B6204321");
+        	cp2.setStudentId("B6204321");
         	cp2.setYear(2);
         	cp2.setGrade("3.65");
         	cp2.setArchivement("บริจาคโลหิต");
@@ -152,7 +154,7 @@ public class VotingApplication {
 			cp3.setC_name("ใจร้าย มากมาก");
 			cp3.setBirthday("27 กุมภาพันธ์ 2542");
 			cp3.setTelephone("0981135169");
-			cp3.setStudent_id("B6104321");
+			cp3.setStudentId("B6104321");
 			cp3.setYear(3);
 			cp3.setGrade("3.84");
 			cp3.setArchivement("บริจาคโลหิต");
@@ -170,7 +172,7 @@ public class VotingApplication {
 			cp4.setC_name("จงเกียจ จานชาม");
 			cp4.setBirthday("1 มกราคม 2542");
 			cp4.setTelephone("0960032169");
-			cp4.setStudent_id("B6101234");
+			cp4.setStudentId("B6101234");
 			cp4.setYear(3);
 			cp4.setGrade("3.45");
 			cp4.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
@@ -187,7 +189,7 @@ public class VotingApplication {
 			cp5.setC_name("ใจเย็น มากมาย");
 			cp5.setBirthday("27 กุมภาพันธ์ 2541");
 			cp5.setTelephone("0981135169");
-			cp5.setStudent_id("B6004321");
+			cp5.setStudentId("B6004321");
 			cp5.setYear(4);
 			cp5.setGrade("3.84");
 			cp5.setArchivement("บริจาคโลหิต");
@@ -205,12 +207,12 @@ public class VotingApplication {
 			cp6.setC_name("มโน เอาเอง");
 			cp6.setBirthday("1 มกราคม 2541");
 			cp6.setTelephone("0960032169");
-			cp6.setStudent_id("B6001234");
+			cp6.setStudentId("B6001234");
 			cp6.setYear(4);
 			cp6.setGrade("3.88");
 			cp6.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
 			cp6.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
-			cp6.setC_number(401);
+			cp6.setC_number(402);
 
 			cp6.setMajor(m36);
 			cp6.setGender(g1);

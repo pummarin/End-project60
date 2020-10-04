@@ -183,13 +183,30 @@ export default {
             // this.$router.push("/candidateDetail");
             // this.$router.go();
           }else{
-            this.$router.push("/vote")
+            this.checkStudentAlreadyCandidate();            
           } 
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    checkStudentAlreadyCandidate(){
+      let user = JSON.parse(localStorage.getItem("user"));
+      let body = {
+        studentId: user.studentId
+      }
+      Api.post("/api/canp/student",JSON.stringify(body))
+        .then((res) => {
+          if(res.data === true){
+            alert("นักศึกษาเป็นผู้ลงสมัคร");
+          }else{
+            this.$router.push("/vote")
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    }
     // async save2() {},
   },
   mounted() {
