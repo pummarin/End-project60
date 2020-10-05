@@ -32,14 +32,15 @@ public class Vote {
 
     private @NotNull Date voteTime;
 
-
+    private String hash;
 
     public Vote() {
     }
 
-    public Vote( Students students, CandidateProfile candidateProfile) {
+    public Vote( Students students, CandidateProfile candidateProfile,String hash) {
         this.voteTime = new Date();
         this.students = students;
         this.candidateProfile = candidateProfile;
+        this.hash = hash;
     }
 }
