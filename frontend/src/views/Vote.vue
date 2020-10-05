@@ -15,7 +15,7 @@
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto" v-if="loaded">
               <v-card-title primary-title>
-                <font size="auto">Number: {{ i.c_number }}</font>
+                <font size="auto">หมายเลขผู้สมัคร: {{ i.c_number }}</font>
               </v-card-title>
 
               <v-card-text class="text-center">
@@ -29,7 +29,7 @@
 
               <v-card-text>
                 <font color="black">
-                  <pre>Name: {{ i.c_name }}</pre>
+                  <pre>ชื่อ-นามสกุล: {{ i.c_name }}</pre>
                   <pre>Gpax: {{ i.grade }}</pre>
                 </font>
               </v-card-text>
