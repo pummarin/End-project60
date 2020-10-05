@@ -83,7 +83,6 @@
   </v-app>
 </template>
 <script>
-// import api from "../src/Api";
 export default {
   name: "App",
   components: {},
@@ -116,7 +115,6 @@ export default {
       this.isSignin = true;
       if (this.user.studentId) {
         this.userRole = "student";
-        // this.checkStudentAlreadyVote();
       } else {
         this.userRole = "staff";
       }
@@ -125,24 +123,6 @@ export default {
     }
   },
   methods: {
-    // checkStudentAlreadyVote() {
-    //   let user = JSON.parse(localStorage.getItem("user"));
-    //   let body = {
-    //     student_id: user.id,
-    //   };
-    //   api
-    //     .post("/api/vote/student", JSON.stringify(body))
-    //     .then((res) => {
-    //       if (res.data.length > 0) {
-    //         this.items[1].click = () => {
-    //           alert("นักศึกษาลงคะแนนไปแล้ว");
-    //         };
-    //       }
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // },
     whichColor() {
       if (!this.userRole) {
         return "white";
