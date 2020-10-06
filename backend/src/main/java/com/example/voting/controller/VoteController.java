@@ -40,6 +40,8 @@ public class VoteController {
 
     @PostMapping("/vote/new")
     public Vote newVote2(@RequestBody VotePayload v){
+        //verify payload
+
         Vote newVote = new Vote();
         Optional<Students> students = studentsRepository.findById(v.getStudents_id());
         Optional<CandidateProfile> candidateProfile = candidateProfileRepository.findById(v.getCan_id());
@@ -47,7 +49,8 @@ public class VoteController {
         newVote.setVoteTime(new Date());
         newVote.setStudents(students.get());
         newVote.setCandidateProfile(candidateProfile.get());
-
+        newVote.setHash(v.getHash());
+        //step1 getCanditePro =>
         candidateProfile.get().setPoints(candidateProfile.get().getPoints()+1);
         candidateProfileRepository.save(candidateProfile.get());
 

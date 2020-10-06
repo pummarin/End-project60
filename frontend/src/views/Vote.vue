@@ -60,6 +60,8 @@
 <script>
 import Axios from "axios";
 import Api from "../Api";
+import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
 
 export default {
   name: "Vote",
@@ -104,11 +106,18 @@ export default {
       if (confirm("Are you sure ?")) {
         const student = await JSON.parse(localStorage.getItem("user"));
         // console.log(student);
-        let data = {
+        var hashes = {
           can_id: c.can_id,
           students_id: student.id,
         };
-        // console.log(data);
+        var hash_result = sha256(JSON.stringify(hashes));
+        // console.log(hash_result.toString(CryptoJS.enc.Hex));
+        let data = {
+          can_id: c.can_id,
+          students_id: student.id,
+          hash: hash_result.toString(CryptoJS.enc.Hex),
+        };
+        console.log(data);
         Api.post("/api/vote/new", data)
           .then(() => {
             this.alertSuccess = true;
@@ -120,7 +129,7 @@ export default {
             console.log(e);
           });
       }
-      console.log(c);
+      // console.log(c);
     },
     checkStudentAlreadyCandidate(){
       let user = JSON.parse(localStorage.getItem("user"));
