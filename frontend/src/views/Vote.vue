@@ -112,10 +112,12 @@ export default {
         };
         var hash_result = sha256(JSON.stringify(hashes));
         // console.log(hash_result.toString(CryptoJS.enc.Hex));
+        var prehash_result = sha256(JSON.stringify(hash_result));
         let data = {
           can_id: c.can_id,
           students_id: student.id,
           hash: hash_result.toString(CryptoJS.enc.Hex),
+          prehash: prehash_result.toString(CryptoJS.enc.Hex),
         };
         console.log(data);
         Api.post("/api/vote/new", data)
