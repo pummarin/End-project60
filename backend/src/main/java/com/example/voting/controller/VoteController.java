@@ -55,7 +55,11 @@ public class VoteController {
 
         if (!students.isPresent()){
             return ResponseEntity.badRequest().body("studentsId is not correct!!");
+        }else if(voteRepository.findByStudents(students.get()).isPresent()){
+            //      todo check student vote?
+            return ResponseEntity.badRequest().body("This student have been voted");
         }
+
         newVote.setStudents(students.get());
 
         if (!candidateProfile.isPresent()){
