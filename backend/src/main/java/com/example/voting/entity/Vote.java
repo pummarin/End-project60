@@ -34,13 +34,16 @@ public class Vote {
 
     private String hash;
 
+    private String prevHash;
+
     public Vote() {
     }
 
-    public Vote( Students students, CandidateProfile candidateProfile,String hash) {
+    public Vote( Students students, CandidateProfile candidateProfile,String hash, String prevHash) {
         this.voteTime = new Date();
         this.students = students;
         this.candidateProfile = candidateProfile;
         this.hash = hash;
+        this.prevHash = prevHash;
     }
 }
