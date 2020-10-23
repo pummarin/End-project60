@@ -3,6 +3,7 @@
   <v-col cols="10" md="6" sm="6">
     <div>
       <div>
+        <h1 >ข้อมูลผู้สมัคร</h1>
         <v-container grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto">
