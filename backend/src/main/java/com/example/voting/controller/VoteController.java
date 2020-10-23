@@ -1,5 +1,7 @@
 package com.example.voting.controller;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
@@ -17,6 +19,8 @@ import com.example.voting.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.bind.DatatypeConverter;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -39,7 +43,7 @@ public class VoteController {
     }
 
     @PostMapping("/vote/new")
-    public Vote newVote2(@RequestBody VotePayload v){
+    public ResponseEntity<?> newVote2(@RequestBody VotePayload v){
         //verify payload
 
         Vote newVote = new Vote();
@@ -47,14 +51,56 @@ public class VoteController {
         Optional<CandidateProfile> candidateProfile = candidateProfileRepository.findById(v.getCan_id());
 
         newVote.setVoteTime(new Date());
-        newVote.setStudents(students.get());
-        newVote.setCandidateProfile(candidateProfile.get());
-        newVote.setHash(v.getHash());
-        //step1 getCanditePro =>
-        candidateProfile.get().setPoints(candidateProfile.get().getPoints()+1);
-        candidateProfileRepository.save(candidateProfile.get());
 
-        return voteRepository.save(newVote);
+
+        if (!students.isPresent()){
+            return ResponseEntity.badRequest().body("studentsId is not correct!!");
+        }
+        newVote.setStudents(students.get());
+
+        if (!candidateProfile.isPresent()){
+            return ResponseEntity.badRequest().body("candidateprofileId is not correct!!");
+        }
+        newVote.setCandidateProfile(candidateProfile.get());
+
+//        todo import hash function
+
+//        todo getPrevHash from lasted record and set it
+        Optional<Vote> prevVote = voteRepository.findTopByOrderByIdDesc();
+        if (prevVote.isPresent()){
+            String prevHash = prevVote.get().getHash();
+            newVote.setPrevHash(prevHash);
+        }else {
+            //todo hash it's self
+            try{
+                newVote = voteRepository.saveAndFlush(newVote);
+                String data = newVote.toString();
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                byte[] hash = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+                String encoded = DatatypeConverter.printHexBinary(hash);
+//                System.out.println(encoded.toLowerCase());
+                newVote.setPrevHash(encoded.toLowerCase());
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }
+//      todo hash it's self
+        try{
+            newVote = voteRepository.saveAndFlush(newVote);
+            String data1 = newVote.toString();
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(data1.getBytes(StandardCharsets.UTF_8));
+            String encoded1 = DatatypeConverter.printHexBinary(hash);
+//                System.out.println(encoded.toLowerCase());
+            newVote.setHash(encoded1.toLowerCase());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+         voteRepository.save(newVote);
+        return ResponseEntity.ok().body("vote sucessfully");
     }
 
 

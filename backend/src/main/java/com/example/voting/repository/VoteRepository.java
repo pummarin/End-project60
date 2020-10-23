@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 	Vote findById(long id);
 	Optional<Vote> findByStudents(Students students);
+	Optional<Vote> findTopByOrderByIdDesc();
 }

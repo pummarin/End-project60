@@ -14,6 +14,9 @@ public class VotePayload {
     @NotBlank
     private Long can_id;
 
-    @NotNull
-    private String hash;
+//    @NotNull
+//    private String hash;
+//
+//    @NotNull
+//    private String prevHash;
 }

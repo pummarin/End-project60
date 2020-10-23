@@ -68,12 +68,10 @@ public class CandidateProfile {
     @JsonManagedReference
     private @NotNull Admin admin;
 
-    private int points;
-    
     public CandidateProfile(){}
 
     public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,
-                            String archivement,int c_number, String purpose, Major major, Gender gender, Admin admin, int points) {
+                            String archivement,int c_number, String purpose, Major major, Gender gender, Admin admin) {
         this.title_name = title_name;
         this.c_name = c_name;
         this.birthday = birthday;
@@ -87,7 +85,6 @@ public class CandidateProfile {
         this.purpose = purpose;
         this.gender = gender;
         this.admin = admin;
-        this.points = points;
-		
-	}
+
+    }
 }
