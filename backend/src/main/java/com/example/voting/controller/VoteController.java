@@ -1,10 +1,9 @@
 package com.example.voting.controller;
 
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.voting.entity.CandidateProfile;
@@ -16,6 +15,7 @@ import com.example.voting.entity.payload.VotePayload;
 import com.example.voting.repository.CandidateProfileRepository;
 import com.example.voting.repository.StudentsRepository;
 import com.example.voting.repository.VoteRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +40,29 @@ public class VoteController {
     @GetMapping("/votes")
     public Collection<Vote> getAllVote() {
         return voteRepository.findAll().stream().collect(Collectors.toList());
+    }
+
+    @GetMapping("/vote/result")
+    public ResponseEntity<?> getVoteResult() {
+        // todo count point from each number
+        // todo get candidate
+        List<CandidateProfile> candidateProfiles = candidateProfileRepository.findAll();
+        JSONObject cps[] = new JSONObject[candidateProfiles.size()];
+        // todo get vote
+        List<Vote> votes = voteRepository.findAll();
+        // todo check candidate in vote table and count score
+
+        votes.stream().forEach(vote -> {
+//            candidateProfiles
+//            cps[vote.getCandidateProfile().getCan_id().intValue()].put("")
+//            candidateProfiles.get
+           if( candidateProfiles.contains(vote.getCandidateProfile())){
+               int index = candidateProfiles.indexOf(vote.getCandidateProfile());
+               candidateProfiles.get(index);
+
+           }
+        });
+        return ResponseEntity.ok().body("e.getMessage()");
     }
 
     @PostMapping("/vote/new")
