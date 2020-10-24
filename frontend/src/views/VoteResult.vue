@@ -24,8 +24,8 @@
             </v-card-text>
 
             <v-card-text>
-              <font color="black" >
-                <pre>ชื่อ-นามสกุล: {{i.title_name}}{{ i.c_name }}</pre>
+              <font color="black">
+                <pre>ชื่อ-นามสกุล: {{ i.title_name }}{{ i.c_name }}</pre>
                 <pre>Gpax: {{ i.grade }}</pre>
                 <pre>กิจกรรมที่เข้าร่วม: {{ i.archivement }}</pre>
               </font>
@@ -51,6 +51,7 @@ export default {
     return {
       photos: [],
       candidate: [],
+      votes: [],
     };
   },
   methods: {
@@ -69,16 +70,19 @@ export default {
       await Api.get("/api/canprofile")
         .then((response) => {
           this.candidate = response.data;
-          console.log(JSON.parse(JSON.stringify(response.data)));
+          // console.log(JSON.parse(JSON.stringify(response.data)));
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    
+    
   },
   mounted() {
     this.getPhotos();
     this.getAllCandidate();
+    
   },
 };
 </script>
