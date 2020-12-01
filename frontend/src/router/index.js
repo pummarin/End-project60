@@ -19,18 +19,12 @@ const routes = [
   {
     path: "/signin",
     name: "sigin",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Signin.vue")
   },
   {
     path: "/profile",
     name: "profile",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Profile.vue")
   },
@@ -72,7 +66,7 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/signin", "/home", "/register", "/admin/signin","/voteResult",
+  const publicPages = ["/signin", "/home", "/register", "/admin/signin","/voteResult","/candidateprofile"
     ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
