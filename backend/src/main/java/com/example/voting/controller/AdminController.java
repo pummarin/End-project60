@@ -1,3 +1,4 @@
+
 package com.example.voting.controller;
 
 import java.util.Collection;
@@ -37,5 +38,5 @@ public class AdminController {
         return adminRepository.findById(id);
     }
     */
-    
+    //
 }
