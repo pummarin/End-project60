@@ -1,8 +1,9 @@
 package com.example.voting.entity.payload;
 
 import lombok.Data;
-
+import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class CandidateProfilePayload {
@@ -14,7 +15,7 @@ public class CandidateProfilePayload {
     private String c_name;
 
     @NotBlank
-    private String birthday;
+    private LocalDate birthday;
 
     @NotBlank
     private String telephone;
@@ -46,6 +47,7 @@ public class CandidateProfilePayload {
     @NotBlank
     private Long major_id;
 
-
+    @NotBlank
+    private MultipartFile file;
 
 }

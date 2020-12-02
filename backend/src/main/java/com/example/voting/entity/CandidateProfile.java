@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -13,6 +14,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -37,7 +41,8 @@ public class CandidateProfile {
     @NotNull
     private  String c_name;
     @NotNull
-    private  String birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private  LocalDate birthday;
     @NotNull
     private  String telephone;
     @NotNull
@@ -52,7 +57,9 @@ public class CandidateProfile {
     private  int c_number;
     @NotNull
     private  String purpose;
-
+    @NotNull
+    private  String avatar;
+    
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Major.class)
     @JoinColumn(name = "MAJOR_ID", insertable = true)
     @JsonManagedReference
@@ -68,9 +75,12 @@ public class CandidateProfile {
     @JsonManagedReference
     private @NotNull Admin admin;
 
-    public CandidateProfile(){}
 
-    public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,
+    //private int points;
+    
+    public CandidateProfile(){}
+    
+    /*public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,
                             String archivement,int c_number, String purpose, Major major, Gender gender, Admin admin) {
         this.title_name = title_name;
         this.c_name = c_name;
@@ -85,6 +95,6 @@ public class CandidateProfile {
         this.purpose = purpose;
         this.gender = gender;
         this.admin = admin;
-
-    }
+       // this.points = points;
+	} */
 }
