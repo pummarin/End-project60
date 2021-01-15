@@ -1,12 +1,13 @@
 package com.example.voting.controller;
 
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import com.example.voting.entity.CandidateProfile;
+import com.example.voting.entity.CandidateScoreResponeModel;
 import com.example.voting.entity.Students;
 import com.example.voting.entity.Vote;
 
@@ -145,4 +146,32 @@ public class VoteController {
         return ResponseEntity.badRequest().body("Error: Incorrect Student_Id!");
     }
 
+    @GetMapping("/score")
+    public ResponseEntity<?> getAllCandidateScore(){
+        List<Vote> votes = voteRepository.findAll();
+        List<CandidateProfile> candidateProfiles = candidateProfileRepository.findAll();
+        ArrayList<CandidateScoreResponeModel> candidateScoreResponeModel = new ArrayList<CandidateScoreResponeModel>();
+        //เบอร์ที่ไม่มาเพราะ ไม่มีใครโหวต
+        candidateProfiles.forEach(vote -> {
+            CandidateScoreResponeModel temp = new CandidateScoreResponeModel();
+            temp.setCandidateProfile(vote);
+            if (!candidateScoreResponeModel.contains(temp))
+                candidateScoreResponeModel.add(temp);
+        });
+
+        votes.forEach(vote -> {
+            CandidateScoreResponeModel temp = new CandidateScoreResponeModel();
+            temp.setCandidateProfile(vote.getCandidateProfile());
+            AtomicInteger i = new AtomicInteger();
+            candidateScoreResponeModel.forEach(c -> {
+                if (c.getCandidateProfile()==temp.getCandidateProfile()){
+                   int j = candidateScoreResponeModel.indexOf(c);
+                   i.set(j);
+                }
+            });
+            //นับคะแนน
+            candidateScoreResponeModel.get(i.get()).setScore(candidateScoreResponeModel.get(i.get()).getScore()+1);
+        });
+        return ResponseEntity.ok().body(candidateScoreResponeModel);
+    }
 }

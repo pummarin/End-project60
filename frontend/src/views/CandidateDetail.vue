@@ -12,9 +12,9 @@
               </v-card-title>
 
               <v-card-text class="text-center">
-                <v-img v-if="photos[29]" :src="photos[29].download_url"></v-img>
+                <v-img v-if="i.avatar" :src="'http://localhost:9000/files/' + i.avatar"></v-img>
                 <v-progress-circular
-                  v-if="!photos[29]"
+                  v-if="!i.avatar"
                   indeterminate
                   color="primary"
                 ></v-progress-circular>
@@ -141,15 +141,7 @@ export default {
     };
   },
   methods: {
-    async getPhotos() {
-      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
-        (Response) => {
-          // console.log(Response.data);
-          // this.photos = Response.data;
-          return Response.data;
-        }
-      );
-    },
+    
 
     clearAlert() {
       this.alertSuccess = false;
@@ -160,7 +152,7 @@ export default {
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
-          // console.log(JSON.parse(JSON.stringify(response.data)));
+          console.log(JSON.parse(JSON.stringify(response.data)));
           // for(let i in this.candidate){
           //   console.log(i);
           // }
@@ -169,6 +161,18 @@ export default {
           console.log(e);
         });
     },
+
+    async getPhotos() {
+      // this.photos = await Axios.get(`${api/canprofile2}/${this.getAllCandidate.avatar}`).then(
+      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
+        (Response) => {
+          console.log(Response.data);
+          // this.photos = Response.data;
+          return Response.data;
+        }
+      );
+    },
+    
     checkStudentAlreadyVote() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
@@ -211,7 +215,7 @@ export default {
     // async save2() {},
   },
   mounted() {
-    this.getPhotos();
+    // this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
   },

@@ -19,9 +19,9 @@
               </v-card-title>
 
               <v-card-text class="text-center">
-                <v-img v-if="photos[29]" :src="photos[29].download_url"></v-img>
+                <v-img v-if="i.avatar" :src="'http://localhost:9000/files/'+i.avatar"></v-img>
                 <v-progress-circular
-                  v-if="!photos[29]"
+                  v-if="!i.avatar"
                   indeterminate
                   color="primary"
                 ></v-progress-circular>
@@ -143,7 +143,7 @@ export default {
     },
   },
   mounted() {
-    this.getPhotos();
+    // this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
     let user = JSON.parse(localStorage.getItem("user"));
