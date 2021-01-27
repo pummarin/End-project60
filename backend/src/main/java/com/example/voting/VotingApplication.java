@@ -42,11 +42,11 @@ public class VotingApplication {
 			Students student1 = new Students("นายภุมรินทร์", "b6003296", "ชาย",
 					"0621983565","1480000330642","2","hantermaster0@gmail.com", "ComputerEngineer");
 			Students student2 = new Students("นายพรเทพ", "b6003235", "ชาย",
-					"0625687511","1489750329658","3","Pontep@gmail.com", "ComputerEngineer");
+					"0625687511","1489750329658","2","Pontep@gmail.com", "ComputerEngineer");
 			Students student3 = new Students("นางสาวกมลฉัตร", "b6000358", "หญิง",
-					"0621983565","1480010329569","4","Kamolchat@gmail.com", "ComputerEngineer");
+					"0621983565","1480010329569","2","Kamolchat@gmail.com", "ComputerEngineer");
 			Students student4 = new Students("นายมโน เอาเอง", "B6001234", "ชาย",
-					"0960032169","1480010329785","4","Mahno@gmail.com", "ComputerEngineer");
+					"0960032169","1480010329785","2","Mahno@gmail.com", "ComputerEngineer");
 
 
 			Stream.of(student1,student2,student3, student4).forEach(student -> {
@@ -222,30 +222,30 @@ public class VotingApplication {
 			candidateProfileRepository.save(cp);
 			
 			});
-			Vote v1 = new Vote();
-			v1.setHash("asdasdwqdq");
-			v1.setPrevHash("ertyuiop");
-			v1.setCandidateProfile(cp1);
-			v1.setStudents(student1);
-			v1.setVoteTime(new Date());
-
-			Vote v2 = new Vote();
-			v2.setHash("qwertyu");
-			v2.setPrevHash("ertyuioppkm");
-			v2.setCandidateProfile(cp1);
-			v2.setStudents(student2);
-			v2.setVoteTime(new Date());
-
-			Vote v3 = new Vote();
-			v3.setHash("asdasdwqdq");
-			v3.setPrevHash("ertyuiop");
-			v3.setCandidateProfile(cp2);
-			v3.setStudents(student3);
-			v3.setVoteTime(new Date());
-
-			Stream.of(v1,v2,v3).forEach(vote -> {
-				voteRepository.save(vote);
-			});
+//			Vote v1 = new Vote();
+//			v1.setHash("asdasdwqdq");
+//			v1.setPrevHash("ertyuiop");
+//			v1.setCandidateProfile(cp1);
+//			v1.setStudents(student1);
+//			v1.setVoteTime(new Date());
+//
+//			Vote v2 = new Vote();
+//			v2.setHash("qwertyu");
+//			v2.setPrevHash("ertyuioppkm");
+//			v2.setCandidateProfile(cp1);
+//			v2.setStudents(student2);
+//			v2.setVoteTime(new Date());
+//
+//			Vote v3 = new Vote();
+//			v3.setHash("asdasdwqdq");
+//			v3.setPrevHash("ertyuiop");
+//			v3.setCandidateProfile(cp2);
+//			v3.setStudents(student3);
+//			v3.setVoteTime(new Date());
+//
+//			Stream.of(v1,v2,v3).forEach(vote -> {
+//				voteRepository.save(vote);
+//			});
 			
 		};
 	}
