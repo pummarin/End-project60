@@ -11,13 +11,14 @@
           <v-img src="Sut_logo_Thai.png" alt="Vuetify" />
         </v-avatar>
       </v-btn>
-      <v-toolbar-title style="width: 700px" class="ml-0 pl-4" >
-         <font color="#FB8C00"> 
-        <h1 class="hidden-sm-and-down" >SUT Student Council Election</h1> </font>
+      <v-toolbar-title style="width: 700px" class="ml-0 pl-4">
+        <font color="#FB8C00">
+          <h1 class="hidden-sm-and-down">SUT Student Council Election</h1>
+        </font>
       </v-toolbar-title>
-      
+
       <v-spacer />
-      
+
       <template v-if="isSignin">
         <span >Sign in as</span>
         <template v-if="user.studentId">
@@ -61,7 +62,12 @@
       </div>
       <v-divider vertical style="padding-right: 5px"></v-divider>
       <div>
-        <v-btn href="https://github.com/pummarin/End-project60" icon small target="_blank">
+        <v-btn
+          href="https://github.com/pummarin/End-project60"
+          icon
+          small
+          target="_blank"
+        >
           <v-icon>mdi-github</v-icon>
         </v-btn>
       </div>
@@ -94,7 +100,7 @@ export default {
           fontColor: "light",
         },
         staff: {
-          appBar: "amber darken-3",
+          appBar: "green darken-3",
           fontColor: "light",
         },
         public: {
@@ -136,7 +142,7 @@ export default {
     },
     appBarColor() {
       if (this.userRole == "staff") {
-        return "amber darken-3";
+        return "green darken-3";
       } else if (this.userRole == "student") {
         return "blue darken-3";
       } else {
@@ -145,7 +151,7 @@ export default {
     },
     footerColor() {
       if (this.userRole == "staff") {
-        return "amber darken-4";
+        return "green darken-4";
       } else if (this.userRole == "student") {
         return "primary";
       } else {
@@ -158,7 +164,8 @@ export default {
     handleSignout() {
       this.isSignin = false;
       localStorage.removeItem("user");
-      this.$router.push("/");
+      this.$router.push("/home");
+      location.reload();
     },
     handleIndex() {
       this.$router.push("/");
