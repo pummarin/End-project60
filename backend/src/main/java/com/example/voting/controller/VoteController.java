@@ -96,7 +96,7 @@ public class VoteController {
         newVote.setCandidateProfile(candidateProfile.get());
         try {
             System.out.println("candidateprofile " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(candidateProfile.get()));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
@@ -114,7 +114,7 @@ public class VoteController {
 //                System.out.println("before xxxxx" + newVote.toString());
                 newVote = voteRepository.saveAndFlush(newVote);
 //                System.out.println("after" + newVote);
-                String data =mapper.writeValueAsString(newVote) ;
+                String data = mapper.writeValueAsString(newVote);
 //                System.out.println("origin xxxx" + data);
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
                 byte[] hash = digest.digest(data.getBytes(StandardCharsets.UTF_8));
@@ -131,15 +131,15 @@ public class VoteController {
         try {
             newVote = voteRepository.saveAndFlush(newVote);
 //            System.out.println("before " + newVote);
-            String data1 =mapper.writeValueAsString(newVote) ;
+            String data1 = mapper.writeValueAsString(newVote);
 //            System.out.println("data1 = " + data1);
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(data1.getBytes(StandardCharsets.UTF_8));
             String encoded1 = DatatypeConverter.printHexBinary(hash);
 //                System.out.println(encoded.toLowerCase());
-            System.out.println("encode1 = "+encoded1.toLowerCase());
+            System.out.println("encode1 = " + encoded1.toLowerCase());
             newVote.setHash(encoded1.toLowerCase());
-            System.out.println("vote2 = "+ newVote);
+            System.out.println("vote2 = " + newVote);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -150,75 +150,69 @@ public class VoteController {
         return ResponseEntity.ok().body("vote sucessfully");
     }
 
-    @GetMapping("/vote/getCheckedAllBox")
-    public ResponseEntity<?> getCheckedAllBox() {
+    @GetMapping("/vote/getCheckedAllBlock")
+    public ResponseEntity<?> getCheckedAllBlock() {
         List<Vote> votes = voteRepository.findAll();
 //        System.out.println("get all vote = " + votes);
         ArrayList<CheckedAllBoxRespone> respone = new ArrayList<CheckedAllBoxRespone>();
-        AtomicReference<String> tempPrevHash = new AtomicReference<>("");
+        AtomicReference<String> tempHash = new AtomicReference<>("");
         votes.forEach(vote -> {
             CheckedAllBoxRespone c = new CheckedAllBoxRespone();
             c.setId(vote.getId());
             c.setHash(vote.getHash());
             c.setPrevHash(vote.getPrevHash());
-//            System.out.println("c = "+c);
-//            System.out.println("sssss = " + vote);
-            if (checkHashData(vote, tempPrevHash.get())) {
+//
+//            System.out.println("temp hash = "+tempHash);
+            tempHash.set(checkHashData(vote, tempHash.get()));
+//            System.out.println("vote hash = "+vote.getHash()+" temp hash = " + tempHash);
+            if (tempHash.get().equals(vote.getHash())) {
                 c.setCorrect(true);
             } else {
                 c.setCorrect(false);
             }
-            tempPrevHash.set(vote.getHash());
             respone.add(c);
         });
         return ResponseEntity.ok().body(respone);
     }
 
-    public Boolean checkHashData(Vote vote, String prevHash) {
-        System.out.println("origin vote" + vote);
-//        Date d1 = new Date(vote.getVoteTime());
-        String hash = vote.getHash();
-        String prevhash = vote.getPrevHash();
-
+    public String checkHashData(Vote vote, String prevHash) {
         ObjectMapper mapper = new ObjectMapper();
+        Vote v = new Vote();
+        v.setId(vote.getId());
+        v.setStudents(vote.getStudents());
+        v.setCandidateProfile(vote.getCandidateProfile());
+        v.setVoteTime(vote.getVoteTime());
 
+
+        v.setHash(null);
+        v.setPrevHash(prevHash);
+        String encoded;
+        byte[] hash;
+        MessageDigest digest;
+        String data;
         try {
             //เช้คค่าprevhashเดิมกับใหม่ว่าตรงกันไหม
             if (prevHash.equals("")) {
-                vote.setHash(null);
-                vote.setPrevHash(null);
-                String data = mapper.writeValueAsString(vote) ;
-//                System.out.println("data = " + data);
-                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                byte[] hash1 = digest.digest(data.getBytes(StandardCharsets.UTF_8));
-                String encoded = DatatypeConverter.printHexBinary(hash1);
-                vote.setPrevHash(encoded.toLowerCase());
-                System.out.println("vote set prevhash " + encoded.toLowerCase());
-                if (!vote.getPrevHash().equals(prevhash) ) {
-                    System.out.printf("prevhashincorrect case 1st box " + vote.getPrevHash() + "!=" + prevhash + "\n");
-                    return false;
-                }
-            } else {
-                if (!vote.getPrevHash().equals(prevhash)) {
-                    System.out.printf("prevhashincorrect case nomal " + vote.getPrevHash() + "!=" + prevhash + "\n");
-                    return false;
-                }
+                v.setPrevHash(null);
+                data = mapper.writeValueAsString(v);
+                digest = MessageDigest.getInstance("SHA-256");
+                hash = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+                encoded = DatatypeConverter.printHexBinary(hash);
+                v.setPrevHash(encoded.toLowerCase());
+                System.out.println("v.setprevhash = " + encoded.toLowerCase());
+
             }
-            vote.setHash(null);
-            String data = mapper.writeValueAsString(vote);
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash1 = digest.digest(data.getBytes(StandardCharsets.UTF_8));
-            String encoded = DatatypeConverter.printHexBinary(hash1);
+
+            data = mapper.writeValueAsString(v);
+            digest = MessageDigest.getInstance("SHA-256");
+            hash = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+            encoded = DatatypeConverter.printHexBinary(hash);
             //เช็คค่าhashว่าตรงกันไหม
-            vote.setHash(encoded.toLowerCase());
-            if (!vote.getHash().equals(hash) ) {
-                System.out.printf(vote.getHash() + "!=" + vote.getHash());
-                return false;
-            }
+            v.setHash(encoded.toLowerCase());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return true;
+        return v.getHash();
     }
 
 
