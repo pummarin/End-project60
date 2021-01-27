@@ -4,15 +4,15 @@
       <v-flex xs3 sm6 md9 lg12>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="6">
-            <v-alert type="success" dismissible v-model="message"
-              >บันทึกข้อมูลสำเร็จ</v-alert
-            >
-            <!-- <v-alert type="error" dismissible v-model="alertFailed">{{alertmsg}}!</v-alert> -->
+            <v-alert type="success" dismissible v-model="alertSuccess">บันทึกข้อมูลสำเร็จ</v-alert>
+            <v-alert type="error" dismissible v-model="alertFailed">{{alertmsg}}!</v-alert>
           </v-col>
         </v-row>
         <br />
+         <v-card class="mx-auto" max-width="1500">
+            <br />
         <h1 class="display-2 font-weight-bold mb-3">
-          ข้อมูลผู้สมัครสมาชิกสภานักศึกษา
+          Create New Candidate
         </h1>
 
         <v-row justify="center">
@@ -181,6 +181,7 @@
           </v-col>
         </v-row>
 
+    <!-- accept="image/png, image/jpeg" -->
         <v-row justify="center">
           <v-col cols="6">
             <v-select
@@ -199,22 +200,30 @@
           <v-col cols="6" sm="6" class="pa-2 mx-3">
             <v-btn @click="save" color="success">SAVE</v-btn>
             &nbsp;
-            <v-btn class="ma-2" router-link to="/">CANCEL</v-btn>
+            <v-btn class="ma-2" router-link to="/home">CANCEL</v-btn>
           </v-col>
         </v-row>
+         </v-card>
       </v-flex>
+      
     </v-layout>
+    
   </v-container>
+  
 </template>
 
 <script>
 import api from '../Api.js';
 export default {
   mounted() {
-    this.getAllAdmin();
+    this.currentUser = JSON.parse(localStorage.getItem("user"));
+    console.log("this.currentUser = " + this.currentUser) ;
+    // this.getAllAdmin();
+    this.admins.push(this.currentUser);
+    this.selectAdmin = this.currentUser; //default ไว้
     this.getAllGender();
     this.getAllMajor();
-    // this.clearAlert();
+    this.clearAlert();
   },
   data() {
     return {
@@ -238,10 +247,11 @@ export default {
       response: null,
       message: null,
       selectDate: null,
-      menu2: false
-      //alertFailed: false,
-      //alertSuccess: false,
-      //alertmsg: undefined
+      menu2: false,
+      alertFailed: false,
+      alertSuccess: false,
+      alertmsg: undefined,
+      currentUser : null,
     };
   },
   methods: {
@@ -285,12 +295,12 @@ export default {
         });
     },
     
-    /*clearAlert() {
+    clearAlert() {
       this.alertmsg = false;
-      this.alertFailed = false;
+       this.alertFailed = false;
       this.alertSuccess = false;
       
-    },*/
+    },
     save() {
       var fd = new FormData();
       // หน้าบ้าน FormData -> key ต้องให้ตรงกับ หลังบ้าน @RequestParam("key")
@@ -306,24 +316,29 @@ export default {
       fd.append('purpose', this.fillPurpose); //String
       fd.append('major', this.selectMajor); //long
       fd.append('gender', this.selectGender); //long
-      fd.append('admin', this.selectAdmin); //long
+      fd.append('admin', this.selectAdmin.admin_id); //long
       fd.append('file', this.file); //MultipartFile
       // Log for debug.
-      // console.log(
-      //   fd.forEach((v, k) => {
-      //     console.log(k + ' = ' + v + ' -> ' + typeof v);
-      //   })
-      // );
+      console.log(
+        fd.forEach((v, k) => {
+          console.log(k + ' = ' + v + ' -> ' + typeof v);
+        })
+      );
       console.log('Posting in process...');
+      console.log(this.selectAdmin);
       api
         .post('/api/canp', fd)
         .then((response) => {
           console.log(response.data);
           console.log('Posting Successfully');
+          // this.alertSuccess = true;
+          window.location.reload()
         })
         .catch(function(error) {
           console.log(error);
+          // this.alertFailed = true;
         });
+        
     },
   },
 };

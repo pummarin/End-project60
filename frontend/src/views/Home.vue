@@ -28,12 +28,12 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-btn color="orange" text>
-              Share
+            <v-btn color="orange" text @click="handleCreateCandidate">
+              Add Candidate Profile
             </v-btn>
 
-            <v-btn color="orange" text>
-              Explore
+            <v-btn color="orange" text  @click="handleShowCandidate">
+              Show Candidate Profile
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -48,7 +48,14 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    handleCreateCandidate() {
+      this.$router.push("/candidateprofile");
+    },
+    handleShowCandidate() {
+      this.$router.push("/candidatelist");
+    },
+  },
   mounted() {}
 };
 </script>

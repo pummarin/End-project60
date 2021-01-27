@@ -135,7 +135,6 @@ public class VotingApplication {
 			cp1.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
 			cp1.setC_number(201);
 			cp1.setAvatar("test01.png");
-        
         	cp1.setMajor(m36);
         	cp1.setGender(g1);
 			cp1.setAdmin(admin2);
@@ -154,10 +153,42 @@ public class VotingApplication {
 			cp2.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
 			cp2.setC_number(202);
 			cp2.setAvatar("test01.png");
-        
         	cp2.setMajor(m17);
-        	cp2.setGender(g2);
-        	cp2.setAdmin(admin2);
+			cp2.setGender(g2);
+			cp2.setAdmin(admin2);
+
+			CandidateProfile cp3 = new CandidateProfile();
+			cp3.setTitle_name("นาย");
+			cp3.setBirthday(birthday);
+        	cp3.setStudentId("B6204321");
+			cp3.setC_name("คิม โดยอง");
+        	cp3.setYear(2);
+			cp3.setTelephone("0981135169");
+        	cp3.setGrade("4.00");
+        	cp3.setArchivement("บริจาคโลหิต");
+			cp3.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
+			cp3.setC_number(203);
+			cp3.setAvatar("test01.png");
+        	cp3.setMajor(m17);
+			cp3.setGender(g2);
+				cp3.setAdmin(admin2);
+			
+			CandidateProfile cp4 = new CandidateProfile();
+			cp4.setTitle_name("นางสาว");
+			cp4.setBirthday(birthday);
+        	cp4.setStudentId("B6204321");
+			cp4.setC_name("ซอ จอนห์นี่");
+        	cp4.setYear(3);
+			cp4.setTelephone("0981135169");
+        	cp4.setGrade("3.99");
+        	cp4.setArchivement("บริจาคโลหิต");
+			cp4.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
+			cp4.setC_number(301);
+			cp4.setAvatar("test01.png");
+        	cp4.setMajor(m17);
+			cp4.setGender(g2);
+			cp4.setAdmin(admin2);
+        
 //			//3
 //			CandidateProfile cp3 = new CandidateProfile();
 //			cp3.setTitle_name("นางสาว");
@@ -173,52 +204,8 @@ public class VotingApplication {
 //			cp3.setMajor(m20);
 //			cp3.setGender(g2);
 //			cp3.setAdmin(admin1);
-//			//4
-//			CandidateProfile cp4 = new CandidateProfile();
-//			cp4.setTitle_name("นาย");
-//			cp4.setC_name("จงเกียจ จานชาม");
-//			cp4.setBirthday("1 มกราคม 2542");
-//			cp4.setTelephone("0960032169");
-//			cp4.setStudentId("B6101234");
-//			cp4.setYear(3);
-//			cp4.setGrade("3.45");
-//			cp4.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
-//			cp4.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
-//			cp4.setC_number(301);
-//			cp4.setMajor(m36);
-//			cp4.setGender(g1);
-//			cp4.setAdmin(admin1);
-//			//5
-//			CandidateProfile cp5 = new CandidateProfile();
-//			cp5.setTitle_name("นางสาว");
-//			cp5.setC_name("ใจเย็น มากมาย");
-//			cp5.setBirthday("27 กุมภาพันธ์ 2541");
-//			cp5.setTelephone("0981135169");
-//			cp5.setStudentId("B6004321");
-//			cp5.setYear(4);
-//			cp5.setGrade("3.84");
-//			cp5.setArchivement("บริจาคโลหิต");
-//			cp5.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
-//			cp5.setC_number(401);
-//			cp5.setMajor(m13);
-//			cp5.setGender(g2);
-//			cp5.setAdmin(admin1);
-//			//6
-//			CandidateProfile cp6 = new CandidateProfile();
-//			cp6.setTitle_name("นาย");
-//			cp6.setC_name("มโน เอาเอง");
-//			cp6.setBirthday("1 มกราคม 2541");
-//			cp6.setTelephone("0960032169");
-//			cp6.setStudentId("B6001234");
-//			cp6.setYear(4);
-//			cp6.setGrade("3.88");
-//			cp6.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
-//			cp6.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
-//			cp6.setC_number(402);
-//			cp6.setMajor(m36);
-//			cp6.setGender(g1);
-//			cp6.setAdmin(admin1);
-			Stream.of(cp1, cp2).forEach(cp -> {
+//			
+			Stream.of(cp1, cp2, cp3, cp4).forEach(cp -> {
 			candidateProfileRepository.save(cp);
 			
 			});
