@@ -3,10 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:/home/leo/Desktop/secure;CIPHER=AES
     username: root
-    password: root
+    password: filepwd root
     driver-class-name: org.h2.Driver
+
   h2:
     console:
       enabled: true
