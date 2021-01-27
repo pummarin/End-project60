@@ -24,8 +24,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name="CandidateProfile")
 
 
@@ -62,17 +61,17 @@ public class CandidateProfile {
     
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Major.class)
     @JoinColumn(name = "MAJOR_ID", insertable = true)
-    @JsonManagedReference
+    // @JsonManagedReference
     private @NotNull Major major; 
 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Gender.class)
     @JoinColumn(name = "GENDER_ID", insertable = true)
-    @JsonManagedReference
+    // @JsonManagedReference
     private @NotNull Gender gender; 
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Admin.class)
     @JoinColumn(name = "ADMIN_ID", insertable = true)
-    @JsonManagedReference
+    // @JsonManagedReference
     private @NotNull Admin admin;
 
 

@@ -19,7 +19,7 @@
       <v-spacer />
       
       <template v-if="isSignin">
-        <span>Sign in as</span>
+        <span >Sign in as</span>
         <template v-if="user.studentId">
           <v-btn text @click="handleProfile">{{ user.fullName }}</v-btn>
         </template>
