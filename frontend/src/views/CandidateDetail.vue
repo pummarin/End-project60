@@ -1,6 +1,6 @@
 
 <template>
-  <v-col cols="10" md="6" sm="6">
+  <v-col cols="12" md="5" sm="6">
     <div>
       <div>
         <h1 >ข้อมูลผู้สมัคร</h1>

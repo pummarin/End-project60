@@ -6,45 +6,32 @@
           height="200px"
           src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
         >
-          <v-app-bar
-            flat
-            color="rgba(0, 0, 0, 0)"
-          >
+          <v-app-bar flat color="rgba(0, 0, 0, 0)">
             <v-spacer></v-spacer>
-
-            <v-btn
-              color="white"
-              icon
-            >
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
           </v-app-bar>
 
           <v-card-title class="white--text mt-8">
-            
-            <p class="ml-3">
-              ตรวจสอบความถูกต้องของข้อมูล
-            </p>
+            <p class="ml-3">ตรวจสอบความถูกต้องของข้อมูล</p>
           </v-card-title>
         </v-img>
 
         <v-card-text>
-         
-          <v-timeline
-            align-top
-            dense
-          >
+          <div v-if="votes.length === 0">
+            <p>Not Have Vote</p>
+          </div>
+          <v-timeline v-if="votes" align-top dense>
             <v-timeline-item
-              v-for="message in messages"
-              :key="message.time"
-              :color="color"
+              v-for="vote in votes"
+              :key="vote.id"
+              :color="vote.correct ? 'green' : 'red'"
               small
             >
               <div>
                 <div class="font-weight-normal">
-                  <strong>{{ message.from }}</strong> @{{ message.time }}
+                  <strong>{{ vote.id }}</strong> @{{ vote.voteTime }}
                 </div>
-                <div>{{ message.message }}</div>
+                <div>Block hash : {{ vote.hash }}</div>
+                <div>Previous hash: {{ vote.prevHash }}</div>
               </div>
             </v-timeline-item>
           </v-timeline>
@@ -60,27 +47,6 @@ export default {
   data() {
     return {
       votes: [],
-      color:'green',
-      messages: [
-        {
-          from: 'You',
-          message: `Sure, I'll see you later.`,
-          time: '10:42am',
-          color: 'deep-purple lighten-1',
-        },
-        {
-          from: 'John Doe',
-          message: 'Yeah, sure. Does 1:00pm work?',
-          time: '10:37am',
-          color: 'dark green',
-        },
-        {
-          from: 'You',
-          message: 'Did you still want to grab lunch today?',
-          time: '9:47am',
-          color: 'red',
-        },
-      ],
     };
   },
   methods: {
