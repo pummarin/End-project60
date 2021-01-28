@@ -152,7 +152,7 @@ export default {
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
-          console.log(JSON.parse(JSON.stringify(response.data)));
+          // console.log(JSON.parse(JSON.stringify(response.data)));
           // for(let i in this.candidate){
           //   console.log(i);
           // }
@@ -166,7 +166,7 @@ export default {
       // this.photos = await Axios.get(`${api/canprofile2}/${this.getAllCandidate.avatar}`).then(
       this.photos = await Axios.get("https://picsum.photos/v2/list").then(
         (Response) => {
-          console.log(Response.data);
+          // console.log(Response.data);
           // this.photos = Response.data;
           return Response.data;
         }
