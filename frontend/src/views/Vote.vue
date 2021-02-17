@@ -62,8 +62,8 @@
             <u>ลงคะแนนสำเร็จ.. กรุณาบันทึกภาพเป็นหลักฐาน</u>
           </v-card-title>
           <v-card-text>
-            <p>ข้อมูลเข้ารหัส: {{studentHash.hash}}</p>
-            <p></p>
+            <p>Code: {{studentHash.hash}}</p>
+            <p>Index: {{studentHash.id}}</p>
             </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
