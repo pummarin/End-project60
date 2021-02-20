@@ -3,7 +3,53 @@
   <v-col cols="12" md="5" sm="6">
     <div>
       <div>
-        <h1 >ข้อมูลผู้สมัคร</h1>
+        <h1>ข้อมูลผู้สมัคร</h1>
+        <div class="text-right">
+          <v-dialog v-model="dialog2" width="500">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="red lighten-2"
+                outlined
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                ตรวจสอบการลงคะแนน
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title class="headline grey lighten-2">
+                ตรวจสอบการลงคะแนน
+              </v-card-title>
+
+              <v-card-text>
+                <v-text-field
+                  label="กรอกรหัส"
+                  name="hashvalue"
+                  v-model="userhash"
+                ></v-text-field>
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  class="ma-2"
+                  outlined
+                  color="primary"
+                  dark
+                  @click="checkStudentHash(userhash)"
+                  >ตรวจสอบ</v-btn
+                >
+                <v-btn color="primary" text @click="dialog2 = false">
+                  ปิด
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
         <v-container grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto">
@@ -12,7 +58,10 @@
               </v-card-title>
 
               <v-card-text class="text-center">
-                <v-img v-if="i.avatar" :src="'http://localhost:9000/files/' + i.avatar"></v-img>
+                <v-img
+                  v-if="i.avatar"
+                  :src="'http://localhost:9000/files/' + i.avatar"
+                ></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
                   indeterminate
@@ -61,7 +110,7 @@
                           color="primary"
                           dark
                           @click="checkStudentAlreadyVote"
-                          >Go ot vote page</v-btn
+                          >ไปหน้าลงคะแนน</v-btn
                         >
                       </template>
 
@@ -85,29 +134,35 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>ชื่อ-นามสกุล: {{i.title_name}}{{ i.c_name }}</pre>
+                                <pre>
+ชื่อ-นามสกุล: {{ i.title_name }}{{ i.c_name }}</pre
+                                >
                                 <pre>วัน/เดือน/ปี: {{ i.birthday }}</pre>
                                 <pre>เพศ: {{ i.gender.gender }}</pre>
-                                <pre>สำนักวิชา: {{i.major.major}}</pre>
-                                <pre>รหัสนักศึกษา: {{i.student_id}}</pre>
-                                <pre>ชั้นปี: {{i.year}}</pre>
-                                <pre>Gpax: {{i.grade}}</pre>
+                                <pre>สำนักวิชา: {{ i.major.major }}</pre>
+                                <pre>รหัสนักศึกษา: {{ i.student_id }}</pre>
+                                <pre>ชั้นปี: {{ i.year }}</pre>
+                                <pre>Gpax: {{ i.grade }}</pre>
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>จุดประสงค์ในการลงสมัคร</v-list-item-title>
+                              <v-list-item-title
+                                >จุดประสงค์ในการลงสมัคร</v-list-item-title
+                              >
                               <v-card-text>
-                                {{i.purpose}}
+                                {{ i.purpose }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>กิจกรรมที่เคยเข้าร่วม</v-list-item-title>
+                              <v-list-item-title
+                                >กิจกรรมที่เคยเข้าร่วม</v-list-item-title
+                              >
                               <v-card-text>
-                                {{i.archivement}}
+                                {{ i.archivement }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -138,11 +193,12 @@ export default {
       candidate: [],
       alertSuccess: false,
       dialog: false,
+      dialog2: false,
+      userhash: undefined,
+      userindex: undefined,
     };
   },
   methods: {
-    
-
     clearAlert() {
       this.alertSuccess = false;
     },
@@ -172,7 +228,7 @@ export default {
         }
       );
     },
-    
+
     checkStudentAlreadyVote() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
@@ -184,34 +240,54 @@ export default {
           // console.log(res.data)
           if (res.data === true) {
             alert("นักศึกษาลงคะแนนไปแล้ว");
-            
+
             // this.$router.push("/candidateDetail");
             // this.$router.go();
-          }else{
-            this.checkStudentAlreadyCandidate();            
-          } 
+          } else {
+            this.checkStudentAlreadyCandidate();
+          }
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    checkStudentAlreadyCandidate(){
+    checkStudentAlreadyCandidate() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
-        studentId: user.studentId
-      }
-      Api.post("/api/canp/student",JSON.stringify(body))
+        studentId: user.studentId,
+      };
+      Api.post("/api/canp/student", JSON.stringify(body))
         .then((res) => {
-          if(res.data === true){
+          if (res.data === true) {
             alert("นักศึกษาเป็นผู้ลงสมัคร");
-          }else{
-            this.$router.push("/vote")
+          } else {
+            this.$router.push("/vote");
           }
         })
         .catch((e) => {
           console.log(e);
+        });
+    },
+    async checkStudentHash(userhash) {
+      // const student = await JSON.parse(localStorage.getItem("user"));
+      // console.log(student);
+      // console.log(user.id);
+
+      await Api.get(
+        `/api/vote/getCorrectStudentHashByStudentHash?USER_HASH=${userhash}`
+      )
+        .then((res1) => {
+          console.log(res1);
+          if (res1.data === true) {
+            alert("ผลการลงคะแนนถูกต้อง");
+          } else {
+            alert("ผลการลงคะแนนไม่ถูกต้อง");
+          }
         })
-    }
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     // async save2() {},
   },
   mounted() {
