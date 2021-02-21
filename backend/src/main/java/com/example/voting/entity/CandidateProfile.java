@@ -26,8 +26,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @Table(name="CandidateProfile")
-
-
 public class CandidateProfile {
     @Id
     @SequenceGenerator(name="candidate_profile_seq",sequenceName="candidate_profile_seq")               
@@ -58,6 +56,8 @@ public class CandidateProfile {
     private  String purpose;
     @NotNull
     private  String avatar;
+    @NotNull
+    private  String pdf;    
     
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Major.class)
     @JoinColumn(name = "MAJOR_ID", insertable = true)
@@ -75,8 +75,6 @@ public class CandidateProfile {
     private @NotNull Admin admin;
 
 
-    //private int points;
-    
     public CandidateProfile(){}
     
     /*public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,

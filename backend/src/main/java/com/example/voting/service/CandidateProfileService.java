@@ -4,8 +4,10 @@ import com.example.voting.repository.CandidateProfileRepository;
 import com.example.voting.entity.CandidateProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-// import org.springframework.core.io.UrlResource;
+
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,8 +16,9 @@ public class CandidateProfileService {
   @Autowired
   private CandidateProfileRepository candidateProfileRepository;
 
-  // @Autowired
-  // private CandidateProfile candidateProfile;
+  public List<CandidateProfile> listAll() {
+    return candidateProfileRepository.findAll();
+  }
 
   public String deleteById(Long id) {
     Optional<CandidateProfile> candidateProfile = candidateProfileRepository.findById(id);
@@ -42,6 +45,7 @@ public class CandidateProfileService {
       cp.setPurpose(request.getPurpose());
       cp.setArchivement(request.getArchivement());
       cp.setAvatar(request.getAvatar());
+      cp.setPdf(request.getPdf());
       candidateProfileRepository.save(cp);
       return "edit candidate profile success";
     } else {
@@ -49,16 +53,5 @@ public class CandidateProfileService {
     }
   }
 
-  // public CandidateProfile deleteById(long id) {
-  // CandidateProfile candidateProfile = findById(id);
 
-  // if (candidateProfile == null)
-  // return null;
-
-  // if (canprofile.remove(candidateProfile)) {
-  // return candidateProfile;
-  // }
-
-  // return null;
-  // }
 }

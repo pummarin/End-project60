@@ -18,7 +18,7 @@
         <v-row justify="center">
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              label="หมายเลขผู้สมัคร"
+              label="หมายเลขผู้สมัคร (No.)"
               placeholder=" "
               outlined
               v-model="fillCanNumber"
@@ -29,7 +29,7 @@
         <v-row justify="center">
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              label="คำนำหน้าชื่อ"
+              label="คำนำหน้าชื่อ (Title Name)"
               placeholder=" "
               outlined
               v-model="fillTitleName"
@@ -38,7 +38,7 @@
 
           <v-col cols="12" sm="6" md="4">
             <v-text-field
-              label="ชื่อ-สกุล"
+              label="ชื่อ-สกุล (Firstname - Lastname)"
               placeholder=" "
               outlined
               v-model="fillName"
@@ -50,11 +50,12 @@
           <v-col cols="6" sm="2">
             <v-select
               class="pa-0 ma-0"
-              label="เพศ"
+              label="เพศ (Gender)"
               v-model="selectGender"
               :items="genders"
               item-text="gender"
               item-value="gender_id"
+              outlined
             />
           </v-col> 
 
@@ -71,10 +72,11 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="selectDate"
-                  label="วัน/เดือน/ปีเกิด"
+                  label="วัน/เดือน/ปีเกิด (Birthday)"
                   prepend-icon="mdi-calendar"
                   readonly
                   v-on="on"
+                  outlined
                 ></v-text-field>
               </template>
               <v-date-picker v-model="selectDate" no-title @input="menu2 = false"></v-date-picker>
@@ -82,22 +84,11 @@
             </v-menu>
           </v-col>
 
-    <!--
-          <v-col cols="12" sm="6" md="2">
-
-            <v-text-field
-              label="วัน-เดือน-ปีเกิด"
-              placeholder=" "
-              outlined
-              v-model="fillBirthday"
-            ></v-text-field>
-
-          </v-col>  -->
 
           <v-col cols="12" sm="6" md="2">
 
             <v-text-field
-              label="เบอร์โทรศัพท์"
+              label="เบอร์โทรศัพท์ (Mobile Phone)"
               placeholder=" "
               outlined
               v-model="fillTelephone"
@@ -108,7 +99,7 @@
         <v-row justify="center">
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              label="รหัสนักศึกษา"
+              label="รหัสนักศึกษา (Student ID No.)"
               placeholder=" "
               outlined
               v-model="fillStudentId"
@@ -117,7 +108,7 @@
 
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              label="ชั้นปี"
+              label="ชั้นปี (Year)"
               placeholder=" "
               outlined
               v-model="fillYear"
@@ -126,7 +117,7 @@
 
           <v-col cols="12" sm="6" md="2">
             <v-text-field
-              label="คะแนนเฉลี่ยสะสม(GPAX)"
+              label="คะแนนเฉลี่ยสะสม (GPAX)"
               placeholder=" "
               outlined
               v-model="fillGrade"
@@ -138,11 +129,12 @@
           <v-col cols="6">
             <v-select
               class="pa-0 ma-0"
-              label="สำนักวิชา-สาขาวิชา"
+              label="สำนักวิชา-สาขาวิชา (Major)"
               v-model="selectMajor"
               :items="majors"
               item-text="major"
               item-value="major_id"
+              outlined
             />
           </v-col>
         </v-row>
@@ -150,7 +142,7 @@
         <v-row justify="center">
           <v-col cols="12" sm="6" md="6">
             <v-text-field
-              label="กิจกรรมที่เคยร่วม"
+              label="กิจกรรมที่เคยร่วม (Archivement)"
               placeholder=" "
               outlined
               v-model="fillArchivement"
@@ -161,7 +153,7 @@
         <v-row justify="center">
           <v-col cols="12" sm="6" md="6">
             <v-text-field
-              label="จุดมุ่งหมายในการสมัครครั้งนี้"
+              label="จุดมุ่งหมายในการสมัครครั้งนี้ (Purpose)"
               placeholder=" "
               outlined
               v-model="fillPurpose"
@@ -173,7 +165,7 @@
           <v-col cols="12" sm="6" md="6">
             <v-file-input
               accept="image/png, image/jpeg"
-              label="รูปภาพ"
+              label="รูปภาพ (Image)"
               prepend-icon="mdi-camera"
               outlined
               @change="onFileSelected"
@@ -181,16 +173,29 @@
           </v-col>
         </v-row>
 
-    <!-- accept="image/png, image/jpeg" -->
+        <v-row justify="center">
+          <v-col cols="12" sm="6" md="6">
+            <v-file-input
+             
+              label="ผลงาน (Portfolio)"
+             
+              outlined
+              @change="pdfSelected"
+            ></v-file-input>
+          </v-col>
+        </v-row>
+
+    
         <v-row justify="center">
           <v-col cols="6">
             <v-select
               class="pa-0 ma-0"
-              label="ผู้กรอกข้อมูล"
+              label="ผู้กรอกข้อมูล (Updated By)"
               v-model="selectAdmin"
               :items="admins"
               item-text="name"
               item-value="admin_id"
+              outlined
             />
           </v-col>
         </v-row>
@@ -238,6 +243,8 @@ export default {
       fillPurpose: '',
       selectedFile: null,
       file: null,
+      selectedPdf: null,
+      pdf: null,
       majors: [],
       selectMajor: null,
       genders: [],
@@ -259,6 +266,12 @@ export default {
       // ให้ภาพที่เราเลือกจากคอม มาเก็บไว้ในตัวแปร selectedFile
       console.log(file);
       this.file = file;
+      // this.selectedFile = event.target.files[0];
+    },
+    pdfSelected(pdf) {
+      // ให้ภาพที่เราเลือกจากคอม มาเก็บไว้ในตัวแปร selectedFile
+      console.log(pdf);
+      this.pdf = pdf;
       // this.selectedFile = event.target.files[0];
     },
     getAllAdmin() {
@@ -318,6 +331,7 @@ export default {
       fd.append('gender', this.selectGender); //long
       fd.append('admin', this.selectAdmin.admin_id); //long
       fd.append('file', this.file); //MultipartFile
+       fd.append('pdf', this.pdf); //MultipartFile
       // Log for debug.
       console.log(
         fd.forEach((v, k) => {

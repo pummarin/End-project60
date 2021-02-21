@@ -6,16 +6,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-public interface StorageService {
-
-	void init();
+public interface PdfStorage {
+    void init();
 	void store(MultipartFile file);
 	Stream<Path> loadAll();
-	Path load(String avatar);
-	Resource loadAsResource(String avatar);
+	Path loadPdf(String pdf);
+	Resource loadPdfAsResource(String pdf);
 	void deleteAll();
-
-
-
-
 }

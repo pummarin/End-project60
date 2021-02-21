@@ -1,5 +1,4 @@
 package com.example.voting.storage;
-
 import com.example.voting.repository.*;
 import com.example.voting.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,12 @@ import java.util.*;
 import java.io.*;
 
 @Service
-public class FileStorageService implements StorageService {
-
-  private final Path rootLocation;
+public class PdfStorageService implements PdfStorage {
+    
+    private final Path rootLocation;
 
 	@Autowired
-	public FileStorageService(StorageProperties properties) {
+	public PdfStorageService(StorageProperties properties) {
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
 
@@ -60,14 +59,14 @@ public class FileStorageService implements StorageService {
 	}
 
 	@Override
-	public Path load(String filename) {
+	public Path loadPdf(String filename) {
 		return rootLocation.resolve(filename);
 	}
 
 	@Override
-	public Resource loadAsResource(String filename) {
+	public Resource loadPdfAsResource(String filename) {
 		try {
-			Path file = load(filename);
+			Path file = loadPdf(filename);
 			Resource resource = new UrlResource(file.toUri());
 			if(resource.exists() || resource.isReadable()) {
 				return resource;
@@ -98,5 +97,4 @@ public class FileStorageService implements StorageService {
 
 
 	
-
 }
