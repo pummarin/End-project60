@@ -2,7 +2,8 @@ package com.example.voting.entity;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import javax.persistence.Table;
 
 import javax.validation.constraints.NotNull;
 
-// import com.fasterxml.jackson.annotation.JsonFormat;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,13 +32,21 @@ public class TimeManagement {
     @Column(name = "time_id", unique = true, nullable = true)
     private  Long time_id;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime time_start;
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate election_day;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime time_end;
+    @NotNull
+    @DateTimeFormat(pattern="HH:mm")
+    private LocalTime time_start;
+
+    @NotNull
+    @DateTimeFormat(pattern="HH:mm")
+    private LocalTime time_end;
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Admin.class)
     @JoinColumn(name = "ADMIN_ID", insertable = true)
     private @NotNull Admin admin;
+
+    public TimeManagement(){}
 }

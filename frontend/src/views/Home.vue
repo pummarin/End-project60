@@ -2,21 +2,23 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="8" md="8">
       <template>
-        <v-card class="mx-auto" max-width="600">
+        <v-card class="mx-auto" max-width="900">
           <v-img
             class="white--text align-end"
-            height="200px"
-            src="http://localhost:9000/files/test01.png"
+         
+            max-height="400"
+            max-width="900"
+            src="back1.jpg"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular
                   indeterminate
-                  color="grey lighten-5"
+                  color="#000000"
                 ></v-progress-circular>
               </v-row>
             </template>
-            <v-card-title>SUT Student Council Election</v-card-title>
+            <!-- <v-card-title>SUT Student Council Election</v-card-title> -->
           </v-img>
 
           <v-card-subtitle class="pb-0">Detials</v-card-subtitle>
@@ -28,11 +30,12 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-btn color="orange" text @click="handleCreateCandidate">
+            <v-btn color="#000000"  text @click="handleCreateCandidate">
+            
               Add Candidate Profile
             </v-btn>
 
-            <v-btn color="orange" text  @click="handleShowCandidate">
+            <v-btn color="#000000" text @click="handleShowCandidate">
               Show Candidate Profile
             </v-btn>
           </v-card-actions>
@@ -56,6 +59,6 @@ export default {
       this.$router.push("/candidatelist");
     },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>

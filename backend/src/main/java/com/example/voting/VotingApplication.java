@@ -16,6 +16,8 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
@@ -35,7 +37,7 @@ public class VotingApplication {
 	@Bean
 	ApplicationRunner init(AdminRepository adminRepository, CandidateProfileRepository candidateProfileRepository,
 			GenderRepository genderRepository, MajorRepository majorRepository, StudentsRepository studentsRepository,
-			VoteRepository voteRepository) {
+			VoteRepository voteRepository, TimeManagementRepository timeManagementRepository) {
 		return args -> {
 
 			// Students
@@ -237,6 +239,28 @@ public class VotingApplication {
 			// Stream.of(v1,v2,v3).forEach(vote -> {
 			// voteRepository.save(vote);
 			// });
+
+			String select_time_start = "00:00";
+			String select_time_end = "00:05";
+			String select_election_day = "2021-02-28";
+			
+			DateTimeFormatter date_format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate election_day = LocalDate.parse(select_election_day, date_format);
+
+			DateTimeFormatter time_format = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime time_start = LocalTime.parse(select_time_start, time_format);
+            LocalTime time_end = LocalTime.parse(select_time_end, time_format);
+			
+			TimeManagement t1 = new TimeManagement();
+			t1.setElection_day(election_day);
+			t1.setTime_start(time_start);
+			t1.setTime_end(time_end);
+			t1.setAdmin(admin2);
+
+			Stream.of(t1).forEach(time -> {
+				timeManagementRepository.save(time);
+
+			});
 
 		};
 	}
