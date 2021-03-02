@@ -61,17 +61,23 @@ export default {
     },
 
     async getAllTime() {
-      await api
-        .get("/api/timeshow")
-        .then((response) => {
-          this.date_time_election = JSON.parse(JSON.stringify(response.data));
-          console.log(this.date_time_election[0]);
-          console.log(JSON.parse(JSON.stringify(response.data)));
-          console.log("get time_start = " + this.date_time_election[0].time_start);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      return new Promise((success, err) => {
+        api
+          .get("/api/timeshow")
+          .then((response) => {
+            this.date_time_election = JSON.parse(JSON.stringify(response.data));
+            console.log(this.date_time_election[0]);
+            console.log(JSON.parse(JSON.stringify(response.data)));
+            console.log(
+              "get time_start = " + this.date_time_election[0].time_start
+            );
+            success(true);
+          })
+          .catch((e) => {
+            console.log(e);
+            err(false);
+          });
+      });
     },
 
     signin() {
@@ -79,68 +85,40 @@ export default {
         studentId: this.username,
         identifyNumber: this.password,
       };
-      // var timeout = new Date();
-      // timeout.setHours(0);
-      // timeout.setMinutes(10);
-      // this.getAllTime();
-      // var date2 = date1.toLocaleDateString("th-TH" ,"d/M/yyyy"); // วันที่ 3/2/2564
-      // console.log(date1.toLocaleDateString("th-TH" ,"d/M/yyyy"));
+      
+      var now = new Date();
+      console.log(now);
+      //เซตวันเวลาเริ่มต้น
+      var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
+      // console.log(electionDateStart);
+      //เซตวันเวลาสิ้นสุด
+      var electionDateEnd = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_end);
+      // console.log(electionDateEnd);
 
-      var date1 = new Date();
-      this.today = date1;
-      console.log(date1);
-
-      var login_date_now = date1.toISOString().slice(0, 10).replace(/-/g, "-");
-      this.login_today = login_date_now;
-      console.log(login_date_now);
-
-      // var time_now = date1.getHours() + ":" + date1.getMinutes() + ":" + date1.getSeconds();
-      // console.log("time that you loged in = " + time_now);
-
-      //  this.$router.push("/candidateDetail");
-
-      // var end_election_time = this.time_end.toLocaleTimeString(); //หมดเวลา
-      // var start_election_time = this.time_start.toLocaleTimeString(); //ในช่วงเวลานั้น
-      // var login_time = time_now.toLocaleTimeString(); //เวลาที่ล็อกอิน
-      // var login_date = time_now.toLocaleDateString("fr-CA"); //วันที่ล็อกอิน
-
-      // if(login_date == election_date){
-      //   if(login_time > start_election_time && login_time < end_election_time){
-      //     console.log("in time");
-      //   } else if(login_time < start_election_time) {
-      //     console.log("election not start yet");
-      //   } else if(login_time > end_election_time){
-      //     console.log("election closed");
-      //   }
-      // }
-
-      api
+      //เช็คอยู่ในช่วงเวลาไหม
+      if (now >= electionDateStart && now <= electionDateEnd) {
+        // console.log("อยู่ช่วงเวลาลงคะแนน");
+        api
         .post("/auth/login", JSON.stringify(user))
         .then((res) => {
-          let user = res.data;
-          localStorage.setItem("user", JSON.stringify(user));
-          // localStorage.setItem("login_time", Date.now());
-          // console.log(localStorage.toLocaleTimeString());
-          this.$router.go("/home");
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.$router.go("/candidateDetail");
         })
         .catch((e) => {
           alert(e);
         });
+      }else{
+        // console.log("ไม่อยู่ในช่วงเวลาลงคะแนน");
+        alert("ไม่ได้อยู่ในช่วงเวลาทำการ\n"+"เริ่ม: "+electionDateStart.toLocaleString("th-TH") + " สิ้นสุด: "+ electionDateEnd.toLocaleString("th-TH"));
+      }
+      
     },
   },
   mounted() {
-    this.getAllTime();
-    // console.log(this.date_time_election);
-    if (localStorage.getItem("user")) {
-      // if (this.login_date_now < this.date_time_election[0].election_day) {
-      //   this.$router.push("/home");
-      // } else if (this.login_date_now > this.date_time_election[0].election_day) {
-      //   this.$router.push("/home");
-      // } else {
-      //   this.$router.push("/candidateDetail");
-      // }
+    this.getAllTime();   
+    if(localStorage.getItem("user")){
       this.$router.push("/candidateDetail");
-    }
+    } 
   },
 };
 </script>
