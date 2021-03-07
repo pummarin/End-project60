@@ -100,7 +100,6 @@ public class VoteController {
             System.out.println(e.getMessage());
         }
 
-
 //        todo import hash function
 
 //        todo getPrevHash from lasted record and set it
@@ -161,7 +160,7 @@ public class VoteController {
             c.setId(vote.getId());
             c.setHash(vote.getHash());
             c.setPrevHash(vote.getPrevHash());
-//
+            c.setVoteTime(vote.getVoteTime());
 //            System.out.println("temp hash = "+tempHash);
             tempHash.set(checkHashData(vote, tempHash.get()));
 //            System.out.println("vote hash = "+vote.getHash()+" temp hash = " + tempHash);
@@ -173,6 +172,18 @@ public class VoteController {
             respone.add(c);
         });
         return ResponseEntity.ok().body(respone);
+    }
+
+    @GetMapping("/vote/getHashBlockByStudentId")
+    public ResponseEntity<?> getHashBlockByStudentId(@RequestParam("STUDENT_ID") long id){
+        Optional<Students> students = studentsRepository.findById(id);
+        Optional<Vote> votes = voteRepository.findByStudents(students.get());
+        CheckedAllBoxRespone c = new CheckedAllBoxRespone();
+        c.setId(votes.get().getId());
+        c.setHash(votes.get().getHash());
+        c.setPrevHash(votes.get().getPrevHash());
+        c.setVoteTime(votes.get().getVoteTime());
+        return ResponseEntity.ok().body(c);
     }
 
     public String checkHashData(Vote vote, String prevHash) {

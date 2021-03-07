@@ -124,6 +124,9 @@ public class VotingApplication {
 			String selectDate = "1998-08-11";
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate birthday = LocalDate.parse(selectDate, formatter);
+
+			String date1 = "1999-02-01";
+			LocalDate birthday1 = LocalDate.parse(date1, formatter);
 			// CandidateProfile
 			// 1
 			CandidateProfile cp1 = new CandidateProfile();
@@ -137,7 +140,7 @@ public class VotingApplication {
 			cp1.setArchivement("โครงการ Green and Clean, บริจาคโลหิต");
 			cp1.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
 			cp1.setC_number(201);
-			cp1.setAvatar("test01.png");
+			cp1.setAvatar("test02.jpg");
 			cp1.setMajor(m36);
 			cp1.setGender(g1);
 			cp1.setAdmin(admin2);
@@ -163,54 +166,39 @@ public class VotingApplication {
 
 			CandidateProfile cp3 = new CandidateProfile();
 			cp3.setTitle_name("นาย");
-			cp3.setBirthday(birthday);
+			cp3.setBirthday(birthday1);
 			cp3.setStudentId("B6204321");
-			cp3.setC_name("คิม โดยอง");
+			cp3.setC_name("คริสโตเฟอร์ แซ่จีน");
 			cp3.setYear(2);
 			cp3.setTelephone("0981135169");
 			cp3.setGrade("4.00");
 			cp3.setArchivement("บริจาคโลหิต");
 			cp3.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
 			cp3.setC_number(203);
-			cp3.setAvatar("test01.png");
+			cp3.setAvatar("test03.jpg");
 			cp3.setMajor(m17);
-			cp3.setGender(g2);
+			cp3.setGender(g1);
 			cp3.setAdmin(admin2);
 			cp3.setPdf("testfile.pdf");
 
 			CandidateProfile cp4 = new CandidateProfile();
-			cp4.setTitle_name("นางสาว");
-			cp4.setBirthday(birthday);
+			cp4.setTitle_name("นาย");
+			cp4.setBirthday(birthday1);
 			cp4.setStudentId("B6204321");
-			cp4.setC_name("ซอ จอนห์นี่");
+			cp4.setC_name("จอห์น นี่");
 			cp4.setYear(3);
 			cp4.setTelephone("0981135169");
 			cp4.setGrade("3.99");
 			cp4.setArchivement("บริจาคโลหิต");
 			cp4.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
 			cp4.setC_number(301);
-			cp4.setAvatar("test01.png");
+			cp4.setAvatar("test04.jpg");
 			cp4.setMajor(m17);
-			cp4.setGender(g2);
+			cp4.setGender(g1);
 			cp4.setAdmin(admin2);
 			cp4.setPdf("testfile.pdf");
 
-			// //3
-			// CandidateProfile cp3 = new CandidateProfile();
-			// cp3.setTitle_name("นางสาว");
-			// cp3.setC_name("ใจร้าย มากมาก");
-			// cp3.setBirthday("27 กุมภาพันธ์ 2542");
-			// cp3.setTelephone("0981135169");
-			// cp3.setStudentId("B6104321");
-			// cp3.setYear(3);
-			// cp3.setGrade("3.84");
-			// cp3.setArchivement("บริจาคโลหิต");
-			// cp3.setPurpose("อยากมีส่วนร่วมกิจกรรมของมหาวิทยาลัย");
-			// cp3.setC_number(301);
-			// cp3.setMajor(m20);
-			// cp3.setGender(g2);
-			// cp3.setAdmin(admin1);
-			//
+		
 			Stream.of(cp1, cp2, cp3, cp4).forEach(cp -> {
 				candidateProfileRepository.save(cp);
 
@@ -240,9 +228,11 @@ public class VotingApplication {
 			// voteRepository.save(vote);
 			// });
 
-			String select_time_start = "00:00";
-			String select_time_end = "00:05";
-			String select_election_day = "2021-02-28";
+				//วันเวลาเลือกตั้ง
+
+			String select_time_start = "14:19";
+			String select_time_end = "14:30";
+			String select_election_day = "2021-03-06";
 			
 			DateTimeFormatter date_format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate election_day = LocalDate.parse(select_election_day, date_format);

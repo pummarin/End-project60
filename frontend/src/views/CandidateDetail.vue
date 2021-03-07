@@ -1,9 +1,8 @@
-
 <template>
-  <v-col cols="10" md="6" sm="6">
+  <v-col cols="12" md="5" sm="6">
     <div>
       <div>
-        <h1 >ข้อมูลผู้สมัคร</h1>
+        <h1>ข้อมูลผู้สมัคร</h1>
         <v-container grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto">
@@ -12,7 +11,10 @@
               </v-card-title>
 
               <v-card-text class="text-center">
-                <v-img v-if="i.avatar" :src="'http://localhost:9000/files/' + i.avatar"></v-img>
+                <v-img
+                  v-if="i.avatar"
+                  :src="'http://localhost:9000/files/' + i.avatar"
+                ></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
                   indeterminate
@@ -55,6 +57,15 @@
                         >
                           ข้อมูลผู้สมัคร
                         </v-btn>
+                        
+                        <v-btn
+                          class="ma-2"
+                          outlined
+                          color="primary"
+                          dark
+                           @click="exportPDF(i.pdf)"
+                          >Portfolio</v-btn>
+
                         <v-btn
                           class="ma-2"
                           outlined
@@ -85,29 +96,35 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>ชื่อ-นามสกุล: {{i.title_name}}{{ i.c_name }}</pre>
+                                <pre>
+ชื่อ-นามสกุล: {{ i.title_name }}{{ i.c_name }}</pre
+                                >
                                 <pre>วัน/เดือน/ปี: {{ i.birthday }}</pre>
                                 <pre>เพศ: {{ i.gender.gender }}</pre>
-                                <pre>สำนักวิชา: {{i.major.major}}</pre>
-                                <pre>รหัสนักศึกษา: {{i.student_id}}</pre>
-                                <pre>ชั้นปี: {{i.year}}</pre>
-                                <pre>Gpax: {{i.grade}}</pre>
+                                <pre>สำนักวิชา: {{ i.major.major }}</pre>
+                                <pre>รหัสนักศึกษา: {{ i.student_id }}</pre>
+                                <pre>ชั้นปี: {{ i.year }}</pre>
+                                <pre>Gpax: {{ i.grade }}</pre>
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>จุดประสงค์ในการลงสมัคร</v-list-item-title>
+                              <v-list-item-title
+                                >จุดประสงค์ในการลงสมัคร</v-list-item-title
+                              >
                               <v-card-text>
-                                {{i.purpose}}
+                                {{ i.purpose }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>กิจกรรมที่เคยเข้าร่วม</v-list-item-title>
+                              <v-list-item-title
+                                >กิจกรรมที่เคยเข้าร่วม</v-list-item-title
+                              >
                               <v-card-text>
-                                {{i.archivement}}
+                                {{ i.archivement }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -129,11 +146,11 @@
 <script>
 import Axios from "axios";
 import Api from "../Api";
-
 export default {
   name: "Vote",
   data() {
     return {
+      pdf: [],
       photos: [],
       candidate: [],
       alertSuccess: false,
@@ -142,7 +159,6 @@ export default {
   },
   methods: {
     
-
     clearAlert() {
       this.alertSuccess = false;
     },
@@ -156,12 +172,12 @@ export default {
           // for(let i in this.candidate){
           //   console.log(i);
           // }
+          console.log("pdf name = " + this.candidate[0].pdf);
         })
         .catch((e) => {
           console.log(e);
         });
     },
-
     async getPhotos() {
       // this.photos = await Axios.get(`${api/canprofile2}/${this.getAllCandidate.avatar}`).then(
       this.photos = await Axios.get("https://picsum.photos/v2/list").then(
@@ -171,6 +187,12 @@ export default {
           return Response.data;
         }
       );
+    },
+
+    exportPDF(pdf) {
+      window.open("http://localhost:9000/pdf/" + pdf, "_blank");
+      // this.$router.push("http://localhost:9000/pdf/" + pdf);
+
     },
     
     checkStudentAlreadyVote() {

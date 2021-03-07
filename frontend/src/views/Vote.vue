@@ -1,16 +1,9 @@
 
 <template>
   <v-col cols="12" md="5" sm="6">
-    <v-alert prominent type="success" dismissible v-model="alertSuccess"
-      ><v-row align-center>
-        <v-col class="grow"> ลงคะแนนสำเร็จ... </v-col>
-        <v-col class="shrink">
-          <v-btn text>Go ot home page</v-btn>
-        </v-col>
-      </v-row></v-alert
-    >
     <div>
       <div>
+        <h1>ลงคะแนนผู้สมัคร</h1>
         <v-container fluid grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto" v-if="loaded">
@@ -19,7 +12,10 @@
               </v-card-title>
 
               <v-card-text class="text-center">
-                <v-img v-if="i.avatar" :src="'http://localhost:9000/files/'+i.avatar"></v-img>
+                <v-img
+                  v-if="i.avatar"
+                  :src="'http://localhost:9000/files/' + i.avatar"
+                ></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
                   indeterminate
@@ -54,6 +50,34 @@
         </v-container>
       </div>
     </div>
+    <v-row justify="center">
+      <v-dialog v-model="dialog" persistent max-width="550px">
+        <!-- <template v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+            Open Dialog
+          </v-btn>
+        </template> -->
+        <v-card>
+          <v-card-title class="headline">
+            <u>ลงคะแนนสำเร็จ.. กรุณาบันทึกภาพเป็นหลักฐาน</u>
+          </v-card-title>
+          <v-card-text>
+            <p>ข้อมูลเข้ารหัส: {{studentHash.hash}}</p>
+            <p></p>
+            </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="(dialog = false), goDetail()"
+            >
+              Disagree
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </v-col>
 </template>
 
@@ -69,6 +93,8 @@ export default {
       photos: [],
       candidate: [],
       alertSuccess: false,
+      dialog: false,
+      studentHash: ''
     };
   },
   methods: {
@@ -101,21 +127,23 @@ export default {
         });
     },
     async save2(c) {
-      if (confirm("Are you sure ?")) {
+      if (confirm("ยืนยันการลงคะแนนหรือไม่?")) {
         const student = await JSON.parse(localStorage.getItem("user"));
         // console.log(student);
         var data = {
           can_id: c.can_id,
           students_id: student.id,
         };
-        
+
         Api.post("/api/vote/new", data)
-          .then(res => {
-            alert(res.data);
+          .then((res) => {
+            console.log(res.data);
             this.alertSuccess = true;
-            setTimeout(() => {
-              this.$router.push("/candidateDetail");
-            }, 1000);
+            this.getBlockHashVoteStudent();
+            this.dialog = true;
+            // setTimeout(() => {
+            //   this.$router.push("/candidateDetail");
+            // }, 1000);
           })
           .catch((e) => {
             console.log(e);
@@ -123,50 +151,64 @@ export default {
       }
       // console.log(c);
     },
-    checkStudentAlreadyCandidate(){
+    checkStudentAlreadyCandidate() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
-        studentId: user.studentId
-      }
-      Api.post("/api/canp/student",JSON.stringify(body))
+        studentId: user.studentId,
+      };
+      Api.post("/api/canp/student", JSON.stringify(body))
         .then((res) => {
-          if(res.data === true){
+          if (res.data === true) {
             alert("นักศึกษาเป็นผู้ลงสมัคร");
             this.$router.push("/candidateDetail");
-          }else{
+          } else {
             this.loaded = true;
           }
         })
         .catch((e) => {
           console.log(e);
-        })
+        });
+    },
+    goDetail() {
+      setTimeout(() => {
+        this.$router.push("/candidateDetail");
+      }, 1000);
+    },
+    async getBlockHashVoteStudent() {
+      const student = await JSON.parse(localStorage.getItem("user"));
+      // console.log(student);
+      await Api.get(
+        `/api/vote/getHashBlockByStudentId?STUDENT_ID=${student.id}`
+      ).then((res) => {
+        this.studentHash = res.data
+        console.log(this.studentHash);
+      });
     },
   },
   mounted() {
-    // this.getPhotos();
+    // this.getPhotos();    
     this.clearAlert();
     this.getAllCandidate();
     let user = JSON.parse(localStorage.getItem("user"));
-      let body = {
-        student_id: user.id,
-      };
-      // console.log(user.id);
-      Api.post("/api/vote/student", JSON.stringify(body))
-        .then((res) => {
-          // console.log(res.data)
-          if (res.data === true) {
-            alert("นักศึกษาลงคะแนนไปแล้ว");
-            
-            this.$router.push("/candidateDetail");
-            // this.$router.go();
-          }else{
-            this.checkStudentAlreadyCandidate();            
-          } 
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    let body = {
+      student_id: user.id,
+    };
+    // console.log(user.id);
+    Api.post("/api/vote/student", JSON.stringify(body))
+      .then((res) => {
+        // console.log(res.data)
+        if (res.data === true) {
+          alert("นักศึกษาลงคะแนนไปแล้ว");
 
+          this.$router.push("/candidateDetail");
+          // this.$router.go();
+        } else {
+          this.checkStudentAlreadyCandidate();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 };
 </script>

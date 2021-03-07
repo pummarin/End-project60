@@ -48,8 +48,8 @@ export default {
       username: undefined,
       password: undefined,
       date_time_election: [],
-      today: null, //วันที่
-      login_today: null, //login วันนี้
+      // today: null, //วันที่
+      // login_today: null, //login วันนี้
       election_day: null,
       time_start: null, //เริ่มเวลาเท่าไหร่
       time_end: null, //หมดเวลาเท่าไหร่
@@ -110,6 +110,8 @@ export default {
       }else{
         // console.log("ไม่อยู่ในช่วงเวลาลงคะแนน");
         alert("ไม่ได้อยู่ในช่วงเวลาทำการ\n"+"เริ่ม: "+electionDateStart.toLocaleString("th-TH") + " สิ้นสุด: "+ electionDateEnd.toLocaleString("th-TH"));
+        this.$router.push("/voteResult");
+        
       }
       
     },

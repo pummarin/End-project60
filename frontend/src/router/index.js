@@ -56,7 +56,7 @@ const routes = [
     path: "/voteResult",
     name: "VoteResult",
     component: () =>
-    import("../views/VoteResult.vue")
+      import("../views/VoteResult.vue")
   },
   {
     path: "/candidatelist",
@@ -64,6 +64,7 @@ const routes = [
     component: () =>
     import("../views/CandidateList.vue")
   },
+  
   // {
   //   path: "/test",
   //   name: "candidatelist",
@@ -78,7 +79,28 @@ const routes = [
     component: () =>
     import("../views/SetTime.vue")
   },
-];
+
+  {
+    path: "/hashchecker",
+    name: "Hashchecker",
+    component: () =>
+      import("../views/Hashchecker.vue")
+  },
+
+  {
+    path: "/editdate",
+    name: "EditTime",
+    component: () =>
+      import("../views/EditTime.vue")
+  },
+
+  {
+    path: "/adminhomepage",
+    name: "AdminHome",
+    component: () =>
+      import("../views/AdminHome.vue")
+  }
+]
 
 const router = new VueRouter({
   mode: "history",
@@ -86,8 +108,9 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/signin", "/home", "/register", "/admin/signin","/voteResult","/candidateprofile","/candidatelist",
-    ];
+  const publicPages = ["/signin", "/home", "/register", "/admin/signin", "/voteResult", "/candidateprofile", "/hashchecker", "/candidatelist"
+  ,"/editdate", "/adminhomepage"
+  ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
 

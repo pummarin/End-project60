@@ -9,5 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface TimeManagementRepository extends JpaRepository<TimeManagement, Long> {
-    Optional<TimeManagement> findById(Long id);
+    Optional<TimeManagement> findById(Long time_id);
+
 }

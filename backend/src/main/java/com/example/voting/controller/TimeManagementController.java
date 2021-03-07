@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import com.example.voting.entity.*;
 import com.example.voting.repository.*;
+import com.example.voting.service.TimeManagementService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,8 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,15 +30,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class TimeManagementController {
 
     @Autowired
-    private AdminRepository adminRepository;
+    AdminRepository adminRepository;
     @Autowired
     private TimeManagementRepository timeManagementRepository;
 
+    @Autowired
+    TimeManagementService timeManagementService;
+
+    public TimeManagementController(TimeManagementRepository timeManagementRepository) {
+        this.timeManagementRepository = timeManagementRepository;
+    }
+    
     @GetMapping("/timeshow")
     public Collection<TimeManagement> getAllTime() {
         return timeManagementRepository.findAll().stream().collect(Collectors.toList());
     }
-
+    // @PutMapping("/editdate")
+    // public String editTime(@RequestBody TimeManagement request) {
+    //     return timeManagementService.editTime(request);
+    // }
 
     @PostMapping("/timecheck")
     public ResponseEntity<?> newTimeSet(@RequestParam(value = "election_day") String select_election_day,
