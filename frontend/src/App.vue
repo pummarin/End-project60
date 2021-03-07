@@ -153,7 +153,7 @@ export default {
       } else if (this.userRole == "student") {
         return "blue darken-3";
       } else {
-        return "white";
+        return "#EBEBEB";
       }
     },
     footerColor() {
@@ -162,7 +162,7 @@ export default {
       } else if (this.userRole == "student") {
         return "primary";
       } else {
-        return "white";
+        return "#EBEBEB";
       }
     },
     handleProfile() {

@@ -13,7 +13,7 @@
           </v-col>
         </v-row>
         <br />
-        <v-card class="mx-auto" max-width="900">
+        <v-card class="mx-auto" shaped max-width="900">
           <br />
           <h1>Set Time</h1>
           <v-row justify="center">

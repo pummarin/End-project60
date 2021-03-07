@@ -13,12 +13,12 @@
           </v-col>
         </v-row>
         <br />
-        <v-card class="mx-auto" max-width="1400">
+        <v-card class="mx-auto" shaped max-width="900">
           <br />
           <h1>Add Candidate</h1>
 
           <v-row justify="center">
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="3">
               <v-text-field
                 label="หมายเลขผู้สมัคร (No.)"
                 placeholder=" "
@@ -29,7 +29,7 @@
           </v-row>
 
           <v-row justify="center">
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="3">
               <v-text-field
                 label="คำนำหน้าชื่อ (Title Name)"
                 placeholder=" "
@@ -38,7 +38,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="6" md="4">
+            <v-col cols="12" sm="6" md="6">
               <v-text-field
                 label="ชื่อ-สกุล (Firstname - Lastname)"
                 placeholder=" "
@@ -49,7 +49,7 @@
           </v-row>
 
           <v-row justify="center">
-            <v-col cols="6" sm="2">
+            <v-col cols="6" sm="2" md="3">
               <v-select
                 class="pa-0 ma-0"
                 label="เพศ (Gender)"
@@ -61,7 +61,7 @@
               />
             </v-col>
 
-            <v-col cols="6" sm="2">
+            <v-col cols="6" sm="2" md="3">
               <v-menu
                 v-model="menu2"
                 :close-on-content-click="false"
@@ -89,7 +89,7 @@
               </v-menu>
             </v-col>
 
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="3">
               <v-text-field
                 label="เบอร์โทรศัพท์ (Mobile Phone)"
                 placeholder=" "
@@ -100,7 +100,7 @@
           </v-row>
 
           <v-row justify="center">
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="3">
               <v-text-field
                 label="รหัสนักศึกษา (Student ID No.)"
                 placeholder=" "
@@ -109,7 +109,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="3">
               <v-text-field
                 label="ชั้นปี (Year)"
                 placeholder=" "
@@ -118,7 +118,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="6" md="2">
+            <v-col cols="12" sm="6" md="3">
               <v-text-field
                 label="คะแนนเฉลี่ยสะสม (GPAX)"
                 placeholder=" "
@@ -196,6 +196,7 @@
                 item-text="name"
                 item-value="admin_id"
                 outlined
+                disabled
               />
             </v-col>
           </v-row>

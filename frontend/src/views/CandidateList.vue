@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-flex mb-4>
-      <v-data-table
+      <v-data-table 
         :headers="headers"
         :items="allCandidate"
         class="elevation-1"
@@ -13,7 +13,7 @@
             <v-spacer></v-spacer>
 
             <v-dialog v-if="selectEdit" v-model="dialogEdit" max-width="900">
-              <v-card>
+              <v-card >
                 <v-row justify="center">
                   <v-card-text class="text-center">
                     <v-row justify="center">
@@ -210,6 +210,7 @@
                       v-model="selectAdmin"
                       :items="admins"
                       outlined
+                      disabled
                       item-text="name"
                       item-value="admin_id"
                     />

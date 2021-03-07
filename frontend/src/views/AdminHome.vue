@@ -2,7 +2,7 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="8" md="8">
       <template>
-        <v-card class="mx-auto" max-width="2000">
+        <v-card class="mx-auto" shaped max-width="2000">
           <v-img
             class="white--text align-end"
             max-height="500"

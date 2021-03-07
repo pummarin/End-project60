@@ -49,7 +49,7 @@ public class VotingApplication {
 					"Kamolchat@gmail.com", "ComputerEngineer");
 			Students student4 = new Students("นายมโน เอาเอง", "B6001234", "ชาย", "0960032169", "1480010329785", "2",
 					"Mahno@gmail.com", "ComputerEngineer");
-			Students student5 = new Students("นางสาวทดสอบ ระบบ", "B6008376", "หญิง", "0960032169", "0000", "2",
+			Students student5 = new Students("นางสาวทดสอบ ระบบ", "B6008376", "หญิง", "0960032169", "0000", "3",
 					"Mahno@gmail.com", "ComputerEngineer");
 
 			Stream.of(student1, student2, student3, student4, student5).forEach(student -> {
