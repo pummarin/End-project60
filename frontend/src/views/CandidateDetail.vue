@@ -3,7 +3,7 @@
   <v-col cols="12" md="5" sm="6">
     <div>
       <div>
-        <h1 >ข้อมูลผู้สมัคร</h1>
+        <h1>ข้อมูลผู้สมัคร</h1>
         <v-container grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto">
@@ -12,7 +12,10 @@
               </v-card-title>
 
               <v-card-text class="text-center">
-                <v-img v-if="i.avatar" :src="'http://localhost:9000/files/' + i.avatar"></v-img>
+                <v-img
+                  v-if="i.avatar"
+                  :src="'http://localhost:9000/files/' + i.avatar"
+                ></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
                   indeterminate
@@ -29,14 +32,6 @@
 
               <v-card-actions>
                 <div>
-                  <!-- <v-btn
-                    class="ma-2"
-                    outlined
-                    color="indigo"
-                    dark
-                    @click="save2()"
-                    >ข้อมูลผู้สมัคร</v-btn
-                  > -->
                   <v-row>
                     <v-dialog
                       v-model="dialog"
@@ -52,28 +47,27 @@
                           dark
                           v-bind="attrs"
                           v-on="on"
+                          @click="test(i)"
                         >
                           ข้อมูลผู้สมัคร
                         </v-btn>
+
                         <v-btn
                           class="ma-2"
                           outlined
                           color="primary"
                           dark
                           @click="checkStudentAlreadyVote"
-                          >Go ot vote page</v-btn
+                          >ไปหน้าลงคะแนน</v-btn
                         >
                       </template>
 
-                      <v-card>
-                        <v-toolbar dark color="primary">
-                          <v-btn icon dark @click="dialog = false">
-                            <v-icon>mdi-close</v-icon>
-                          </v-btn>
+                      <v-card v-if="personal">
+                        <v-toolbar dark color="primary">                         
                           <v-toolbar-title>รายละเอียด</v-toolbar-title>
                           <v-spacer></v-spacer>
                           <v-toolbar-items>
-                            <v-btn dark text @click="dialog = false">
+                            <v-btn dark text @click="dialog = false ; personal = undefined">
                               Close
                             </v-btn>
                           </v-toolbar-items>
@@ -85,29 +79,33 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>ชื่อ-นามสกุล: {{i.title_name}}{{ i.c_name }}</pre>
-                                <pre>วัน/เดือน/ปี: {{ i.birthday }}</pre>
-                                <pre>เพศ: {{ i.gender.gender }}</pre>
-                                <pre>สำนักวิชา: {{i.major.major}}</pre>
-                                <pre>รหัสนักศึกษา: {{i.student_id}}</pre>
-                                <pre>ชั้นปี: {{i.year}}</pre>
-                                <pre>Gpax: {{i.grade}}</pre>
+                                <pre>ชื่อ-นามสกุล: {{ personal.title_name }}{{ personal.c_name }}</pre>
+                                <pre>วัน/เดือน/ปี: {{ personal.birthday }}</pre>
+                                <pre>เพศ: {{ personal.gender.gender }}</pre>
+                                <pre>สำนักวิชา: {{ personal.major.major }}</pre>
+                                <pre>รหัสนักศึกษา: {{ personal.student_id }}</pre>
+                                <pre>ชั้นปี: {{ personal.year }}</pre>
+                                <pre>Gpax: {{ personal.grade }}</pre>
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>จุดประสงค์ในการลงสมัคร</v-list-item-title>
+                              <v-list-item-title
+                                >จุดประสงค์ในการลงสมัคร</v-list-item-title
+                              >
                               <v-card-text>
-                                {{i.purpose}}
+                                {{ personal.purpose }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
                           <v-list-item>
                             <v-list-item-content>
-                              <v-list-item-title>กิจกรรมที่เคยเข้าร่วม</v-list-item-title>
+                              <v-list-item-title
+                                >กิจกรรมที่เคยเข้าร่วม</v-list-item-title
+                              >
                               <v-card-text>
-                                {{i.archivement}}
+                                {{ personal.archivement }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -127,22 +125,19 @@
 </template>
 
 <script>
-import Axios from "axios";
 import Api from "../Api";
 
 export default {
   name: "Vote",
   data() {
     return {
-      photos: [],
       candidate: [],
       alertSuccess: false,
       dialog: false,
+      personal: undefined,
     };
   },
   methods: {
-    
-
     clearAlert() {
       this.alertSuccess = false;
     },
@@ -152,27 +147,17 @@ export default {
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
-          console.log(JSON.parse(JSON.stringify(response.data)));
-          // for(let i in this.candidate){
-          //   console.log(i);
-          // }
         })
         .catch((e) => {
           console.log(e);
         });
     },
 
-    async getPhotos() {
-      // this.photos = await Axios.get(`${api/canprofile2}/${this.getAllCandidate.avatar}`).then(
-      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
-        (Response) => {
-          console.log(Response.data);
-          // this.photos = Response.data;
-          return Response.data;
-        }
-      );
+    test(i) {
+      this.personal = i;
+      console.log(i);
     },
-    
+
     checkStudentAlreadyVote() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
@@ -184,38 +169,36 @@ export default {
           // console.log(res.data)
           if (res.data === true) {
             alert("นักศึกษาลงคะแนนไปแล้ว");
-            
+
             // this.$router.push("/candidateDetail");
             // this.$router.go();
-          }else{
-            this.checkStudentAlreadyCandidate();            
-          } 
+          } else {
+            this.checkStudentAlreadyCandidate();
+          }
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    checkStudentAlreadyCandidate(){
+    checkStudentAlreadyCandidate() {
       let user = JSON.parse(localStorage.getItem("user"));
       let body = {
-        studentId: user.studentId
-      }
-      Api.post("/api/canp/student",JSON.stringify(body))
+        studentId: user.studentId,
+      };
+      Api.post("/api/canp/student", JSON.stringify(body))
         .then((res) => {
-          if(res.data === true){
+          if (res.data === true) {
             alert("นักศึกษาเป็นผู้ลงสมัคร");
-          }else{
-            this.$router.push("/vote")
+          } else {
+            this.$router.push("/vote");
           }
         })
         .catch((e) => {
           console.log(e);
-        })
-    }
-    // async save2() {},
+        });
+    },
   },
   mounted() {
-    // this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
   },
