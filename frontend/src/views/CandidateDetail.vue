@@ -4,52 +4,6 @@
     <div>
       <div>
         <h1>ข้อมูลผู้สมัคร</h1>
-        <div class="text-right">
-          <v-dialog v-model="dialog2" width="500">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="red lighten-2"
-                outlined
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                ตรวจสอบการลงคะแนน
-              </v-btn>
-            </template>
-
-            <v-card>
-              <v-card-title class="headline grey lighten-2">
-                ตรวจสอบการลงคะแนน
-              </v-card-title>
-
-              <v-card-text>
-                <v-text-field
-                  label="กรอกรหัส"
-                  name="hashvalue"
-                  v-model="userhash"
-                ></v-text-field>
-              </v-card-text>
-
-              <v-divider></v-divider>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  class="ma-2"
-                  outlined
-                  color="primary"
-                  dark
-                  @click="checkStudentHash(userhash)"
-                  >ตรวจสอบ</v-btn
-                >
-                <v-btn color="primary" text @click="dialog2 = false">
-                  ปิด
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </div>
         <v-container grid-list-md>
           <v-col v-for="i in candidate" v-bind:key="i.can_id">
             <v-card width="650" height="auto">
@@ -78,14 +32,6 @@
 
               <v-card-actions>
                 <div>
-                  <!-- <v-btn
-                    class="ma-2"
-                    outlined
-                    color="indigo"
-                    dark
-                    @click="save2()"
-                    >ข้อมูลผู้สมัคร</v-btn
-                  > -->
                   <v-row>
                     <v-dialog
                       v-model="dialog"
@@ -101,9 +47,11 @@
                           dark
                           v-bind="attrs"
                           v-on="on"
+                          @click="test(i)"
                         >
                           ข้อมูลผู้สมัคร
                         </v-btn>
+
                         <v-btn
                           class="ma-2"
                           outlined
@@ -114,15 +62,12 @@
                         >
                       </template>
 
-                      <v-card>
-                        <v-toolbar dark color="primary">
-                          <v-btn icon dark @click="dialog = false">
-                            <v-icon>mdi-close</v-icon>
-                          </v-btn>
+                      <v-card v-if="personal">
+                        <v-toolbar dark color="primary">                         
                           <v-toolbar-title>รายละเอียด</v-toolbar-title>
                           <v-spacer></v-spacer>
                           <v-toolbar-items>
-                            <v-btn dark text @click="dialog = false">
+                            <v-btn dark text @click="dialog = false ; personal = undefined">
                               Close
                             </v-btn>
                           </v-toolbar-items>
@@ -134,15 +79,13 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>
-ชื่อ-นามสกุล: {{ i.title_name }}{{ i.c_name }}</pre
-                                >
-                                <pre>วัน/เดือน/ปี: {{ i.birthday }}</pre>
-                                <pre>เพศ: {{ i.gender.gender }}</pre>
-                                <pre>สำนักวิชา: {{ i.major.major }}</pre>
-                                <pre>รหัสนักศึกษา: {{ i.student_id }}</pre>
-                                <pre>ชั้นปี: {{ i.year }}</pre>
-                                <pre>Gpax: {{ i.grade }}</pre>
+                                <pre>ชื่อ-นามสกุล: {{ personal.title_name }}{{ personal.c_name }}</pre>
+                                <pre>วัน/เดือน/ปี: {{ personal.birthday }}</pre>
+                                <pre>เพศ: {{ personal.gender.gender }}</pre>
+                                <pre>สำนักวิชา: {{ personal.major.major }}</pre>
+                                <pre>รหัสนักศึกษา: {{ personal.student_id }}</pre>
+                                <pre>ชั้นปี: {{ personal.year }}</pre>
+                                <pre>Gpax: {{ personal.grade }}</pre>
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -152,7 +95,7 @@
                                 >จุดประสงค์ในการลงสมัคร</v-list-item-title
                               >
                               <v-card-text>
-                                {{ i.purpose }}
+                                {{ personal.purpose }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -162,7 +105,7 @@
                                 >กิจกรรมที่เคยเข้าร่วม</v-list-item-title
                               >
                               <v-card-text>
-                                {{ i.archivement }}
+                                {{ personal.archivement }}
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -182,20 +125,16 @@
 </template>
 
 <script>
-import Axios from "axios";
 import Api from "../Api";
 
 export default {
   name: "Vote",
   data() {
     return {
-      photos: [],
       candidate: [],
       alertSuccess: false,
       dialog: false,
-      dialog2: false,
-      userhash: undefined,
-      userindex: undefined,
+      personal: undefined,
     };
   },
   methods: {
@@ -208,25 +147,15 @@ export default {
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
-          // console.log(JSON.parse(JSON.stringify(response.data)));
-          // for(let i in this.candidate){
-          //   console.log(i);
-          // }
         })
         .catch((e) => {
           console.log(e);
         });
     },
 
-    async getPhotos() {
-      // this.photos = await Axios.get(`${api/canprofile2}/${this.getAllCandidate.avatar}`).then(
-      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
-        (Response) => {
-          // console.log(Response.data);
-          // this.photos = Response.data;
-          return Response.data;
-        }
-      );
+    test(i) {
+      this.personal = i;
+      console.log(i);
     },
 
     checkStudentAlreadyVote() {
@@ -268,30 +197,8 @@ export default {
           console.log(e);
         });
     },
-    async checkStudentHash(userhash) {
-      // const student = await JSON.parse(localStorage.getItem("user"));
-      // console.log(student);
-      // console.log(user.id);
-
-      await Api.get(
-        `/api/vote/getCorrectStudentHashByStudentHash?USER_HASH=${userhash}`
-      )
-        .then((res1) => {
-          console.log(res1);
-          if (res1.data === true) {
-            alert("ผลการลงคะแนนถูกต้อง");
-          } else {
-            alert("ผลการลงคะแนนไม่ถูกต้อง");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    // async save2() {},
   },
   mounted() {
-    // this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
   },

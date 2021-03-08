@@ -6,18 +6,25 @@
           cols="12"
           md="6"
           sm="6"
-          v-for="i in candidate"
-          v-bind:key="i.can_id"
+          v-for="i in scores"
+          v-bind:key="i.candidateProfile.can_id"
         >
           <v-card width="700" height="auto">
             <v-card-title primary-title>
-              <font size="auto">หมายเลขผู้สมัคร: {{ i.c_number }}</font>
+              <font size="auto"
+                >หมายเลขผู้สมัคร: {{ i.candidateProfile.c_number }}</font
+              >
             </v-card-title>
 
             <v-card-text class="text-center">
-              <v-img v-if="photos[29]" :src="photos[29].download_url"></v-img>
+              <v-img
+                v-if="i.candidateProfile.avatar"
+                :src="
+                  'http://localhost:9000/files/' + i.candidateProfile.avatar
+                "
+              ></v-img>
               <v-progress-circular
-                v-if="!photos[29]"
+                v-if="!i.candidateProfile.avatar"
                 indeterminate
                 color="primary"
               ></v-progress-circular>
@@ -25,15 +32,67 @@
 
             <v-card-text>
               <font color="black">
-                <pre>ชื่อ-นามสกุล: {{ i.title_name }}{{ i.c_name }}</pre>
-                <pre>Gpax: {{ i.grade }}</pre>
-                <pre>กิจกรรมที่เข้าร่วม: {{ i.archivement }}</pre>
+                <pre>ชื่อ-นามสกุล: {{ i.candidateProfile.title_name}}{{ i.candidateProfile.c_name }}</pre>
+                <pre>Gpax: {{ i.candidateProfile.grade }}</pre>
+                <pre>กิจกรรมที่เข้าร่วม: {{ i.candidateProfile.archivement }}</pre>
               </font>
             </v-card-text>
             <v-card-text>
-              <font color="blue">
-                <pre><h1>คะแนนที่ได้: {{i.points}} </h1> </pre>
-              </font>
+              <div v-if="checktime()">
+                <font color="blue">
+                  <pre><h1>คะแนนที่ได้: {{i.score}} </h1> </pre>
+                </font>
+              </div>
+              <div v-else>
+                <font color="blue">
+                  <pre><h1>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผล </h1> </pre>
+                </font>
+              </div>
+              <v-divider></v-divider>
+              <v-dialog v-model="dialog2" width="500">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="red lighten-2"
+                    outlined
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    ตรวจสอบการลงคะแนน
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="headline grey lighten-2">
+                    ตรวจสอบการลงคะแนน
+                  </v-card-title>
+
+                  <v-card-text>
+                    <v-text-field
+                      label="กรอกรหัส"
+                      name="hashvalue"
+                      v-model="userhash"
+                    ></v-text-field>
+                  </v-card-text>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      class="ma-2"
+                      outlined
+                      color="primary"
+                      dark
+                      @click="checkStudentHash(userhash)"
+                      >ตรวจสอบ</v-btn
+                    >
+                    <v-btn color="primary" text @click="dialog2 = false">
+                      ปิด
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-card-text>
           </v-card>
         </v-col>
@@ -43,30 +102,20 @@
 </template>
 
 <script>
-import Axios from "axios";
 import Api from "../Api";
 export default {
   name: "Vote",
   data() {
     return {
-      photos: [],
       candidate: [],
       votes: [],
+      dialog2: false,
+      userhash: undefined,
+      scores: [],
     };
   },
   methods: {
-    async getPhotos() {
-      this.photos = await Axios.get("https://picsum.photos/v2/list").then(
-        (Response) => {
-          // console.log(Response.data);
-          // this.photos = Response.data;
-          return Response.data;
-        }
-      );
-    },
     async getAllCandidate() {
-      //   const student = await JSON.parse(localStorage.getItem("user"));
-      // console.log(student.s_year)
       await Api.get("/api/canprofile")
         .then((response) => {
           this.candidate = response.data;
@@ -76,13 +125,41 @@ export default {
           console.log(e);
         });
     },
-    
-    
+    async checkStudentHash(userhash) {
+      await Api.get(
+        `/api/vote/getCorrectStudentHashByStudentHash?USER_HASH=${userhash}`
+      )
+        .then((res1) => {
+          console.log(res1);
+          if (res1.data === true) {
+            alert("ผลการลงคะแนนถูกต้อง");
+          } else {
+            alert("ผลการลงคะแนนไม่ถูกต้อง");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    checktime(){
+      return false;
+    },
+
+    async getScore() {
+      await Api.get("/api/score")
+        .then((res2) => {
+          this.scores = res2.data;
+          console.log(this.scores);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
   mounted() {
-    this.getPhotos();
     this.getAllCandidate();
-    
+    this.getScore();
+    this.checktime();
   },
 };
 </script>
