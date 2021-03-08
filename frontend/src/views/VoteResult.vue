@@ -16,13 +16,13 @@
               >
             </v-card-title>
 
-            <v-card-text class="text-center">
+            <v-card-text class="text-center" >
               <v-img
                 v-if="i.candidateProfile.avatar"
                 :src="
                   'http://localhost:9000/files/' + i.candidateProfile.avatar
                 "
-              ></v-img>
+              width="536px" height="528px"></v-img>
               <v-progress-circular
                 v-if="!i.candidateProfile.avatar"
                 indeterminate
@@ -112,6 +112,10 @@ export default {
       dialog2: false,
       userhash: undefined,
       scores: [],
+      date_time_election: [],
+      election_day: null,
+      time_start: null, //เริ่มเวลาเท่าไหร่
+      time_end: null, //หมดเวลาเท่าไหร่
     };
   },
   methods: {
@@ -141,8 +145,46 @@ export default {
           console.log(e);
         });
     },
+
+    async getAllTime() {
+      return new Promise((success, err) => {
+        Api
+          .get("/api/timeshow")
+          .then((response) => {
+            this.date_time_election = JSON.parse(JSON.stringify(response.data));
+            console.log(this.date_time_election[0]);
+            console.log(JSON.parse(JSON.stringify(response.data)));
+            console.log(
+              "get time_start = " + this.date_time_election[0].time_start
+            );
+            success(true);
+          })
+          .catch((e) => {
+            console.log(e);
+            err(false);
+          });
+      });
+    },
+
     checktime(){
-      return false;
+      var now = new Date();
+      console.log(now);
+      //เซตวันเวลาเริ่มต้น
+      var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
+      // console.log(electionDateStart);
+      //เซตวันเวลาสิ้นสุด
+      var electionDateEnd = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_end);
+      // console.log(electionDateEnd);
+
+      //เช็คอยู่ในช่วงเวลาไหม
+      if (now >= electionDateStart && now <= electionDateEnd) {
+        // console.log("อยู่ช่วงเวลาลงคะแนน");
+        return true
+      }else{
+        // console.log("ไม่อยู่ในช่วงเวลาลงคะแนน");
+        // alert("ไม่ได้อยู่ในช่วงเวลาทำการ\n"+"เริ่ม: "+electionDateStart.toLocaleString("th-TH") + " สิ้นสุด: "+ electionDateEnd.toLocaleString("th-TH"));
+        return false
+      }
     },
 
     async getScore() {
@@ -157,6 +199,7 @@ export default {
     },
   },
   mounted() {
+    this.getAllTime();
     this.getAllCandidate();
     this.getScore();
     this.checktime();
