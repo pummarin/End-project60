@@ -108,15 +108,32 @@ const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/signin", "/home", "/register", "/admin/signin", "/voteResult", "/candidateprofile", "/hashchecker", "/candidatelist"
-  ,"/editdate", "/adminhomepage"
-  ];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("user");
+  const studentPage = ["/candidateDetail", "/vote"]
+  const adminPages = ["/candidateprofile", "/hashchecker",];
+  const publicPages = ["/signin", "/home", "/register", "/admin/signin", "/voteResult"];
+  const loggedIn = JSON.parse(localStorage.getItem("user"));
+  console.log(loggedIn);
 
-  // try to access a restricted page + not logged in
-  if (authRequired && !loggedIn) {
-    return next("/signin");
+  if (publicPages.includes(to.path)) {
+    console.log();
+  } else if (studentPage.includes(to.path)) {
+    if (loggedIn) {
+      console.log();
+    } else {
+      return next("/signin");
+    }
+  } else if (adminPages.includes(to.path)) {
+    if (loggedIn) {
+      if (loggedIn.username) {
+        console.log();
+      } else {
+        return next("/admin/signin");
+      }
+    }else{
+      return next("/admin/signin");
+    }
+  } else {
+    return next("/home");
   }
 
   next();

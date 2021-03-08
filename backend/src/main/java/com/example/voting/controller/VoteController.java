@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -184,6 +185,36 @@ public class VoteController {
         c.setPrevHash(votes.get().getPrevHash());
         c.setVoteTime(votes.get().getVoteTime());
         return ResponseEntity.ok().body(c);
+    }
+
+    @GetMapping("/vote/getCorrectStudentHashByStudentHash")
+    public ResponseEntity<?> getCorrectStudentHashByStudentHash(@RequestParam("USER_HASH") String userhash){
+        List<Vote> votes = voteRepository.findAll();
+//        System.out.println("get all vote = " + votes);
+        ArrayList<CheckedAllBoxRespone> respone = new ArrayList<CheckedAllBoxRespone>();
+        AtomicReference<String> tempHash = new AtomicReference<>("");
+        AtomicBoolean result = new AtomicBoolean(false);
+        votes.forEach(vote -> {
+            CheckedAllBoxRespone c = new CheckedAllBoxRespone();
+            c.setId(vote.getId());
+            c.setHash(vote.getHash());
+            c.setPrevHash(vote.getPrevHash());
+            c.setVoteTime(vote.getVoteTime());
+//            System.out.println("temp hash = "+tempHash);
+            tempHash.set(checkHashData(vote, tempHash.get()));
+//            System.out.println("vote hash = "+vote.getHash()+" temp hash = " + tempHash);
+            if (tempHash.get().equals(vote.getHash())) {
+                c.setCorrect(true);
+            } else {
+                c.setCorrect(false);
+            }
+            respone.add(c);
+
+            if(tempHash.get().equals(userhash)){
+                result.set(true);
+            }
+        });
+        return ResponseEntity.ok().body(result);
     }
 
     public String checkHashData(Vote vote, String prevHash) {
