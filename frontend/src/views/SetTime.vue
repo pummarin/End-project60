@@ -15,7 +15,7 @@
         <br />
         <v-card class="mx-auto" shaped max-width="900">
           <br />
-          <h1>Set Time</h1>
+          <h1 style="font-family: 'SUT Regular'">Set Time</h1>
           <v-row justify="center">
           <v-col cols="12" sm="4">
             <v-menu
@@ -27,6 +27,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
+                style="font-family: 'SUT Regular'"
                   v-model="select_date"
                   label="วันเลือกตั้ง (Election Day)"
                   prepend-icon="mdi-calendar"
@@ -37,6 +38,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
+              style="font-family: 'SUT Regular'"
                 v-model="select_date"
                 no-title
                 width="400"
@@ -57,6 +59,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                  style="font-family: 'SUT Regular'"
                     v-model="select_time_start"
                     label="เริ่มเวลา (Start)"
                     prepend-icon="mdi-clock-time-four-outline"
@@ -67,6 +70,7 @@
                   ></v-text-field>
                 </template>
                 <v-time-picker
+                style="font-family: 'SUT Regular'"
                   v-if="time_start_menu"
                   v-model="select_time_start"
                   full-width
@@ -94,6 +98,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                  style="font-family: 'SUT Regular'"
                     v-model="select_time_end"
                     label="หมดเวลา (End)"
                     prepend-icon="mdi-clock-time-four-outline"
@@ -104,6 +109,7 @@
                   ></v-text-field>
                 </template>
                 <v-time-picker
+                style="font-family: 'SUT Regular'"
                   v-if="time_end_menu"
                   v-model="select_time_end"
                   full-width
@@ -119,6 +125,7 @@
           <v-row justify="center">
             <v-col cols="6" sm="4">
               <v-select
+              style="font-family: 'SUT Regular'"
                 class="pa-0 ma-0"
                 label="ผู้กรอกข้อมูล (Updated By)"
                 v-model="selectAdmin"
@@ -132,9 +139,11 @@
 
           <v-row justify="center">
             <v-col cols="6" sm="6" class="pa-2 mx-3">
-              <v-btn rounded @click="save" color="#F16529">SAVE</v-btn>
+              <v-btn rounded @click="save" color="#F16529" style="font-family: 'SUT Regular'">
+                <h3>SAVE</h3></v-btn>
               &nbsp;
-              <v-btn rounded class="ma-2" color="#EBEBEB" router-link to="/adminhomepage">CANCEL</v-btn>
+              <v-btn rounded class="ma-2" color="#EBEBEB" router-link to="/adminhomepage" style="font-family: 'SUT Regular'">
+              <h3>CANCEL</h3></v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -222,3 +231,15 @@ export default {
   },
 };
 </script>
+<style>
+.v-text-field input {
+  font-size: 1.3em;
+}
+.v-text-field label {
+  font-size: 1.5em;
+}
+.v-text-field title {
+  font-size: 1.5em;
+}
+
+</style>

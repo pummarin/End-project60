@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:D:\project\End-project60\secure;CIPHER=AES
     username: root
-    password: root
+    password: root root
     driver-class-name: org.h2.Driver
 
   h2:

@@ -25,27 +25,33 @@
             <h3 class="text-left">UPCOMING EVENTS</h3></font
           >
         </div>
-        <v-card elevation="2" shaped max-width="400" color="#EBEBEB">
+        <v-card elevation="2" shaped max-width="550" color="#EBEBEB">
           <v-card-text>
             <font color="#E44D26">
-            <h2 style="font-family: 'Love'">Student Council</h2>
+              <h2 style="font-family: 'Love'">Student Council</h2>
             </font>
             <font color="#E44D26">
               <br />
               <h1 style="font-family: 'Love'">
-                {{ date_time_election[0].election_day }}
+                Date : {{ date_time_election[0].election_day }}
               </h1>
             </font>
             <!-- <p>adjective</p> --><br />
             <font color="#000000">
               <h2 style="font-family: 'Love'">
-                Start: {{ date_time_election[0].time_start }} - End: {{ date_time_election[0].time_end }}
+                Start : {{ date_time_election[0].time_start }} - End :
+                {{ date_time_election[0].time_end }}
               </h2>
             </font>
+            <br>
             <font color="#000000">
-              <h2  style="font-family: 'Angsana New'">
-               ทดสอบ
-              </h2>
+              <!-- <h2  style="font-family: 'Angsana New'"> -->
+              <h2 style="font-family: 'SUT Regular'">เลือกตั้งสภานักศึกษา มหาวิทยาลัยเทคโนโลยีสุรนารี ประจำปีการศึกษา {{ date_time_election[0].election_day}} </h2>
+              <!-- <br> -->
+              <h3 style="font-family: 'SUT Regular'">ผู้ที่มีสิทธิ์เลือกตั้ง : นักศึกษาชั้นปีที่ 1 เป็นต้นไป</h3>
+            </font>
+            <font color="#FF0000">
+              <h3 style="font-family: 'SUT Regular'">*หากนักศึกษาคนใดไม่ได้ใช้สิทธิในการเลือกตั้ง จะไม่มีสิทธิเป็นคณะกรรมการชมรม, คณะกรรมการบริหาร, สมาชิกสภานักศึกษา และไม่มีสิทธิขอใบรับรองกิจกรรม</h3>
             </font>
           </v-card-text>
         </v-card>
@@ -65,6 +71,7 @@ export default {
     };
   },
   methods: {
+   
     async getAllTime() {
       return new Promise((success, err) => {
         api
@@ -73,9 +80,7 @@ export default {
             this.date_time_election = JSON.parse(JSON.stringify(response.data));
             console.log(this.date_time_election[0]);
             console.log(JSON.parse(JSON.stringify(response.data)));
-            console.log(
-              "get time_start = " + this.date_time_election[0].time_start
-            );
+            console.log("get time_start = " + this.date_time_election[0].time_start);
             success(true);
           })
           .catch((e) => {

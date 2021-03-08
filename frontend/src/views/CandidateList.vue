@@ -1,26 +1,28 @@
 <template>
   <v-container>
     <v-flex mb-4>
-      <v-data-table 
+      <v-data-table
+       
         :headers="headers"
         :items="allCandidate"
         class="elevation-1"
+        
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Candidates Management</v-toolbar-title>
+            <v-toolbar-title style="font-family: 'SUT Regular'">Candidates Management</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
 
-            <v-dialog v-if="selectEdit" v-model="dialogEdit" max-width="900">
-              <v-card >
+            <v-dialog v-if="selectEdit" v-model="dialogEdit" max-width="800">
+              <v-card>
                 <v-row justify="center">
                   <v-card-text class="text-center">
                     <v-row justify="center">
                       <v-col cols="12" sm="6" md="6">
                         <v-img
-                          max-height="350"
-                          max-width="350"
+                          max-height="320"
+                          max-width="320"
                           v-if="selectEdit.avatar"
                           :src="
                             'http://localhost:9000/files/' + selectEdit.avatar
@@ -37,154 +39,174 @@
                 </v-row>
                 <v-row justify="center">
                   <v-col cols="12" sm="6" md="3">
-                    <v-text-field
-                      label="หมายเลขผู้สมัคร (No.)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.c_number"
-                    ></v-text-field>
+                    <p>
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="หมายเลขผู้สมัคร (No.)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.c_number"
+                      ></v-text-field>
+                    </p>
                   </v-col>
                 </v-row>
 
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="3">
-                    <v-text-field
-                      label="คำนำหน้าชื่อ (Title Name)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.title_name"
-                    ></v-text-field>
-                  </v-col>
+                <p>
+                  <v-row justify="center">
+                    <v-col cols="12" sm="6" md="3">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="คำนำหน้าชื่อ (Title Name)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.title_name"
+                      ></v-text-field>
+                    </v-col>
 
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field
-                      label="ชื่อ-สกุล (Firstname - Lastname)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.c_name"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="ชื่อ-สกุล (Firstname - Lastname)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.c_name"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </p>
+                <p>
+                  <v-row justify="center">
+                    <v-col cols="6" sm="3">
+                      <v-select
+                        style="font-family: 'SUT Regular'"
+                        class="pa-0 ma-0"
+                        label="เพศ (Gender)"
+                        v-model="selectEdit.gender"
+                        :items="genders"
+                        item-text="gender"
+                        outlined
+                        return-object
+                      />
+                    </v-col>
 
-                <v-row justify="center">
-                  <v-col cols="6" sm="3">
-                    <v-select
-                      class="pa-0 ma-0"
-                      label="เพศ (Gender)"
-                      v-model="selectEdit.gender"
-                      :items="genders"
-                      item-text="gender"
-                      outlined
-                      return-object
-                    />
-                  </v-col>
-
-                  <v-col cols="6" sm="3">
-                    <v-menu
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      max-width="290px"
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
+                    <v-col cols="6" sm="3">
+                      <v-menu
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        max-width="290px"
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on }">
+                          <v-text-field
+                            style="font-family: 'SUT Regular'"
+                            v-model="selectEdit.birthday"
+                            label="วัน/เดือน/ปีเกิด (Birthday)"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-on="on"
+                            outlined
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
                           v-model="selectEdit.birthday"
-                          label="วัน/เดือน/ปีเกิด (Birthday)"
-                          prepend-icon="mdi-calendar"
-                          readonly
-                          v-on="on"
-                          outlined
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker
-                        v-model="selectEdit.birthday"
-                        no-title
-                        @input="menu2 = false"
-                      ></v-date-picker>
-                    </v-menu>
-                  </v-col>
+                          no-title
+                          @input="menu2 = false"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
 
-                  <v-col cols="12" sm="6" md="3">
-                    <v-text-field
-                      label="เบอร์โทรศัพท์ (Mobile Phone)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.telephone"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
+                    <v-col cols="12" sm="6" md="3">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="เบอร์โทรศัพท์ (Mobile Phone)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.telephone"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </p>
+                <p>
+                  <v-row justify="center">
+                    <v-col cols="12" sm="6" md="3">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="รหัสนักศึกษา (Student ID No.)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.studentId"
+                      ></v-text-field>
+                    </v-col>
 
+                    <v-col cols="12" sm="6" md="3">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="ชั้นปี (Year)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.year"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="3">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="คะแนนเฉลี่ยสะสม (GPAX)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.grade"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </p>
+                <p>
+                  <v-row justify="center">
+                    <v-col cols="12" sm="6" md="8">
+                      <v-select
+                        style="font-family: 'SUT Regular'"
+                        class="pa-0 ma-0"
+                        label="สำนักวิชา-สาขาวิชา (Major)"
+                        v-model="selectEdit.major"
+                        :items="majors"
+                        item-text="major"
+                        outlined
+                        return-object
+                      />
+                    </v-col>
+                  </v-row>
+                </p>
+                <p>
                 <v-row justify="center">
-                  <v-col cols="12" sm="6" md="3">
+                  <v-col cols="12" sm="6" md="8">
                     <v-text-field
-                      label="รหัสนักศึกษา (Student ID No.)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.studentId"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" sm="6" md="3">
-                    <v-text-field
-                      label="ชั้นปี (Year)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.year"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" sm="6" md="3">
-                    <v-text-field
-                      label="คะแนนเฉลี่ยสะสม (GPAX)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.grade"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="9">
-                    <v-select
-                      class="pa-0 ma-0"
-                      label="สำนักวิชา-สาขาวิชา (Major)"
-                      v-model="selectEdit.major"
-                      :items="majors"
-                      item-text="major"
-                      outlined
-                      return-object
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="9">
-                    <v-text-field
+                    style="font-family: 'SUT Regular'"
                       label="กิจกรรมที่เคยร่วม (Archivement)"
                       placeholder=" "
                       outlined
                       v-model="selectEdit.archivement"
                     ></v-text-field>
                   </v-col>
-                </v-row>
-
+                </v-row></p>
+                <p>
                 <v-row justify="center">
-                  <v-col cols="12" sm="6" md="9">
+                  <v-col cols="12" sm="6" md="8">
                     <v-text-field
+                    style="font-family: 'SUT Regular'"
                       label="จุดมุ่งหมายในการสมัครครั้งนี้ (Purpose)"
                       placeholder=" "
                       outlined
                       v-model="selectEdit.purpose"
                     ></v-text-field>
                   </v-col>
-                </v-row>
-
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="9">
+                </v-row></p>
+                <p>
+                <v-row  ow justify="center">
+                  <v-col cols="12" sm="6" md="4">
                     <v-file-input
+                    style="font-family: 'SUT Regular'"
                       accept="image/png, image/jpeg"
                       label="รูปภาพ (Image)"
                       prepend-icon="mdi-camera"
@@ -192,19 +214,22 @@
                       @change="onFileSelected"
                     ></v-file-input>
                   </v-col>
-                </v-row>
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="9">
+                  <!-- </v-row>
+                <v-row justify="center"> -->
+                  <v-col cols="12" sm="6" md="4">
                     <v-file-input
+                    style="font-family: 'SUT Regular'"
                       label="ผลงาน (Portfolio)"
                       outlined
                       @change="pdfSelected"
                     ></v-file-input>
                   </v-col>
-                </v-row>
+                </v-row></p>
+                <p>
                 <v-row justify="center">
-                  <v-col cols="6" sm="6" md="9">
+                  <v-col cols="6" sm="6" md="8">
                     <v-select
+                    style="font-family: 'SUT Regular'"
                       class="pa-0 ma-0"
                       label="ผู้กรอกข้อมูล (Updated By)"
                       v-model="selectAdmin"
@@ -215,7 +240,7 @@
                       item-value="admin_id"
                     />
                   </v-col>
-                </v-row>
+                </v-row></p>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-row justify="center">
@@ -225,14 +250,18 @@
                         class="ma-2"
                         color="#F16529"
                         @click="saveEdit"
-                        >Save</v-btn
+                        style="font-family: 'SUT Regular'"
+                      >
+                        <h3>Save</h3></v-btn
                       >
                       <v-btn
                         rounded
                         class="ma-2"
                         color="#EBEBEB"
                         @click="closeEdit"
-                        >Cancel</v-btn
+                        style="font-family: 'SUT Regular'"
+                      >
+                        <h3>Cancel</h3></v-btn
                       >
                     </v-col>
                   </v-row>
@@ -241,19 +270,35 @@
             </v-dialog>
             <!-- <v-icon @click="backToMenu">mdi-arrow-left</v-icon> -->
 
-            <v-dialog v-model="dialogDelete" max-width="570px">
-              <v-card>
-                <v-card-title class="headline"
-                  >Are you sure you want to delete this candidate
-                  ?</v-card-title
+            <v-dialog v-model="dialogDelete" max-width="445px">
+              <v-card justify="center">
+                <v-card-title
+                  class="headline"
+                  style="font-family: 'SUT Regular'"
                 >
+                  <p style="font-family: 'SUT Regular'">
+                    Are you sure you want to delete this candidate?
+                  </p>
+                </v-card-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
-                  <v-btn rounded color="#F16529" @click="deleteCandidate"
-                    >Yes</v-btn
+                  <v-btn
+                    rounded
+                    color="#F16529"
+                    @click="deleteCandidate"
+                    style="font-family: 'SUT Regular'"
                   >
-                  <v-btn rounded color="#EBEBEB" @click="closeDelete">No</v-btn>
+                    <h3>Yes</h3></v-btn
+                  >
+                  <v-btn
+                    rounded
+                    color="#EBEBEB"
+                    @click="closeDelete"
+                    style="font-family: 'SUT Regular'"
+                  >
+                    <h3>No</h3></v-btn
+                  >
                   <v-spacer></v-spacer>
                 </v-card-actions>
               </v-card>
@@ -270,7 +315,9 @@
       <v-spacer></v-spacer>
       <v-row justify="center">
         <v-col cols="12">
-          <v-btn rounded class="ma-2" color="#EBEBEB" @click="backToMenu">Back to home page</v-btn>
+          <v-btn rounded class="ma-2" color="#EBEBEB" @click="backToMenu"
+            >Back to home page</v-btn
+          >
         </v-col>
       </v-row>
     </v-card-actions>
@@ -464,3 +511,20 @@ export default {
   },
 };
 </script>
+<style>
+.v-text-field input {
+  font-size: 1.3em;
+}
+.v-text-field label {
+  font-size: 1.5em;
+}
+.v-text-field title {
+  font-size: 1.5em;
+}
+/* 
+table.v-table items {
+  font-size: 2.0em;
+} */
+
+
+</style>

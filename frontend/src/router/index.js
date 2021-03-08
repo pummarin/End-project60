@@ -109,7 +109,7 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
   const studentPage = ["/candidateDetail", "/vote"]
-  const adminPages = ["/candidateprofile", "/hashchecker",];
+  const adminPages = ["/candidateprofile", "/hashchecker", "/adminhomepage", "/settime", "/candidatelist"];
   const publicPages = ["/signin", "/home", "/register", "/admin/signin", "/voteResult"];
   const loggedIn = JSON.parse(localStorage.getItem("user"));
   console.log(loggedIn);

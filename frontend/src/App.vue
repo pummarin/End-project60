@@ -13,21 +13,25 @@
       </v-btn>
       <v-toolbar-title style="width: 700px" class="ml-0 pl-4">
         <font color="#F16529">
-          <h1 class="hidden-sm-and-down">SUT Student Council Election</h1>
+          <h1 class="hidden-sm-and-down" style="font-family: 'SUT Regular'">SUT Student Council Election</h1>
         </font>
       </v-toolbar-title>
 
       <v-spacer />
 
       <template v-if="isSignin">
-         <font color="#F16529">
-        <span >Sign in as</span>
+         <font color="#F16529" >
+        <span style="font-family: 'SUT Regular'">
+          <h3>Sign in as</h3></span>
          </font>
         <template v-if="user.studentId">
-          <v-btn color="#F16529" text @click="handleProfile">{{ user.fullName }}</v-btn>
+          
+          <v-btn style="font-family: 'SUT Regular'" color="#F16529" text @click="handleProfile"><h2>{{ user.fullName }}</h2></v-btn>
         </template>
+        
         <template v-else>
-          <v-btn color="#F16529" text @click="handleProfile">{{ user.name }}</v-btn>
+          <v-btn style="font-family: 'SUT Regular'" color="#F16529" text @click="handleProfile"><h2>{{ user.name }}</h2></v-btn>
+        
         </template>
         
 
@@ -38,17 +42,24 @@
             </v-btn>
           </template>
 
-          <v-list>
-            <v-list-item @click="handleSignout">
-              <v-list-item-title>
-                <v-icon>mdi-logout</v-icon>Sign out
+          <v-list color = "#EBEBEB">
+            <v-list-item @click="handleSignout" style="width: 130px">
+              <v-icon color="#F16529">mdi-logout</v-icon>
+              <v-list-item-title style="font-family: 'SUT Regular'">
+                 <font color="#F16529">
+                <h3 >Sign out</h3>
+                 </font>
               </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
       </template>
       <template v-else>
-        <v-btn color="#F16529" dark text to="/signin">Sign in</v-btn>
+        <v-btn color="#F16529" dark text to="/signin" style="font-family: 'SUT Regular'">
+        <h3>
+        Sign in
+        </h3>
+        </v-btn>
       </template>
     </v-app-bar>
     <v-content>
@@ -62,7 +73,7 @@
       <div>
         &copy;
          <font color="#F16529">
-        <strong>Project-60</strong>
+        <strong style="font-family: 'SUT Regular'">Project-60</strong>
          </font> 
       </div>
       <v-divider vertical style="padding-right: 5px"></v-divider>
@@ -77,7 +88,7 @@
         </v-btn>
       </div>
       <div>
-        <v-btn
+        <v-btn 
           href="https://www.facebook.com/Sut-Se62-Team01-118308956295583"
           icon
           small
@@ -87,9 +98,9 @@
       </div>
       <v-spacer></v-spacer>
       <div>
-        <font color="#F16529">
+        <font color="#F16529" style="font-family: 'SUT Regular'">
         {{ new Date().getFullYear() }} —
-        <strong>SUT Student Council Election</strong>
+        <strong style="font-family: 'SUT Regular'">SUT Student Council Election</strong>
         </font>
       </div>
     </v-footer>
@@ -104,7 +115,7 @@ export default {
       themes: {
         student: {
           appBar: "blue darken-3",
-          fontColor: "light",
+          fontColor: "#E44D26",
         },
         staff: {
           appBar: "green darken-3",
@@ -151,7 +162,7 @@ export default {
       if (this.userRole == "staff") {
         return "#EBEBEB";
       } else if (this.userRole == "student") {
-        return "blue darken-3";
+        return "#EBEBEB";
       } else {
         return "#EBEBEB";
       }
@@ -160,7 +171,7 @@ export default {
       if (this.userRole == "staff") {
         return "#EBEBEB";
       } else if (this.userRole == "student") {
-        return "primary";
+        return "#EBEBEB";
       } else {
         return "#EBEBEB";
       }
@@ -180,3 +191,9 @@ export default {
   },
 };
 </script>
+<style>
+.v-btn {
+  font-size: 2.0em;
+}
+
+</style>
