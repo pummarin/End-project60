@@ -59,12 +59,48 @@ const routes = [
       import("../views/VoteResult.vue")
   },
   {
+    path: "/candidatelist",
+    name: "candidatelist",
+    component: () =>
+    import("../views/CandidateList.vue")
+  },
+  
+  // {
+  //   path: "/test",
+  //   name: "candidatelist",
+  //   component: () =>
+  //   import("../views/test.vue")
+  // },
+  
+
+  {
+    path: "/settime",
+    name: "editCandidateProfile",
+    component: () =>
+    import("../views/SetTime.vue")
+  },
+
+  {
     path: "/hashchecker",
     name: "Hashchecker",
     component: () =>
       import("../views/Hashchecker.vue")
+  },
+
+  {
+    path: "/editdate",
+    name: "EditTime",
+    component: () =>
+      import("../views/EditTime.vue")
+  },
+
+  {
+    path: "/adminhomepage",
+    name: "AdminHome",
+    component: () =>
+      import("../views/AdminHome.vue")
   }
-];
+]
 
 const router = new VueRouter({
   mode: "history",

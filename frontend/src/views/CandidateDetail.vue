@@ -1,4 +1,3 @@
-
 <template>
   <v-col cols="12" md="5" sm="6">
     <div>
@@ -57,6 +56,14 @@
                           outlined
                           color="primary"
                           dark
+                           @click="exportPDF(i.pdf)"
+                          >Portfolio</v-btn>
+
+                        <v-btn
+                          class="ma-2"
+                          outlined
+                          color="primary"
+                          dark
                           @click="checkStudentAlreadyVote"
                           >ไปหน้าลงคะแนน</v-btn
                         >
@@ -86,6 +93,7 @@
                                 <pre>รหัสนักศึกษา: {{ personal.student_id }}</pre>
                                 <pre>ชั้นปี: {{ personal.year }}</pre>
                                 <pre>Gpax: {{ personal.grade }}</pre>
+
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -126,11 +134,12 @@
 
 <script>
 import Api from "../Api";
-
 export default {
   name: "Vote",
   data() {
     return {
+
+      pdf: [],
       candidate: [],
       alertSuccess: false,
       dialog: false,
@@ -147,16 +156,31 @@ export default {
       await Api.get(`/api/canprofile2?year=${student.s_year}`)
         .then((response) => {
           this.candidate = response.data;
+
+          console.log(JSON.parse(JSON.stringify(response.data)));
+          // for(let i in this.candidate){
+          //   console.log(i);
+          // }
+          console.log("pdf name = " + this.candidate[0].pdf);
+
         })
         .catch((e) => {
           console.log(e);
         });
     },
 
+    exportPDF(pdf) {
+      window.open("http://localhost:9000/pdf/" + pdf, "_blank");
+      // this.$router.push("http://localhost:9000/pdf/" + pdf);
+
+    },
+    
+
     test(i) {
       this.personal = i;
       console.log(i);
     },
+
 
     checkStudentAlreadyVote() {
       let user = JSON.parse(localStorage.getItem("user"));

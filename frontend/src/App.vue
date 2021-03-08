@@ -12,7 +12,7 @@
         </v-avatar>
       </v-btn>
       <v-toolbar-title style="width: 700px" class="ml-0 pl-4">
-        <font color="#FB8C00">
+        <font color="#F16529">
           <h1 class="hidden-sm-and-down">SUT Student Council Election</h1>
         </font>
       </v-toolbar-title>
@@ -20,18 +20,21 @@
       <v-spacer />
 
       <template v-if="isSignin">
-        <span>Sign in as</span>
+         <font color="#F16529">
+        <span >Sign in as</span>
+         </font>
         <template v-if="user.studentId">
-          <v-btn text @click="handleProfile">{{ user.fullName }}</v-btn>
+          <v-btn color="#F16529" text @click="handleProfile">{{ user.fullName }}</v-btn>
         </template>
         <template v-else>
-          <v-btn text @click="handleProfile">{{ user.name }}</v-btn>
+          <v-btn color="#F16529" text @click="handleProfile">{{ user.name }}</v-btn>
         </template>
+        
 
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on">
-              <v-icon>mdi-dots-vertical</v-icon>
+              <v-icon color="#F16529">mdi-dots-vertical</v-icon>
             </v-btn>
           </template>
 
@@ -45,7 +48,7 @@
         </v-menu>
       </template>
       <template v-else>
-        <v-btn color="#FB8C00" dark text to="/signin">Sign in</v-btn>
+        <v-btn color="#F16529" dark text to="/signin">Sign in</v-btn>
       </template>
     </v-app-bar>
     <v-content>
@@ -58,17 +61,19 @@
     <v-footer :color="footerColor()" :dark="isDark()" app>
       <div>
         &copy;
+         <font color="#F16529">
         <strong>Project-60</strong>
+         </font> 
       </div>
       <v-divider vertical style="padding-right: 5px"></v-divider>
       <div>
-        <v-btn
+        <v-btn color="#F16529"
           href="https://github.com/pummarin/End-project60"
           icon
           small
           target="_blank"
         >
-          <v-icon>mdi-github</v-icon>
+          <v-icon color="#F16529">mdi-github</v-icon>
         </v-btn>
       </div>
       <div>
@@ -82,8 +87,10 @@
       </div>
       <v-spacer></v-spacer>
       <div>
+        <font color="#F16529">
         {{ new Date().getFullYear() }} —
         <strong>SUT Student Council Election</strong>
+        </font>
       </div>
     </v-footer>
   </v-app>
@@ -101,10 +108,10 @@ export default {
         },
         staff: {
           appBar: "green darken-3",
-          fontColor: "light",
+          fontColor: "#E44D26",
         },
         public: {
-          appBar: "white",
+          appBar: "#E44D26",
           fontColor: "dark",
         },
       },
@@ -142,20 +149,20 @@ export default {
     },
     appBarColor() {
       if (this.userRole == "staff") {
-        return "green darken-3";
+        return "#EBEBEB";
       } else if (this.userRole == "student") {
         return "blue darken-3";
       } else {
-        return "white";
+        return "#EBEBEB";
       }
     },
     footerColor() {
       if (this.userRole == "staff") {
-        return "green darken-4";
+        return "#EBEBEB";
       } else if (this.userRole == "student") {
         return "primary";
       } else {
-        return "white";
+        return "#EBEBEB";
       }
     },
     handleProfile() {

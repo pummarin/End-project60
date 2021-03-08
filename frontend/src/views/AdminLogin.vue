@@ -2,7 +2,7 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="8" md="6">
       <v-card class="elevation-12">
-        <v-toolbar color="#F16529" dark>
+        <v-toolbar color="#FB8C00" dark>
           <v-toolbar-title>เข้าสู่ระบบในฐานะผู้ดูแล</v-toolbar-title>
           <v-spacer />
         </v-toolbar>
@@ -11,7 +11,7 @@
                   <v-row justify="center">
               <v-col cols="12" sm="6" md="10">
             <v-text-field
-              label="USERNAME"
+              label="Username"
               placeholder=" "
               outlined
               type="text"
@@ -19,7 +19,7 @@
             />
 
             <v-text-field
-              label="PASSWORD"
+              label="Password"
               placeholder=" "
               outlined
               type="password"
@@ -79,7 +79,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("user")) {
-      this.$router.push("/home");
+      this.$router.push("/adminhomepage");
     }
   }
 };

@@ -28,7 +28,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="#FB8C00" dark @click="handleAdminSignin">เข้าสู่ระบบในฐานะผู้ดูแล</v-btn>
+          <v-btn color="#FB8C00" dark @click="handleAdminSignin"
+            >เข้าสู่ระบบในฐานะผู้ดูแล</v-btn
+          >
           <v-btn color="#FB8C00" dark @click="signin">Login</v-btn>
         </v-card-actions>
       </v-card>
@@ -43,40 +45,83 @@ export default {
   name: "sigin",
   data() {
     return {
-      
       username: undefined,
-      password: undefined
+      password: undefined,
+      date_time_election: [],
+      // today: null, //วันที่
+      // login_today: null, //login วันนี้
+      election_day: null,
+      time_start: null, //เริ่มเวลาเท่าไหร่
+      time_end: null, //หมดเวลาเท่าไหร่
     };
   },
   methods: {
     handleAdminSignin() {
       this.$router.push("/admin/signin");
     },
+
+    async getAllTime() {
+      return new Promise((success, err) => {
+        api
+          .get("/api/timeshow")
+          .then((response) => {
+            this.date_time_election = JSON.parse(JSON.stringify(response.data));
+            console.log(this.date_time_election[0]);
+            console.log(JSON.parse(JSON.stringify(response.data)));
+            console.log(
+              "get time_start = " + this.date_time_election[0].time_start
+            );
+            success(true);
+          })
+          .catch((e) => {
+            console.log(e);
+            err(false);
+          });
+      });
+    },
+
     signin() {
       let user = {
         studentId: this.username,
-        identifyNumber: this.password
+        identifyNumber: this.password,
       };
-      api
+      
+      var now = new Date();
+      console.log(now);
+      //เซตวันเวลาเริ่มต้น
+      var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
+      // console.log(electionDateStart);
+      //เซตวันเวลาสิ้นสุด
+      var electionDateEnd = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_end);
+      // console.log(electionDateEnd);
+
+      //เช็คอยู่ในช่วงเวลาไหม
+      if (now >= electionDateStart && now <= electionDateEnd) {
+        // console.log("อยู่ช่วงเวลาลงคะแนน");
+        api
         .post("/auth/login", JSON.stringify(user))
-        .then(res => {
-          let user = res.data;
-          //TODO: Katalon Recorder ไม่ตรวจจับ alert() เลยเอาออก
-          // alert("Signin successfully..." + user.username); alert ไม่ผ่าน
-          // confirm("login OK" + user.fullName); alert ผ่านแต่ assert ไม่เจอ
-          localStorage.setItem("user", JSON.stringify(user));
-          this.$router.go("/home");
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.$router.go("/candidateDetail");
         })
-        .catch(e => {
+        .catch((e) => {
           alert(e);
         });
-    }
+      }else{
+        // console.log("ไม่อยู่ในช่วงเวลาลงคะแนน");
+        alert("ไม่ได้อยู่ในช่วงเวลาทำการ\n"+"เริ่ม: "+electionDateStart.toLocaleString("th-TH") + " สิ้นสุด: "+ electionDateEnd.toLocaleString("th-TH"));
+        this.$router.push("/voteResult");
+        
+      }
+      
+    },
   },
   mounted() {
-    if (localStorage.getItem("user")) {
+    this.getAllTime();   
+    if(localStorage.getItem("user")){
       this.$router.push("/candidateDetail");
-    }
-  }
+    } 
+  },
 };
 </script>
 

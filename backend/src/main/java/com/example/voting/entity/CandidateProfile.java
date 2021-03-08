@@ -24,11 +24,8 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name="CandidateProfile")
-
-
 public class CandidateProfile {
     @Id
     @SequenceGenerator(name="candidate_profile_seq",sequenceName="candidate_profile_seq")               
@@ -59,25 +56,25 @@ public class CandidateProfile {
     private  String purpose;
     @NotNull
     private  String avatar;
+    @NotNull
+    private  String pdf;    
     
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Major.class)
     @JoinColumn(name = "MAJOR_ID", insertable = true)
-    @JsonManagedReference
+    // @JsonManagedReference
     private @NotNull Major major; 
 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Gender.class)
     @JoinColumn(name = "GENDER_ID", insertable = true)
-    @JsonManagedReference
+    // @JsonManagedReference
     private @NotNull Gender gender; 
 
     @OneToOne(fetch = FetchType.EAGER,targetEntity = Admin.class)
     @JoinColumn(name = "ADMIN_ID", insertable = true)
-    @JsonManagedReference
+    // @JsonManagedReference
     private @NotNull Admin admin;
 
 
-    //private int points;
-    
     public CandidateProfile(){}
     
     /*public CandidateProfile(String title_name, String c_name, String birthday, String telephone, String student_id, int year, String grade,
