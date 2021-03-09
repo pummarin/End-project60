@@ -15,7 +15,7 @@
         <br />
         <v-card class="mx-auto" shaped max-width="900">
           <br />
-          <h1 style="font-family: 'SUT Regular'">Set Time</h1>
+          <h1 style="font-family: 'SUT Regular'">Set the Date and Time</h1>
           <v-row justify="center">
           <v-col cols="12" sm="4">
             <v-menu
@@ -38,10 +38,9 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-              style="font-family: 'SUT Regular'"
                 v-model="select_date"
                 no-title
-                width="400"
+                width="350"
                 @input="date_menu = false"
               ></v-date-picker>
             </v-menu>
@@ -69,8 +68,7 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-time-picker
-                style="font-family: 'SUT Regular'"
+               <v-time-picker
                   v-if="time_start_menu"
                   v-model="select_time_start"
                   full-width
@@ -108,8 +106,7 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-time-picker
-                style="font-family: 'SUT Regular'"
+              <v-time-picker
                   v-if="time_end_menu"
                   v-model="select_time_end"
                   full-width
@@ -240,6 +237,9 @@ export default {
 }
 .v-text-field title {
   font-size: 1.5em;
+}
+h1 {
+  font-size: 2em;
 }
 
 </style>

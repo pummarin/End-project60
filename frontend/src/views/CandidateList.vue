@@ -2,15 +2,15 @@
   <v-container>
     <v-flex mb-4>
       <v-data-table
-       
         :headers="headers"
         :items="allCandidate"
         class="elevation-1"
-        
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title style="font-family: 'SUT Regular'">Candidates Management</v-toolbar-title>
+            <v-toolbar-title style="font-family: 'SUT Regular'"
+              >Candidates Management</v-toolbar-title
+            >
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
 
@@ -179,68 +179,72 @@
                   </v-row>
                 </p>
                 <p>
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="8">
-                    <v-text-field
-                    style="font-family: 'SUT Regular'"
-                      label="กิจกรรมที่เคยร่วม (Archivement)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.archivement"
-                    ></v-text-field>
-                  </v-col>
-                </v-row></p>
+                  <v-row justify="center">
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="กิจกรรมที่เคยร่วม (Archivement)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.archivement"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </p>
                 <p>
-                <v-row justify="center">
-                  <v-col cols="12" sm="6" md="8">
-                    <v-text-field
-                    style="font-family: 'SUT Regular'"
-                      label="จุดมุ่งหมายในการสมัครครั้งนี้ (Purpose)"
-                      placeholder=" "
-                      outlined
-                      v-model="selectEdit.purpose"
-                    ></v-text-field>
-                  </v-col>
-                </v-row></p>
+                  <v-row justify="center">
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        style="font-family: 'SUT Regular'"
+                        label="จุดมุ่งหมายในการสมัครครั้งนี้ (Purpose)"
+                        placeholder=" "
+                        outlined
+                        v-model="selectEdit.purpose"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </p>
                 <p>
-                <v-row  ow justify="center">
-                  <v-col cols="12" sm="6" md="4">
-                    <v-file-input
-                    style="font-family: 'SUT Regular'"
-                      accept="image/png, image/jpeg"
-                      label="รูปภาพ (Image)"
-                      prepend-icon="mdi-camera"
-                      outlined
-                      @change="onFileSelected"
-                    ></v-file-input>
-                  </v-col>
-                  <!-- </v-row>
+                  <v-row ow justify="center">
+                    <v-col cols="12" sm="6" md="4">
+                      <v-file-input
+                        style="font-family: 'SUT Regular'"
+                        accept="image/png, image/jpeg"
+                        label="รูปภาพ (Image)"
+                        prepend-icon="mdi-camera"
+                        outlined
+                        @change="onFileSelected"
+                      ></v-file-input>
+                    </v-col>
+                    <!-- </v-row>
                 <v-row justify="center"> -->
-                  <v-col cols="12" sm="6" md="4">
-                    <v-file-input
-                    style="font-family: 'SUT Regular'"
-                      label="ผลงาน (Portfolio)"
-                      outlined
-                      @change="pdfSelected"
-                    ></v-file-input>
-                  </v-col>
-                </v-row></p>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-file-input
+                        style="font-family: 'SUT Regular'"
+                        label="ผลงาน (Portfolio)"
+                        outlined
+                        @change="pdfSelected"
+                      ></v-file-input>
+                    </v-col>
+                  </v-row>
+                </p>
                 <p>
-                <v-row justify="center">
-                  <v-col cols="6" sm="6" md="8">
-                    <v-select
-                    style="font-family: 'SUT Regular'"
-                      class="pa-0 ma-0"
-                      label="ผู้กรอกข้อมูล (Updated By)"
-                      v-model="selectAdmin"
-                      :items="admins"
-                      outlined
-                      disabled
-                      item-text="name"
-                      item-value="admin_id"
-                    />
-                  </v-col>
-                </v-row></p>
+                  <v-row justify="center">
+                    <v-col cols="6" sm="6" md="8">
+                      <v-select
+                        style="font-family: 'SUT Regular'"
+                        class="pa-0 ma-0"
+                        label="ผู้กรอกข้อมูล (Updated By)"
+                        v-model="selectAdmin"
+                        :items="admins"
+                        outlined
+                        disabled
+                        item-text="name"
+                        item-value="admin_id"
+                      />
+                    </v-col>
+                  </v-row>
+                </p>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-row justify="center">
@@ -453,6 +457,7 @@ export default {
       api.put("/api/editcanprofile", this.selectEdit).then((response) => {
         console.log(response);
         this.dialogEdit = false;
+        window.location.reload();
       });
     },
 
@@ -525,6 +530,4 @@ export default {
 table.v-table items {
   font-size: 2.0em;
 } */
-
-
 </style>

@@ -11,9 +11,8 @@
         >
           <v-card width="700" height="auto">
             <v-card-title primary-title>
-              <font size="auto"
-                >หมายเลขผู้สมัคร: {{ i.candidateProfile.c_number }}</font
-              >
+              <font size="auto" style="font-family: 'SUT Regular'">
+                <h3>หมายเลขผู้สมัคร: {{ i.candidateProfile.c_number }}</h3></font>
             </v-card-title>
 
             <v-card-text class="text-center" >
@@ -31,65 +30,75 @@
             </v-card-text>
 
             <v-card-text>
-              <font color="black">
-                <pre>ชื่อ-นามสกุล: {{ i.candidateProfile.title_name}}{{ i.candidateProfile.c_name }}</pre>
-                <pre>Gpax: {{ i.candidateProfile.grade }}</pre>
-                <pre>กิจกรรมที่เข้าร่วม: {{ i.candidateProfile.archivement }}</pre>
+              <font color="black"><p>
+                <pre style="font-family: 'SUT Regular'">ชื่อ-นามสกุล: {{ i.candidateProfile.title_name}}{{ i.candidateProfile.c_name }}</pre>
+                <pre style="font-family: 'SUT Regular'">Gpax: {{ i.candidateProfile.grade }}</pre>
+                <pre style="font-family: 'SUT Regular'">กิจกรรมที่เข้าร่วม: {{ i.candidateProfile.archivement }}</pre></p>
               </font>
             </v-card-text>
             <v-card-text>
               <div v-if="checktime()">
-                <font color="blue">
-                  <pre><h1>คะแนนที่ได้: {{i.score}} </h1> </pre>
+                <font color="#F16529">
+                  <pre style="font-family: 'SUT Regular'" ><h2>คะแนนที่ได้: {{i.score}} </h2> </pre>
                 </font>
               </div>
               <div v-else>
-                <font color="blue">
-                  <pre><h1>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผล </h1> </pre>
+                <font color="#F16529">
+                  <pre style="font-family: 'SUT Regular'"><h2>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผล </h2> </pre>
                 </font>
               </div>
-              <v-divider></v-divider>
+              <v-divider></v-divider><br>
               <v-dialog v-model="dialog2" width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    color="red lighten-2"
+                  rounded
+                    color="#F16529"
                     outlined
                     dark
                     v-bind="attrs"
                     v-on="on"
-                  >
+                    style="font-family: 'SUT Regular'"
+                  ><h3>
                     ตรวจสอบการลงคะแนน
-                  </v-btn>
+                  </h3></v-btn>
                 </template>
 
                 <v-card>
                   <v-card-title class="headline grey lighten-2">
+                    <font color="#F16529">
+                    <h3 style="font-family: 'SUT Regular'">
                     ตรวจสอบการลงคะแนน
+                  </h3></font>
                   </v-card-title>
 
-                  <v-card-text>
+                  <p><v-card-text>
                     <v-text-field
                       label="กรอกรหัส"
                       name="hashvalue"
                       v-model="userhash"
+                      style="font-family: 'SUT Regular'"
                     ></v-text-field>
-                  </v-card-text>
+                  </v-card-text></p>
 
                   <v-divider></v-divider>
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
+                      style="font-family: 'SUT Regular'"
                       class="ma-2"
                       outlined
-                      color="primary"
+                      rounded
+                      color="#EBEBEB"
                       dark
-                      @click="checkStudentHash(userhash)"
-                      >ตรวจสอบ</v-btn
-                    >
-                    <v-btn color="primary" text @click="dialog2 = false">
+                      @click="checkStudentHash(userhash)">
+                      <font color="#F16529">
+                    <h3>ตรวจสอบ</h3></font></v-btn>
+                    <v-btn color="#EBEBEB"  @click="dialog2 = false" outlined
+                      rounded style="font-family: 'SUT Regular'">
+                        <font color="#F16529"><h3>
                       ปิด
-                    </v-btn>
+                    </h3></font></v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -208,7 +217,12 @@ export default {
 </script>
 
 <style>
-h1 {
-  font-size: 20px;
+p {
+  font-size: 1.5em;
 }
+/* h3 {
+  font-size: 2.0em;
+} */
+
+
 </style>
