@@ -1,16 +1,10 @@
 <template>
   <v-container>
     <v-flex mb-4>
-      <v-data-table
-        :headers="headers"
-        :items="allCandidate"
-        class="elevation-1"
-      >
+      <v-data-table :headers="headers" :items="allCandidate" class="elevation-1" style="font-family: 'SUT Regular'">
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title style="font-family: 'SUT Regular'"
-              >Candidates Management</v-toolbar-title
-            >
+            <v-toolbar-title style="font-family: 'SUT Regular'"><h2>Candidates Management</h2></v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
 
@@ -317,13 +311,11 @@
     </v-flex>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-row justify="center">
+      <!-- <v-row justify="center">
         <v-col cols="12">
-          <v-btn rounded class="ma-2" color="#EBEBEB" @click="backToMenu"
-            >Back to home page</v-btn
-          >
+          <v-btn rounded class="ma-2" color="#EBEBEB" @click="backToMenu">Back to home page</v-btn>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-card-actions>
   </v-container>
 </template>
@@ -530,4 +522,38 @@ export default {
 table.v-table items {
   font-size: 2.0em;
 } */
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+    font-size: 1.3em;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+    font-size: 1.3em;
+}
+
+.v-data-footer {
+    font-size: 1.2em;
+}
+.v-data-footer__select .v-select__selections .v-select__selection--comma {
+    font-size: 1.2em;
+}
+.v-list-item__title {
+    font-family: 'SUT Regular';
+    font-size: 1.3em;
+}
+.v-date-picker-table .v-btn {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-picker {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+
+.v-date-picker-table th {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-time-picker-clock__item {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
 </style>

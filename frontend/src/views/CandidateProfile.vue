@@ -375,5 +375,26 @@ export default {
 .v-text-field title {
   font-size: 1.5em;
 }
+.v-list-item__title {
+    font-family: 'SUT Regular';
+    font-size: 1.3em;
+}
+.v-date-picker-table .v-btn {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-picker {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+
+.v-date-picker-table th {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-time-picker-clock__item {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
 
 </style>
