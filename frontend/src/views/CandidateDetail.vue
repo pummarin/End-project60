@@ -14,7 +14,7 @@
                 <v-img
                   v-if="i.avatar"
                   :src="'http://localhost:9000/files/' + i.avatar"
-                ></v-img>
+                width="auto" height="560px"></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
                   indeterminate
@@ -59,15 +59,6 @@
                           @click="exportPDF(i.pdf)"
                           >Portfolio</v-btn
                         >
-
-                        <v-btn
-                          class="ma-2"
-                          outlined
-                          color="primary"
-                          dark
-                          @click="checkStudentAlreadyVote"
-                          >ไปหน้าลงคะแนน</v-btn
-                        >
                       </template>
 
                       <v-card v-if="personal">
@@ -96,14 +87,12 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>
-ชื่อ-นามสกุล: {{ personal.title_name }}{{ personal.c_name }}</pre
+                                <pre>ชื่อ-นามสกุล: {{ personal.title_name }}{{ personal.c_name }}</pre
                                 >
                                 <pre>วัน/เดือน/ปี: {{ personal.birthday }}</pre>
                                 <pre>เพศ: {{ personal.gender.gender }}</pre>
                                 <pre>สำนักวิชา: {{ personal.major.major }}</pre>
-                                <pre>
-รหัสนักศึกษา: {{ personal.student_id }}</pre
+                                <pre>รหัสนักศึกษา: {{ personal.student_id }}</pre
                                 >
                                 <pre>ชั้นปี: {{ personal.year }}</pre>
                                 <pre>Gpax: {{ personal.grade }}</pre>

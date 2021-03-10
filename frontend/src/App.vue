@@ -7,10 +7,10 @@
       :dark="user ? true : false"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color ="#E44D26"></v-app-bar-nav-icon>
-
+  
       <v-btn icon large>
         <v-avatar size="50px" item>
-          <v-img src="Sut_logo_Thai.png" alt="Vuetify" />
+          <v-img src="Sut_logo_Thai.png"/>
         </v-avatar>
       </v-btn>
       <v-toolbar-title style="width: 700px" class="ml-0 pl-4">
@@ -78,48 +78,133 @@
         </v-btn>
       </template>
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      bottom
-      temporary
-      color="#EBEBEB"
-    >
-      <v-list nav dense color="#EBEBEB">
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-          style="font-family: 'SUT Regular'"
-        >
-          <v-list-item>
-            <v-list-item-title @click="goHomeAdmin"><h2>Home</h2></v-list-item-title> 
-          </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title @click="goCandidateList"><h2>Candidate Management</h2></v-list-item-title>
+    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
+      <template v-if="isSignin">
+        <template v-if="user.studentId">
+          <v-list dense>
+            <template v-for="item in studentItems">
+              <v-list-item :key="item.text" link @click="item.click" :disabled="item.disabled">
+                <v-list-item-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+          </v-list>
+        </template>
+        <template v-else>
+          <v-list dense>
+            <template v-for="item in adminItems">
+              <v-row v-if="item.heading" :key="item.heading" align="center">
+                <v-col cols="6">
+                  <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
+                </v-col>
+                <v-col cols="6" class="text-center">
+                  <a href="#!" class="body-2 black--text">EDIT</a>
+                </v-col>
+              </v-row>
+              <v-list-group
+                v-else-if="item.children"
+                :key="item.text"
+                v-model="item.model"
+                :prepend-icon="item.model ? item.icon : item['icon-alt']"
+                append-icon
+              >
+                <template v-slot:activator>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item.text }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </template>
+                <v-list-item v-for="(child, i) in item.children" :key="i" link>
+                  <v-list-item-action v-if="child.icon">
+                    <v-icon>{{ child.icon }}</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ child.text }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-group>
+              <v-list-item v-else :key="item.text" link @click="item.click">
+                <v-list-item-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+          </v-list>
+        </template>
+      </template>
+      <template v-else>
+        <v-list dense>
+          <v-list-item @click="handleIndex">
+            <v-list-item-action>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>หน้าแรก</v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title @click="goCandidateProfile"><h2>Add Candidate</h2></v-list-item-title>
+          <v-list-item @click="handleVoteResult">
+            <v-list-item-action>
+              <v-icon>mdi-bullhorn</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>ผลการลงคะแนน</v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title @click="goSetTime"><h2>Date and Time</h2></v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title @click="goVote"><h2>Vote</h2></v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title @click="goCandidateDetail"><h2>Candidate</h2></v-list-item-title>
-          </v-list-item>
-          <!-- <v-list-item>
-                <v-list-item-title><h1>Buzz</h1></v-list-item-title>
-              </v-list-item> -->
-        </v-list-item-group>
-      </v-list>
+        </v-list>
+      </template>
     </v-navigation-drawer>
+
+    <v-dialog v-model="dialog2" width="500">
+
+                <v-card>
+                  <v-card-title class="headline grey lighten-2">
+                    <font color="#F16529">
+                    <h3 style="font-family: 'SUT Regular'">
+                    ตรวจสอบผลการลงคะแนน
+                  </h3></font>
+                  </v-card-title>
+
+                  <p><v-card-text>
+                    <v-text-field
+                      label="กรอกรหัส"
+                      name="hashvalue"
+                      v-model="userhash"
+                      style="font-family: 'SUT Regular'"
+                    ></v-text-field>
+                  </v-card-text></p>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      style="font-family: 'SUT Regular'"
+                      class="ma-2"
+                      outlined
+                      rounded
+                      color="#EBEBEB"
+                      dark
+                      @click="checkStudentHash(userhash)">
+                      <font color="#F16529">
+                    <h3>ตรวจสอบ</h3></font></v-btn>
+                    <v-btn color="#EBEBEB"  @click="dialog2 = false" outlined
+                      rounded style="font-family: 'SUT Regular'">
+                        <font color="#F16529"><h3>
+                      ปิด
+                    </h3></font></v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
@@ -146,15 +231,7 @@
           <v-icon color="#F16529">mdi-github</v-icon>
         </v-btn>
       </div>
-      <!-- <div>
-        <v-btn
-          href="https://www.facebook.com/Sut-Se62-Team01-118308956295583"
-          icon
-          small
-          target="_blank"
-        >
-        </v-btn>
-      </div> -->
+      
       <v-spacer></v-spacer>
       <div>
         <font color="#F16529" style="font-family: 'SUT Regular'">
@@ -168,6 +245,7 @@
   </v-app>
 </template>
 <script>
+import Api from "./Api";
 export default {
   name: "App",
   components: {},
@@ -191,7 +269,94 @@ export default {
       userRole: null,
       user: {},
       dialog: false,
-      drawer: null,
+      drawer: false,
+      userhash: undefined,
+      dialog2: false,
+      adminItems: [
+        {
+          icon: "mdi-home",
+          role: "all",
+          text: "หน้าหลัก",
+          click: () => {
+            this.$router.push("/adminhomepage");
+          },
+        },
+
+        {
+          icon: "mdi-contacts",
+          role: "staff",
+          text: "ลงทะเบียนผู้สมัคร",
+          click: () => {
+            this.$router.push("/candidateprofile");
+          },
+        },
+        {
+          icon: "mdi-clock",
+          role: "staff",
+          text: "จัดการเวลา",
+          click: () => {
+            this.$router.push("/settime");
+          },
+        },
+        {
+          icon: "mdi-account-box",
+          role: "staff",
+          text: "จัดการผู้สมัคร",
+          click: () => {
+            this.$router.push("/candidatelist");
+          },
+        },
+        {
+          icon: "mdi-account-box",
+          role: "staff",
+          text: "แสดงความถูกต้องของข้อมูล",
+          click: () => {
+            this.$router.push("/hashchecker");
+          },
+        },
+      ],
+      studentItems: [
+        {
+          icon: "mdi-home",
+          role: "all",
+          text: "หน้าหลัก",
+          click: () => {
+            this.$router.push("/home");
+          },
+        },        
+        {
+          icon: "mdi-vote",
+          role: "student",
+          text: "ลงคะแนน",
+          click: () => {
+            this.$router.push("/vote");
+          }
+        },
+        {
+          icon: "mdi-contacts",
+          role: "student",
+          text: "ข้อมูลผู้สมัคร",
+          click: () => {
+            this.$router.push("/candidateDetail");
+          }
+        },
+        {
+          icon: "mdi-bullhorn",
+          role: "all",
+          text: "ผลการลงคะแนน",
+          click: () => {
+            this.$router.push("/voteResult");
+          }
+        },
+        {
+          icon: "mdi-account-check",
+          role: "all",
+          text: "ตรวจสอบผลการลงคะแนน",
+          click: () => {
+            this.dialog2 = true;
+          }
+        },
+      ]
     };
   },
   mounted() {
@@ -220,23 +385,25 @@ export default {
       else return false;
     },
     appBarColor() {
-      if (this.userRole == "staff") {
+      if (this.userRole === "staff") {
         return "#EBEBEB";
-      } else if (this.userRole == "student") {
+      } else if (this.userRole === "student") {
         return "#EBEBEB";
       } else {
         return "#EBEBEB";
       }
     },
+
     footerColor() {
-      if (this.userRole == "staff") {
+      if (this.userRole === "staff") {
         return "#EBEBEB";
-      } else if (this.userRole == "student") {
+      } else if (this.userRole === "student") {
         return "#EBEBEB";
       } else {
         return "#EBEBEB";
       }
     },
+
     handleProfile() {
       this.$router.push("/profile");
     },
@@ -247,26 +414,45 @@ export default {
       location.reload();
     },
     handleIndex() {
-      this.$router.push("/");
+      this.$router.push("/home");
     },
-    goCandidateList() {
-      this.$router.push("/candidatelist");
+    handleVoteResult() {
+      this.$router.push("/voteResult");
     },
-    goCandidateProfile() {
-      this.$router.push("/candidateprofile");
+    async checkStudentHash(userhash) {
+      await Api.get(
+        `/api/vote/getCorrectStudentHashByStudentHash?USER_HASH=${userhash}`
+      )
+        .then((res1) => {
+          console.log(res1);
+          if (res1.data === true) {
+            alert("ผลการลงคะแนนถูกต้อง");
+          } else {
+            alert("ตรวจพบความผิดพลาดของการลงคะแนน กรุณาติดต่อเจ้าหน้าที่");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
-    goSetTime() {
-      this.$router.push("/settime");
-    },
-    goHomeAdmin() {
-      this.$router.push("/adminhomepage");
-    },
-    goVote () {
-      this.$router.push("/vote");
-    },
-    goCandidateDetail () {
-      this.$router.push("/candidateDetail");
-    }
+    // goCandidateList() {
+    //   this.$router.push("/candidatelist");
+    // },
+    // goCandidateProfile() {
+    //   this.$router.push("/candidateprofile");
+    // },
+    // goSetTime() {
+    //   this.$router.push("/settime");
+    // },
+    // goHomeAdmin() {
+    //   this.$router.push("/adminhomepage");
+    // },
+    // goVote() {
+    //   this.$router.push("/vote");
+    // },
+    // goCandidateDetail() {
+    //   this.$router.push("/candidateDetail");
+    // },
   },
 };
 </script>

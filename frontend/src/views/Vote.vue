@@ -1,6 +1,6 @@
 
 <template>
-  <v-col cols="12" md="5" sm="6">
+  <v-col v-if="isNotVoted" cols="12" md="5" sm="6">
     <div>
       <div>
         <h1>ลงคะแนนผู้สมัคร</h1>
@@ -15,6 +15,8 @@
                 <v-img
                   v-if="i.avatar"
                   :src="'http://localhost:9000/files/' + i.avatar"
+                  width="auto"
+                  height="560px"
                 ></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
@@ -62,9 +64,9 @@
             <u>ลงคะแนนสำเร็จ.. กรุณาบันทึกภาพเป็นหลักฐาน</u>
           </v-card-title>
           <v-card-text>
-            <p>ID : {{studentHash.id}}</p>
-            <p>Code : {{studentHash.hash}}</p>
-            </v-card-text>
+            <p>ID : {{ studentHash.id }}</p>
+            <p>Code : {{ studentHash.hash }}</p>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
@@ -94,7 +96,8 @@ export default {
       candidate: [],
       alertSuccess: false,
       dialog: false,
-      studentHash: ''
+      studentHash: "",
+      isNotVoted: false,
     };
   },
   methods: {
@@ -180,13 +183,13 @@ export default {
       await Api.get(
         `/api/vote/getHashBlockByStudentId?STUDENT_ID=${student.id}`
       ).then((res) => {
-        this.studentHash = res.data
+        this.studentHash = res.data;
         console.log(this.studentHash);
       });
     },
   },
   mounted() {
-    // this.getPhotos();    
+    // this.getPhotos();
     this.clearAlert();
     this.getAllCandidate();
     let user = JSON.parse(localStorage.getItem("user"));
@@ -198,11 +201,11 @@ export default {
       .then((res) => {
         // console.log(res.data)
         if (res.data === true) {
-          alert("นักศึกษาลงคะแนนไปแล้ว");
-
+          this.isNotVoted = false;
           this.$router.push("/candidateDetail");
-          // this.$router.go();
+          alert("นักศึกษาลงคะแนนไปแล้ว");
         } else {
+          this.isNotVoted = true;
           this.checkStudentAlreadyCandidate();
         }
       })

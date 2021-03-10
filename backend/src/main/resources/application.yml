@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:file:D:\project\End-project60\secure;CIPHER=AES
+    url: jdbc:h2:file:/home/leo/Desktop/secure;CIPHER=AES
     username: root
     password: root root
     driver-class-name: org.h2.Driver

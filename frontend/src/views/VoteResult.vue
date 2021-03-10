@@ -21,7 +21,7 @@
                 :src="
                   'http://localhost:9000/files/' + i.candidateProfile.avatar
                 "
-              width="536px" height="528px"></v-img>
+              width="536px" height="560px"></v-img>
               <v-progress-circular
                 v-if="!i.candidateProfile.avatar"
                 indeterminate
@@ -44,64 +44,10 @@
               </div>
               <div v-else>
                 <font color="#F16529">
-                  <pre style="font-family: 'SUT Regular'"><h2>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผล </h2> </pre>
+                  <pre style="font-family: 'SUT Regular'"><h2>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผลคะแนน </h2> </pre>
                 </font>
               </div>
-              <v-divider></v-divider><br>
-              <v-dialog v-model="dialog2" width="500">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                  rounded
-                    color="#F16529"
-                    outlined
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                    style="font-family: 'SUT Regular'"
-                  ><h3>
-                    ตรวจสอบการลงคะแนน
-                  </h3></v-btn>
-                </template>
-
-                <v-card>
-                  <v-card-title class="headline grey lighten-2">
-                    <font color="#F16529">
-                    <h3 style="font-family: 'SUT Regular'">
-                    ตรวจสอบการลงคะแนน
-                  </h3></font>
-                  </v-card-title>
-
-                  <p><v-card-text>
-                    <v-text-field
-                      label="กรอกรหัส"
-                      name="hashvalue"
-                      v-model="userhash"
-                      style="font-family: 'SUT Regular'"
-                    ></v-text-field>
-                  </v-card-text></p>
-
-                  <v-divider></v-divider>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      style="font-family: 'SUT Regular'"
-                      class="ma-2"
-                      outlined
-                      rounded
-                      color="#EBEBEB"
-                      dark
-                      @click="checkStudentHash(userhash)">
-                      <font color="#F16529">
-                    <h3>ตรวจสอบ</h3></font></v-btn>
-                    <v-btn color="#EBEBEB"  @click="dialog2 = false" outlined
-                      rounded style="font-family: 'SUT Regular'">
-                        <font color="#F16529"><h3>
-                      ปิด
-                    </h3></font></v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              
             </v-card-text>
           </v-card>
         </v-col>
@@ -118,8 +64,6 @@ export default {
     return {
       candidate: [],
       votes: [],
-      dialog2: false,
-      userhash: undefined,
       scores: [],
       date_time_election: [],
       election_day: null,
@@ -137,23 +81,7 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    },
-    async checkStudentHash(userhash) {
-      await Api.get(
-        `/api/vote/getCorrectStudentHashByStudentHash?USER_HASH=${userhash}`
-      )
-        .then((res1) => {
-          console.log(res1);
-          if (res1.data === true) {
-            alert("ผลการลงคะแนนถูกต้อง");
-          } else {
-            alert("ผลการลงคะแนนไม่ถูกต้อง");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
+    },    
 
     async getAllTime() {
       return new Promise((success, err) => {
@@ -179,20 +107,20 @@ export default {
       var now = new Date();
       console.log(now);
       //เซตวันเวลาเริ่มต้น
-      var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
+      // var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
       // console.log(electionDateStart);
       //เซตวันเวลาสิ้นสุด
       var electionDateEnd = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_end);
       // console.log(electionDateEnd);
 
       //เช็คอยู่ในช่วงเวลาไหม
-      if (now >= electionDateStart && now <= electionDateEnd) {
+      if (now >= electionDateEnd ) {
         // console.log("อยู่ช่วงเวลาลงคะแนน");
-        return true
+        return true;
       }else{
         // console.log("ไม่อยู่ในช่วงเวลาลงคะแนน");
         // alert("ไม่ได้อยู่ในช่วงเวลาทำการ\n"+"เริ่ม: "+electionDateStart.toLocaleString("th-TH") + " สิ้นสุด: "+ electionDateEnd.toLocaleString("th-TH"));
-        return false
+        return false;
       }
     },
 

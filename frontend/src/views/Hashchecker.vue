@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="space-around">
-      <v-card width="100%">
+      <v-card width="80%">
         <v-img
           height="200px"
           src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
@@ -11,7 +11,7 @@
           </v-app-bar>
 
           <v-card-title class="white--text mt-8">
-            <p class="ml-3">ตรวจสอบความถูกต้องของข้อมูล</p>
+            <p class="ml-3">แสดงผลความถูกต้องของข้อมูล</p>
           </v-card-title>
         </v-img>
 
