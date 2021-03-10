@@ -4,22 +4,22 @@
       <v-flex xs3 sm6 md9 lg12>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="6">
-            <v-alert type="success" dismissible v-model="alertSuccess"
+            <!-- <v-alert type="success" dismissible v-model="alertSuccess"
               >บันทึกข้อมูลสำเร็จ</v-alert
             >
             <v-alert type="error" dismissible v-model="alertFailed"
               >{{ alertmsg }}!</v-alert
-            >
+            > -->
           </v-col>
         </v-row>
         <br />
         <v-card class="mx-auto" shaped max-width="900">
           <br />
-          <h1>Add Candidate</h1>
+          <h1 style="font-family: 'SUT Regular'">Add Candidate</h1>
 
           <v-row justify="center">
             <v-col cols="12" sm="6" md="3">
-              <v-text-field
+              <v-text-field style="font-family: 'SUT Regular'"
                 label="หมายเลขผู้สมัคร (No.)"
                 placeholder=" "
                 outlined
@@ -30,7 +30,7 @@
 
           <v-row justify="center">
             <v-col cols="12" sm="6" md="3">
-              <v-text-field
+              <v-text-field style="font-family: 'SUT Regular'"
                 label="คำนำหน้าชื่อ (Title Name)"
                 placeholder=" "
                 outlined
@@ -39,7 +39,7 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
-              <v-text-field
+              <v-text-field style="font-family: 'SUT Regular'"
                 label="ชื่อ-สกุล (Firstname - Lastname)"
                 placeholder=" "
                 outlined
@@ -50,7 +50,7 @@
 
           <v-row justify="center">
             <v-col cols="6" sm="2" md="3">
-              <v-select
+              <v-select style="font-family: 'SUT Regular'"
                 class="pa-0 ma-0"
                 label="เพศ (Gender)"
                 v-model="selectGender"
@@ -72,7 +72,7 @@
                 min-width="290px"
               >
                 <template v-slot:activator="{ on }">
-                  <v-text-field
+                  <v-text-field style="font-family: 'SUT Regular'"
                     v-model="selectDate"
                     label="วัน/เดือน/ปีเกิด (Birthday)"
                     prepend-icon="mdi-calendar"
@@ -90,7 +90,7 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-              <v-text-field
+              <v-text-field style="font-family: 'SUT Regular'"
                 label="เบอร์โทรศัพท์ (Mobile Phone)"
                 placeholder=" "
                 outlined
@@ -102,6 +102,7 @@
           <v-row justify="center">
             <v-col cols="12" sm="6" md="3">
               <v-text-field
+              style="font-family: 'SUT Regular'"
                 label="รหัสนักศึกษา (Student ID No.)"
                 placeholder=" "
                 outlined
@@ -111,6 +112,7 @@
 
             <v-col cols="12" sm="6" md="3">
               <v-text-field
+              style="font-family: 'SUT Regular'"
                 label="ชั้นปี (Year)"
                 placeholder=" "
                 outlined
@@ -120,6 +122,7 @@
 
             <v-col cols="12" sm="6" md="3">
               <v-text-field
+              style="font-family: 'SUT Regular'"
                 label="คะแนนเฉลี่ยสะสม (GPAX)"
                 placeholder=" "
                 outlined
@@ -131,6 +134,7 @@
           <v-row justify="center">
             <v-col cols="6">
               <v-select
+              style="font-family: 'SUT Regular'"
                 class="pa-0 ma-0"
                 label="สำนักวิชา-สาขาวิชา (Major)"
                 v-model="selectMajor"
@@ -145,6 +149,7 @@
           <v-row justify="center">
             <v-col cols="12" sm="6" md="6">
               <v-text-field
+              style="font-family: 'SUT Regular'"
                 label="กิจกรรมที่เคยร่วม (Archivement)"
                 placeholder=" "
                 outlined
@@ -156,6 +161,7 @@
           <v-row justify="center">
             <v-col cols="12" sm="6" md="6">
               <v-text-field
+              style="font-family: 'SUT Regular'"
                 label="จุดมุ่งหมายในการสมัครครั้งนี้ (Purpose)"
                 placeholder=" "
                 outlined
@@ -167,6 +173,7 @@
           <v-row justify="center">
             <v-col cols="12" sm="6" md="6">
               <v-file-input
+              style="font-family: 'SUT Regular'"
                 accept="image/png, image/jpeg"
                 label="รูปภาพ (Image)"
                 prepend-icon="mdi-camera"
@@ -179,6 +186,7 @@
           <v-row justify="center">
             <v-col cols="12" sm="6" md="6">
               <v-file-input
+              style="font-family: 'SUT Regular'"
                 label="ผลงาน (Portfolio)"
                 outlined
                 @change="pdfSelected"
@@ -189,6 +197,7 @@
           <v-row justify="center">
             <v-col cols="6">
               <v-select
+              style="font-family: 'SUT Regular'"
                 class="pa-0 ma-0"
                 label="ผู้กรอกข้อมูล (Updated By)"
                 v-model="selectAdmin"
@@ -203,9 +212,11 @@
 
           <v-row justify="center">
             <v-col cols="6" sm="6" class="pa-2 mx-3">
-              <v-btn rounded @click="save" color="#F16529">SAVE</v-btn>
+              <v-btn rounded @click="save" color="#F16529" style="font-family: 'SUT Regular'">
+                <h3>SAVE</h3></v-btn>
               &nbsp;
-              <v-btn rounded class="ma-2" color="#EBEBEB" router-link to="/adminhomepage">CANCEL</v-btn>
+              <v-btn rounded class="ma-2" color="#EBEBEB" router-link to="/adminhomepage" style="font-family: 'SUT Regular'">
+              <h3>CANCEL</h3></v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -354,3 +365,36 @@ export default {
   },
 };
 </script>
+<style>
+.v-text-field input {
+  font-size: 1.3em;
+}
+.v-text-field label {
+  font-size: 1.5em;
+}
+.v-text-field title {
+  font-size: 1.5em;
+}
+.v-list-item__title {
+    font-family: 'SUT Regular';
+    font-size: 1.3em;
+}
+.v-date-picker-table .v-btn {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-picker {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+
+.v-date-picker-table th {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-time-picker-clock__item {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+
+</style>

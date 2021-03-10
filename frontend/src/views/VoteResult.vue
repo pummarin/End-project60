@@ -11,9 +11,8 @@
         >
           <v-card width="700" height="auto">
             <v-card-title primary-title>
-              <font size="auto"
-                >หมายเลขผู้สมัคร: {{ i.candidateProfile.c_number }}</font
-              >
+              <font size="auto" style="font-family: 'SUT Regular'">
+                <h3>หมายเลขผู้สมัคร: {{ i.candidateProfile.c_number }}</h3></font>
             </v-card-title>
 
             <v-card-text class="text-center" >
@@ -22,7 +21,7 @@
                 :src="
                   'http://localhost:9000/files/' + i.candidateProfile.avatar
                 "
-              width="536px" height="528px"></v-img>
+              width="536px" height="560px"></v-img>
               <v-progress-circular
                 v-if="!i.candidateProfile.avatar"
                 indeterminate
@@ -31,68 +30,24 @@
             </v-card-text>
 
             <v-card-text>
-              <font color="black">
-                <pre>ชื่อ-นามสกุล: {{ i.candidateProfile.title_name}}{{ i.candidateProfile.c_name }}</pre>
-                <pre>Gpax: {{ i.candidateProfile.grade }}</pre>
-                <pre>กิจกรรมที่เข้าร่วม: {{ i.candidateProfile.archivement }}</pre>
+              <font color="black"><p>
+                <pre style="font-family: 'SUT Regular'">ชื่อ-นามสกุล: {{ i.candidateProfile.title_name}}{{ i.candidateProfile.c_name }}</pre>
+                <pre style="font-family: 'SUT Regular'">Gpax: {{ i.candidateProfile.grade }}</pre>
+                <pre style="font-family: 'SUT Regular'">กิจกรรมที่เข้าร่วม: {{ i.candidateProfile.archivement }}</pre></p>
               </font>
             </v-card-text>
             <v-card-text>
               <div v-if="checktime()">
-                <font color="blue">
-                  <pre><h1>คะแนนที่ได้: {{i.score}} </h1> </pre>
+                <font color="#F16529">
+                  <pre style="font-family: 'SUT Regular'" ><h2>คะแนนที่ได้: {{i.score}} </h2> </pre>
                 </font>
               </div>
               <div v-else>
-                <font color="blue">
-                  <pre><h1>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผล </h1> </pre>
+                <font color="#F16529">
+                  <pre style="font-family: 'SUT Regular'"><h2>คะแนนที่ได้: ยังไม่ถึงเวลาประกาศผลคะแนน </h2> </pre>
                 </font>
               </div>
-              <v-divider></v-divider>
-              <v-dialog v-model="dialog2" width="500">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    color="red lighten-2"
-                    outlined
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    ตรวจสอบการลงคะแนน
-                  </v-btn>
-                </template>
-
-                <v-card>
-                  <v-card-title class="headline grey lighten-2">
-                    ตรวจสอบการลงคะแนน
-                  </v-card-title>
-
-                  <v-card-text>
-                    <v-text-field
-                      label="กรอกรหัส"
-                      name="hashvalue"
-                      v-model="userhash"
-                    ></v-text-field>
-                  </v-card-text>
-
-                  <v-divider></v-divider>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      class="ma-2"
-                      outlined
-                      color="primary"
-                      dark
-                      @click="checkStudentHash(userhash)"
-                      >ตรวจสอบ</v-btn
-                    >
-                    <v-btn color="primary" text @click="dialog2 = false">
-                      ปิด
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              
             </v-card-text>
           </v-card>
         </v-col>
@@ -109,8 +64,6 @@ export default {
     return {
       candidate: [],
       votes: [],
-      dialog2: false,
-      userhash: undefined,
       scores: [],
       date_time_election: [],
       election_day: null,
@@ -128,23 +81,7 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    },
-    async checkStudentHash(userhash) {
-      await Api.get(
-        `/api/vote/getCorrectStudentHashByStudentHash?USER_HASH=${userhash}`
-      )
-        .then((res1) => {
-          console.log(res1);
-          if (res1.data === true) {
-            alert("ผลการลงคะแนนถูกต้อง");
-          } else {
-            alert("ผลการลงคะแนนไม่ถูกต้อง");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
+    },    
 
     async getAllTime() {
       return new Promise((success, err) => {
@@ -170,20 +107,20 @@ export default {
       var now = new Date();
       console.log(now);
       //เซตวันเวลาเริ่มต้น
-      var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
+      // var electionDateStart = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_start);
       // console.log(electionDateStart);
       //เซตวันเวลาสิ้นสุด
       var electionDateEnd = new Date(this.date_time_election[0].election_day + " " + this.date_time_election[0].time_end);
       // console.log(electionDateEnd);
 
       //เช็คอยู่ในช่วงเวลาไหม
-      if (now >= electionDateStart && now <= electionDateEnd) {
+      if (now >= electionDateEnd ) {
         // console.log("อยู่ช่วงเวลาลงคะแนน");
-        return true
+        return true;
       }else{
         // console.log("ไม่อยู่ในช่วงเวลาลงคะแนน");
         // alert("ไม่ได้อยู่ในช่วงเวลาทำการ\n"+"เริ่ม: "+electionDateStart.toLocaleString("th-TH") + " สิ้นสุด: "+ electionDateEnd.toLocaleString("th-TH"));
-        return false
+        return false;
       }
     },
 
@@ -208,7 +145,12 @@ export default {
 </script>
 
 <style>
-h1 {
-  font-size: 20px;
+p {
+  font-size: 1.5em;
 }
+/* h3 {
+  font-size: 2.0em;
+} */
+
+
 </style>

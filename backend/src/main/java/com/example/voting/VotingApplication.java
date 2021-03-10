@@ -58,7 +58,7 @@ public class VotingApplication {
 
 			// Admins
 			Admin admin1 = new Admin("ลีโอ", "admin1", "1234", "ชาย");
-			Admin admin2 = new Admin("กมลฉัตร", "admin2", "password", "หญิง");
+			Admin admin2 = new Admin("กมลฉัตร", "admin2", "1234", "หญิง");
 
 			Stream.of(admin1, admin2).forEach(admin -> {
 				adminRepository.save(admin);

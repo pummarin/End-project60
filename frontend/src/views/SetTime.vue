@@ -15,35 +15,36 @@
         <br />
         <v-card class="mx-auto" shaped max-width="900">
           <br />
-          <h1>Set Time</h1>
+          <h1 style="font-family: 'SUT Regular'">Set the Date and Time</h1>
           <v-row justify="center">
-          <v-col cols="12" sm="4">
-            <v-menu
-              v-model="date_menu"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              full-width
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
+            <v-col cols="12" sm="4">
+              <v-menu
+                v-model="date_menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                full-width
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    style="font-family: 'SUT Regular'"
+                    v-model="select_date"
+                    label="วันเลือกตั้ง (Election Day)"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-on="on"
+                    outlined
+                    
+                  ></v-text-field>
+                </template>
+                <v-date-picker
                   v-model="select_date"
-                  label="วันเลือกตั้ง (Election Day)"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  
-                  v-on="on"
-                  outlined
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="select_date"
-                no-title
-                width="400"
-                @input="date_menu = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-col>
+                  no-title
+                  width="350"
+                  @input="date_menu = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
           </v-row>
           <v-row justify="center">
             <v-col cols="12" sm="4">
@@ -57,6 +58,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    style="font-family: 'SUT Regular'"
                     v-model="select_time_start"
                     label="เริ่มเวลา (Start)"
                     prepend-icon="mdi-clock-time-four-outline"
@@ -94,6 +96,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    style="font-family: 'SUT Regular'"
                     v-model="select_time_end"
                     label="หมดเวลา (End)"
                     prepend-icon="mdi-clock-time-four-outline"
@@ -110,7 +113,6 @@
                   @input="time_end_menu = false"
                 >
                   <v-spacer></v-spacer>
-
                 </v-time-picker>
               </v-dialog>
             </v-col>
@@ -119,6 +121,8 @@
           <v-row justify="center">
             <v-col cols="6" sm="4">
               <v-select
+                disabled
+                style="font-family: 'SUT Regular'"
                 class="pa-0 ma-0"
                 label="ผู้กรอกข้อมูล (Updated By)"
                 v-model="selectAdmin"
@@ -132,9 +136,25 @@
 
           <v-row justify="center">
             <v-col cols="6" sm="6" class="pa-2 mx-3">
-              <v-btn rounded @click="save" color="#F16529">SAVE</v-btn>
+              <v-btn
+                rounded
+                @click="save"
+                color="#F16529"
+                style="font-family: 'SUT Regular'"
+              >
+                <h3>SAVE</h3></v-btn
+              >
               &nbsp;
-              <v-btn rounded class="ma-2" color="#EBEBEB" router-link to="/adminhomepage">CANCEL</v-btn>
+              <v-btn
+                rounded
+                class="ma-2"
+                color="#EBEBEB"
+                router-link
+                to="/adminhomepage"
+                style="font-family: 'SUT Regular'"
+              >
+                <h3>CANCEL</h3></v-btn
+              >
             </v-col>
           </v-row>
         </v-card>
@@ -222,3 +242,39 @@ export default {
   },
 };
 </script>
+<style>
+.v-text-field input {
+  font-size: 1.3em;
+}
+.v-text-field label {
+  font-size: 1.5em;
+}
+.v-text-field title {
+  font-size: 1.5em;
+}
+h1 {
+  font-size: 2em;
+}
+
+.v-list-item__title {
+  font-family: "SUT Regular";
+  font-size: 1.3em;
+}
+.v-date-picker-table .v-btn {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-picker {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+
+.v-date-picker-table th {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+.v-time-picker-clock__item {
+  font-family: "SUT Regular";
+  font-size: 1.2em;
+}
+</style>

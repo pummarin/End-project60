@@ -14,7 +14,7 @@
                 <v-img
                   v-if="i.avatar"
                   :src="'http://localhost:9000/files/' + i.avatar"
-                ></v-img>
+                width="auto" height="560px"></v-img>
                 <v-progress-circular
                   v-if="!i.avatar"
                   indeterminate
@@ -56,26 +56,27 @@
                           outlined
                           color="primary"
                           dark
-                           @click="exportPDF(i.pdf)"
-                          >Portfolio</v-btn>
-
-                        <v-btn
-                          class="ma-2"
-                          outlined
-                          color="primary"
-                          dark
-                          @click="checkStudentAlreadyVote"
-                          >ไปหน้าลงคะแนน</v-btn
+                          @click="exportPDF(i.pdf)"
+                          >Portfolio</v-btn
                         >
                       </template>
 
                       <v-card v-if="personal">
-                        <v-toolbar dark color="primary">                         
-                          <v-toolbar-title>รายละเอียด</v-toolbar-title>
+                        <v-toolbar dark color="#EBEBEB">
+                          <font color="#000000">
+                            <v-toolbar-title>รายละเอียด</v-toolbar-title>
+                          </font>
                           <v-spacer></v-spacer>
                           <v-toolbar-items>
-                            <v-btn dark text @click="dialog = false ; personal = undefined">
-                              Close
+                            <v-btn
+                              dark
+                              text
+                              @click="
+                                dialog = false;
+                                personal = undefined;
+                              "
+                            >
+                              <font color="#000000"> Close </font>
                             </v-btn>
                           </v-toolbar-items>
                         </v-toolbar>
@@ -86,14 +87,15 @@
                                 >ข้อมูลส่วนตัว</v-list-item-title
                               >
                               <v-card-text>
-                                <pre>ชื่อ-นามสกุล: {{ personal.title_name }}{{ personal.c_name }}</pre>
+                                <pre>ชื่อ-นามสกุล: {{ personal.title_name }}{{ personal.c_name }}</pre
+                                >
                                 <pre>วัน/เดือน/ปี: {{ personal.birthday }}</pre>
                                 <pre>เพศ: {{ personal.gender.gender }}</pre>
                                 <pre>สำนักวิชา: {{ personal.major.major }}</pre>
-                                <pre>รหัสนักศึกษา: {{ personal.student_id }}</pre>
+                                <pre>รหัสนักศึกษา: {{ personal.student_id }}</pre
+                                >
                                 <pre>ชั้นปี: {{ personal.year }}</pre>
                                 <pre>Gpax: {{ personal.grade }}</pre>
-
                               </v-card-text>
                             </v-list-item-content>
                           </v-list-item>
@@ -138,7 +140,6 @@ export default {
   name: "Vote",
   data() {
     return {
-
       pdf: [],
       candidate: [],
       alertSuccess: false,
@@ -162,7 +163,6 @@ export default {
           //   console.log(i);
           // }
           console.log("pdf name = " + this.candidate[0].pdf);
-
         })
         .catch((e) => {
           console.log(e);
@@ -172,15 +172,12 @@ export default {
     exportPDF(pdf) {
       window.open("http://localhost:9000/pdf/" + pdf, "_blank");
       // this.$router.push("http://localhost:9000/pdf/" + pdf);
-
     },
-    
 
     test(i) {
       this.personal = i;
       console.log(i);
     },
-
 
     checkStudentAlreadyVote() {
       let user = JSON.parse(localStorage.getItem("user"));
