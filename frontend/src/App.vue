@@ -175,7 +175,7 @@
 
                   <p><v-card-text>
                     <v-text-field
-                      label="กรอกรหัส"
+                      label="กรอกค่า Hash Result"
                       name="hashvalue"
                       v-model="userhash"
                       style="font-family: 'SUT Regular'"
@@ -269,7 +269,7 @@ export default {
       userRole: null,
       user: {},
       dialog: false,
-      drawer: false,
+      drawer: true,
       userhash: undefined,
       dialog2: false,
       adminItems: [

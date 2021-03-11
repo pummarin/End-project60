@@ -64,8 +64,8 @@
             <u>ลงคะแนนสำเร็จ.. กรุณาบันทึกภาพเป็นหลักฐาน</u>
           </v-card-title>
           <v-card-text>
-            <p>ID : {{ studentHash.id }}</p>
-            <p>Code : {{ studentHash.hash }}</p>
+            <p>Record Id : {{ studentHash.id }}</p>
+            <p>Hash Result : {{ studentHash.hash }}</p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
