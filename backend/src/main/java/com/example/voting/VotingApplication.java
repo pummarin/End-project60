@@ -232,9 +232,9 @@ public class VotingApplication {
 
 				//วันเวลาเลือกตั้ง
 
-			String select_time_start = "14:19";
-			String select_time_end = "14:30";
-			String select_election_day = "2021-03-06";
+			String select_time_start = "10:30";
+			String select_time_end = "11:30";
+			String select_election_day = "2021-03-12";
 			
 			DateTimeFormatter date_format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate election_day = LocalDate.parse(select_election_day, date_format);

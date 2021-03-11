@@ -191,24 +191,24 @@ public class VoteController {
     public ResponseEntity<?> getCorrectStudentHashByStudentHash(@RequestParam("USER_HASH") String userhash){
         List<Vote> votes = voteRepository.findAll();
 //        System.out.println("get all vote = " + votes);
-        ArrayList<CheckedAllBoxRespone> respone = new ArrayList<CheckedAllBoxRespone>();
+//        ArrayList<CheckedAllBoxRespone> respone = new ArrayList<CheckedAllBoxRespone>();
         AtomicReference<String> tempHash = new AtomicReference<>("");
         AtomicBoolean result = new AtomicBoolean(false);
         votes.forEach(vote -> {
-            CheckedAllBoxRespone c = new CheckedAllBoxRespone();
-            c.setId(vote.getId());
-            c.setHash(vote.getHash());
-            c.setPrevHash(vote.getPrevHash());
-            c.setVoteTime(vote.getVoteTime());
+//            CheckedAllBoxRespone c = new CheckedAllBoxRespone();
+//            c.setId(vote.getId());
+//            c.setHash(vote.getHash());
+//            c.setPrevHash(vote.getPrevHash());
+//            c.setVoteTime(vote.getVoteTime());
 //            System.out.println("temp hash = "+tempHash);
             tempHash.set(checkHashData(vote, tempHash.get()));
 //            System.out.println("vote hash = "+vote.getHash()+" temp hash = " + tempHash);
-            if (tempHash.get().equals(vote.getHash())) {
-                c.setCorrect(true);
-            } else {
-                c.setCorrect(false);
-            }
-            respone.add(c);
+//            if (tempHash.get().equals(vote.getHash())) {
+//                c.setCorrect(true);
+//            } else {
+//                c.setCorrect(false);
+//            }
+//            respone.add(c);
 
             if(tempHash.get().equals(userhash)){
                 result.set(true);

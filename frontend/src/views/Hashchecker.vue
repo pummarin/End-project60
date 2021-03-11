@@ -30,7 +30,7 @@
                 <div class="font-weight-normal">
                   <strong>{{ vote.id }}</strong> @{{ vote.voteTime }}
                 </div>
-                <div>Block hash : {{ vote.hash }}</div>
+                <div>Record hash : {{ vote.hash }}</div>
                 <div>Previous hash: {{ vote.prevHash }}</div>
               </div>
             </v-timeline-item>
