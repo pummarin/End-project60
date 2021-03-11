@@ -66,7 +66,7 @@ export default {
       votes: [],
       scores: [],
       date_time_election: [],
-      election_day: null,
+      // election_day: null,
       time_start: null, //เริ่มเวลาเท่าไหร่
       time_end: null, //หมดเวลาเท่าไหร่
     };

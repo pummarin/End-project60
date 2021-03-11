@@ -51,8 +51,10 @@ public class VotingApplication {
 					"Mahno@gmail.com", "ComputerEngineer");
 			Students student5 = new Students("นางสาวทดสอบ ระบบ", "B6008376", "หญิง", "0960032169", "0000", "3",
 					"Mahno@gmail.com", "ComputerEngineer");
+			Students student6 = new Students("นายจงรัก ภักดี", "B6201234", "ชาย", "0960032169", "0000", "2",
+					"Mahno@gmail.com", "ComputerEngineer");
 
-			Stream.of(student1, student2, student3, student4, student5).forEach(student -> {
+			Stream.of(student1, student2, student3, student4, student5, student6).forEach(student -> {
 				studentsRepository.save(student);
 			});
 

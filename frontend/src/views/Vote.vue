@@ -74,7 +74,7 @@
               text
               @click="(dialog = false), goDetail()"
             >
-              Disagree
+              Close
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -163,9 +163,11 @@ export default {
         .then((res) => {
           if (res.data === true) {
             alert("นักศึกษาเป็นผู้ลงสมัคร");
+            this.isNotVoted = false;
             this.$router.push("/candidateDetail");
           } else {
             this.loaded = true;
+            this.isNotVoted = true;
           }
         })
         .catch((e) => {
@@ -204,8 +206,7 @@ export default {
           this.isNotVoted = false;
           this.$router.push("/candidateDetail");
           alert("นักศึกษาลงคะแนนไปแล้ว");
-        } else {
-          this.isNotVoted = true;
+        } else {          
           this.checkStudentAlreadyCandidate();
         }
       })

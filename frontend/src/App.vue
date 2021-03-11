@@ -350,7 +350,7 @@ export default {
         },
         {
           icon: "mdi-account-check",
-          role: "all",
+          role: "student",
           text: "ตรวจสอบผลการลงคะแนน",
           click: () => {
             this.dialog2 = true;
